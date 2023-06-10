@@ -3,9 +3,6 @@
 
 int	main(int ac, char **av, char **env)
 {
-
-
-
 	char *arg[3];
 
 	arg[0] = "echo";
