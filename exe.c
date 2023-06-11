@@ -1,13 +1,34 @@
-#include <unistd.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exe.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
+/*   Updated: 2023/06/11 21:28:45 by ktunchar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "exe.h"
 
 int	main(int ac, char **av, char **env)
 {
-	char *arg[3];
+	char *input;
 
-	arg[0] = "echo";
-	arg[1] = getenv("ZSH"); // -> use when try to find buildin variable
-	arg[2] = NULL;
+	while (ft_strncmp(input, "exit", 5))
+	{
+		input = readline("minishell$ ");
+		printf("%s\n", input);
+		if (ft_strncmp(input, "exit", 5) == 0)
+			break ;
+		free(input);
+	}
+	free(input);
 
-	execve("/bin/echo", arg, env);
+	// if (!is_pipe())
+	// 	// do_exe();
+	// else
+	// 	// pipex();
+
 }
