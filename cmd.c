@@ -14,3 +14,17 @@ t_cmd	*new_cmd(char *arg, char **env)
 	cmd->next = NULL;
 	return (cmd);
 }
+
+int	create_cmd(t_cmd **head, t_cmd *new_cmd)
+{
+	if (!head)
+		return (0);
+	*head = new_cmd;
+	return (1);
+}
+
+int	cmd_add(t_cmd **head, t_cmd *new_cmd)
+{
+	if ()
+
+}
