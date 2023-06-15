@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/12 00:10:36 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:43:27 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,20 @@
 #include <readline/history.h>
 #include "lib/libft/libft.h"
 
-typedef	struct	s_cmd{ // link list of cmd
-	char *cmd;
-	char **arg;
-	struct s_cmd *next; 
-}t_cmd;
 
-typedef struct	s_line{ // all line data seperate
-	char *infile;
-	char *outfile;
-	char **env;
-	t_cmd *cmd_data;
-}t_line;
+typedef	struct 	s_fd{
+	int	in;
+	int	out;
+}	t_fd;
+
+typedef struct	s_cmd{
+	char			**arg;
+	char			*file;
+	t_fd			*fd;
+	struct s_cmd	*next; 
+}	t_cmd;
+
 
 
 int	exe_cmd(t_cmd *cmd_d, char **env, char **paths);
 char **get_paths(char **env);
-// typedef	struct s_pipe_data{
-// 	size_t	n_pipe;
-// 	char *infile;
-// 	char *outfile;
-// 	char **env;
-// 	t_cmd *cmd;
-	
-
-// }t_pipe_data;
