@@ -6,44 +6,58 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:13:01 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/12 00:38:01 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/16 03:21:51 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
-	
-char **get_paths(char **env)
+
+char	**get_paths(char **env)
 {
-	int	i;
-	char *str_path;
-	char **ret;
+	int		i;
+	char	*path;
+	char	**ret_path;
 
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		if (ft_strnstr(env[i], "PATH", 5))
 		{
-			str_path = ft_strdup(env[i]);
-			break;
+			path = ft_strtrim(env[i], "PATH=");
+			break ;
 		}
 		i++;
 	}
-	ret = ft_split(str_path + 5, ':');
-	free(str_path);
-	return (ret);
+	ret_path = ft_split(path, ':');
+	i = 0;
+	while (ret_path[i])
+	{
+		ret_path[i] = ft_strjoin_free(ret_path[i], "/");
+		i++;
+	}
+	free(path);
+	return (ret_path);
 }
 
-char *get_cmd_path(t_cmd *cmd_d, char **paths)
+int	get_cmd_path(t_cmd *cmd_d, char **env)
 {
-	
-}
+	int		i;
+	char	**paths;
 
-int	exe_cmd(t_cmd *cmd_d, char **env, char **paths)
-{
-	
-	cmd_d->cmd = get_cmd_path(cmd_d, paths)
-	
-	// execute()
+	i = 0;
+	paths = get_paths(env);
+	if (access(cmd_d->arg[0], F_OK) == 0)
+		return (1);
+	// curr_path = *paths;
+	while (paths[i])
+	{
+		printf("%s\n", paths[i]);
+		i++;
+	}
 	return (1);
-	
 }
+
+// int	exe_cmd(t_cmd *cmd_d, char **env, char **paths)
+// {
+
+// }
