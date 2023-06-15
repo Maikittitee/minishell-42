@@ -31,7 +31,7 @@ int	cmd_add(t_cmd **head, t_cmd *new_cmd)
 	while (curr->next)
 		curr = curr->next;
 	curr->next = new_cmd;
-	new_cmd->next = NULL
+	new_cmd->next = NULL;
 	return (1);
 
 }
