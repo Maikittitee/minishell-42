@@ -33,5 +33,17 @@ int	cmd_add(t_cmd **head, t_cmd *new_cmd)
 	curr->next = new_cmd;
 	new_cmd->next = NULL;
 	return (1);
+}
 
+void	print_cmd(t_cmd **head)
+{
+	t_cmd	*curr;
+
+	curr = *head;
+	while (curr)
+	{
+		printf("cmd:%s fd_in:%d fd_out:%d\n", \
+		curr->arg[0], curr->fd->in, curr->fd->out);
+		curr = curr->next;
+	}
 }
