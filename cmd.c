@@ -25,6 +25,13 @@ int	create_cmd(t_cmd **head, t_cmd *new_cmd)
 
 int	cmd_add(t_cmd **head, t_cmd *new_cmd)
 {
-	if ()
+	t_cmd *curr;
+
+	curr = *head;
+	while (curr->next)
+		curr = curr->next;
+	curr->next = new_cmd;
+	new_cmd->next = NULL
+	return (1);
 
 }
