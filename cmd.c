@@ -11,25 +11,20 @@ int	join_path(t_cmd *cmd, char **paths)
 		return (0);
 	if (access(cmd->arg[0], F_OK) == EXIT_SUCCESS)
 		return (1);
-	while (i != - 1 && paths[i])
+	check = ft_strjoin(paths[i], cmd->arg[0]);
+	while (paths[i] && access(check, F_OK) != EXIT_SUCCESS)
 	{
-		check = ft_strjoin(paths[i], cmd->arg[0]);
-		if (access(check, F_OK) == EXIT_SUCCESS)
-		{
-			temp = cmd->arg[0];
-			cmd->arg[0] = ft_strdup(check);
-			if (temp)
-				free(temp);
-			if (check)
-				free(check);
-			return (1);
-		}
-		if (check)
-			free(check);
 		i++;
+		free(check);
+		check = ft_strjoin(paths[i], cmd->arg[0]);
 	}
-
-	return (0);
+	if (paths[i] == NULL)
+		return (0);
+	temp = cmd->arg[0];
+	cmd->arg[0] = ft_strdup(check);
+	free(check);
+	free(temp);
+	return (1);
 }
 
 t_cmd	*new_cmd(char *arg, char **env)
