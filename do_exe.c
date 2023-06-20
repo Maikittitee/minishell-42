@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:13:01 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/21 03:12:45 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/21 03:58:44 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	executes(t_cmd **cmd, char **env)
 	(void)env;
 	while (curr)
 	{
-		// printf("exe cmd is %s\n", curr->arg[0]);
 		execute(curr, env);
 		curr = curr->next;
 	}

@@ -40,10 +40,6 @@ t_cmd	*new_cmd(char *arg, char **env)
 	cmd->fd->in = 0;
 	cmd->fd->out = 1;
 	cmd->next = NULL;
-	if (join_path(cmd, paths))
-		printf("Join path OK\n");
-	else
-		printf("Join path KO\n");
 	ft_double_free(paths);
 	return (cmd);
 }
