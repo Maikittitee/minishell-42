@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/19 18:43:01 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/20 23:13:28 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@ int		cmd_add(t_cmd **head, t_cmd *new_cmd);
 void	print_cmd(t_cmd **head);
 void	clear_free_cmd(t_cmd **cmd);
 void	ft_double_free(char **s);
+void	del_head(t_cmd **cmd);
+int		execute(t_cmd *cmd, char **env);
+int		executes(t_cmd **cmd, char **env);
 
 #endif

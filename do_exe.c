@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:13:01 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/19 18:42:21 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/21 03:12:45 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,33 @@ char	**get_paths(char **env)
 	return (ret_path);
 }
 
-int	get_cmd_path(t_cmd *cmd_d, char **env)
+int	executes(t_cmd **cmd, char **env)
 {
-	int		i;
-	char	**paths;
-
-	i = 0;
-	paths = get_paths(env);
-	if (access(cmd_d->arg[0], F_OK) == 0)
-		return (1);
-	// curr_path = *paths;
-	while (paths[i])
+	t_cmd *curr;
+	
+	curr = *cmd;
+	(void)env;
+	while (curr)
 	{
-		printf("%s\n", paths[i]);
-		i++;
+		// printf("exe cmd is %s\n", curr->arg[0]);
+		execute(curr, env);
+		curr = curr->next;
 	}
+	clear_free_cmd(cmd);
 	return (1);
+	
 }
 
-// int	exe_cmd(t_cmd *cmd_d, char **env, char **paths)
-// {
+int	execute(t_cmd *cmd, char **env)
+{
+	int	pid;
+	int	status;
 
-// }
+	dup2(cmd->fd->in, STDIN_FILENO);
+	dup2( cmd->fd->out, STDOUT_FILENO);
+	pid = fork();
+	if (pid == 0)
+		execve(cmd->arg[0], cmd->arg, env);
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
+}
