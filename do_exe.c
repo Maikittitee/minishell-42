@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:13:01 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/21 03:58:44 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/23 00:46:56 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,12 @@ int	executes(t_cmd **cmd, char **env)
 	t_cmd *curr;
 	
 	curr = *cmd;
-	(void)env;
 	while (curr)
 	{
 		execute(curr, env);
 		curr = curr->next;
 	}
-	clear_free_cmd(cmd);
+	// clear_free_cmd(cmd);
 	return (1);
 	
 }
@@ -60,11 +59,15 @@ int	execute(t_cmd *cmd, char **env)
 	int	pid;
 	int	status;
 
+	// printf("hello\n");
 	dup2(cmd->fd->in, STDIN_FILENO);
 	dup2( cmd->fd->out, STDOUT_FILENO);
 	pid = fork();
 	if (pid == 0)
+	{
+		printf("Helloooooo\n");
 		execve(cmd->arg[0], cmd->arg, env);
+	}
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }

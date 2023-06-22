@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/21 03:11:53 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/23 00:46:20 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int ac, char **av, char **env)
 	create_cmd(cmd, new_cmd("ls -l", env));
 	cmd_add(cmd, new_cmd("cat Makefile -e", env));
 	// cmd_add(cmd, new_cmd("cat -e", env));
-	// print_cmd(cmd);
+	print_cmd(cmd);
 	// del_head(cmd);
 	// printf("after del\n");
 	// print_cmd(cmd);
