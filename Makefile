@@ -1,8 +1,8 @@
-NAME = ./exe
+NAME = hello
 
-CC = cc
+CC = gcc
 
-FLAGS = -Wall -Werror -Wextra -g 
+FLAGS = -Wall -Werror -Wextra
 
 LIBFT_PATH = lib/libft
 SRCS_PATH = 
@@ -30,7 +30,7 @@ $(LIBFT):
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(LIBFT_FLAG) $(OBJS) -o $(NAME)
+	$(CC) $(FLAGS) -lreadline $(LIBFT_FLAG) $(OBJS) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS) $(LIBFT_PATH)/*.o

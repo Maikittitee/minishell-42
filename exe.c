@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/23 00:46:20 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/23 01:33:40 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,31 @@ int	is_pipe(char *input)
 int	main(int ac, char **av, char **env)
 {
 	t_cmd	**cmd;
+	char	*input;
 
 	(void)ac;
 	(void)av;
 
+	while (1)
+	{
+		input = readline("MarkNiShell $ ");
+		cmd = malloc(sizeof(t_cmd *));
+		create_cmd(cmd, new_cmd(input, env));
+		executes(cmd, env);
+		free(input);
+	}
+
 	// cmd = NULL;
 	cmd = malloc(sizeof(t_cmd *));
 
-	create_cmd(cmd, new_cmd("ls -l", env));
-	cmd_add(cmd, new_cmd("cat Makefile -e", env));
+	// create_cmd(cmd, new_cmd("ls -l", env));
+	// cmd_add(cmd, new_cmd("cat Makefile -e", env));
 	// cmd_add(cmd, new_cmd("cat -e", env));
-	print_cmd(cmd);
+	// print_cmd(cmd);
 	// del_head(cmd);
 	// printf("after del\n");
 	// print_cmd(cmd);
-	executes(cmd, env);
+	// executes(cmd, env);
 	
 	// clear_free_cmd(cmd);
 	// get_cmd_path(*cmd, env);
