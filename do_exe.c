@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:13:01 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/23 18:36:05 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/24 02:08:24 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	executes(t_cmd **cmd, char **env)
 		execute(curr, env);
 		curr = curr->next;
 	}
-	clear_free_cmd(cmd);
+	// clear_free_cmd(cmd);
 	return (1);
 	
 }

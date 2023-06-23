@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/23 18:42:18 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/24 02:10:58 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		input = readline(GRN"mainishell $ "RESET);
-		if (ft_strncmp(input, "exit", 5) == 0)
+		if (ft_strncmp(input, "exit", 4) == 0)
 		{
 			free(input);
-			return (0);
+			break;
 		}
 		cmd = malloc(sizeof(t_cmd *));
 		create_cmd(cmd, new_cmd(input, env));
@@ -46,7 +46,7 @@ int	main(int ac, char **av, char **env)
 	}
 
 	// cmd = NULL;
-	cmd = malloc(sizeof(t_cmd *));
+	// cmd = malloc(sizeof(t_cmd *));
 
 	// create_cmd(cmd, new_cmd("ls -l", env));
 	// cmd_add(cmd, new_cmd("cat Makefile -e", env));
@@ -59,4 +59,5 @@ int	main(int ac, char **av, char **env)
 	
 	// clear_free_cmd(cmd);
 	// get_cmd_path(*cmd, env);
+	return(0);
 }
