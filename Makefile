@@ -1,4 +1,4 @@
-NAME = hello
+NAME = minishell
 
 CC = gcc
 
