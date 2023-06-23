@@ -40,8 +40,8 @@ t_cmd	*new_cmd(char *arg, char **env)
 	cmd->fd->in = 0;
 	cmd->fd->out = 1;
 	cmd->next = NULL;
-	if (join_path(cmd, paths))
-		printf("join path OK");
+	if (!join_path(cmd, paths))
+		ft_putendl_fd(RED"Path not found."RESET, 2);
 	ft_double_free(paths);
 	return (cmd);
 }

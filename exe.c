@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/23 01:33:40 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:42:18 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,12 @@ int	main(int ac, char **av, char **env)
 
 	while (1)
 	{
-		input = readline("MarkNiShell $ ");
+		input = readline(GRN"mainishell $ "RESET);
+		if (ft_strncmp(input, "exit", 5) == 0)
+		{
+			free(input);
+			return (0);
+		}
 		cmd = malloc(sizeof(t_cmd *));
 		create_cmd(cmd, new_cmd(input, env));
 		executes(cmd, env);
