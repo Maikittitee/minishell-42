@@ -1,22 +1,32 @@
 #include "exe.h"
 
-int	main()
+int	main(int ac, char **av, char **env)
 {
-	int	fd[2];
+	int	**fd;
+	int	n_pipe;
 	int	pid;
-	int	x;
 
-	pipe(fd);
-	printf("IN PIPE is %d\n", fd[0]);
-	printf("OUT PIPE is %d\n", fd[1]);
+	n_pipe = ac - 2;
 
+	//malloc for pipe;
+	fd = malloc(sizeof(int *) * n_pipe);
+
+	int	i = 0;
+	while (i < n_pipe)
+	{
+		fd[i] = malloc(sizeof(int) * 2);
+		i++;
+	}
+	i = 0;
+	while (i < n_pipe)
+	{
+		pipe(fd[i]);
+		i++;
+	}
+	
 	pid = fork();
 	if (pid == 0)
 	{
-		read(fd[1], &x, 4);
-		printf("hello from child 1 and x is %d\n", x);
-
+		execve("")
 	}
-	// x = 6;
-	// write(fd[0], &x, 4);
 }
