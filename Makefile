@@ -40,4 +40,7 @@ fclean: clean
 
 re: fclean all
 
+test:
+	gcc test.c $(LIBFT_PATH)/*.c
+
 .PHONY: clean fclean all re
