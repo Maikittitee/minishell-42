@@ -65,7 +65,7 @@ void	ft_child(int ifd, t_pipe piped)
 	dupper(ifd, piped);
 	close(piped.fd[0][0]);
 	close(piped.fd[0][1]);
-	printf("h1\n");
+	// dprintf(1, "h1\n");
 	execve(c[0], c, piped.env);
 }
 
@@ -73,14 +73,14 @@ void	ft_child2(int ifd, t_pipe piped)
 {
 	char **c;
 
-	c = ft_split("/usr/bin/wc -l",' ');
+	c = ft_split("/bin/sleep 10",' ');
 	// dup2(piped.fd[0][0], STDIN_FILENO);
 	// dup2(1, STDOUT_FILENO);
 	dupper(ifd, piped);
 	close(piped.fd[0][0]);
 	close(piped.fd[0][1]);
 	
-	printf("h2\n");
+	// dprintf(1, "h2\n");
 
 	execve(c[0], c, piped.env);
 }
@@ -120,12 +120,12 @@ int	main(int ac, char **av, char **env)
 		pid[pcnt] = fork();
 		if (pcnt == 0 && pid[pcnt] == 0)
 		{
-			printf("hello1\n");
+			// printf("hello1\n");
 			ft_child(pcnt, piped);
 		}
 		if (pcnt == 1 && pid[pcnt] == 0)
 		{
-			printf("hello2\n");
+			// printf("hello2\n");
 			ft_child2(pcnt, piped);
 		}
 		pcnt += 1;
@@ -134,7 +134,7 @@ int	main(int ac, char **av, char **env)
 	// close(piped.fd[0][0]);
 	// close(piped.fd[0][1]);
 	waitpid(pid[0], NULL, 0);
-	waitpid(pid[1], &status, WNOHANG);
+	waitpid(pid[1], &status, 0);
 
 	return (WEXITSTATUS(status));
 }
