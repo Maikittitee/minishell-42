@@ -1,18 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isrdir.c                                        :+:      :+:    :+:   */
+/*   skip_operator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/26 10:41:15 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/06/26 12:08:26 by ksaelim          ###   ########.fr       */
+/*   Created: 2023/06/26 11:54:56 by ksaelim           #+#    #+#             */
+/*   Updated: 2023/06/26 12:59:36 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_isrdir(char c)
+int	skip_qoute(char *s, char c)
 {
-    return (c == INRDIR || c == OUTRDIR || c == PIPE);
+	int	i;
+
+	i = 1;
+	while (s[i] && s[i] != c)
+		i++;
+	if (s[i] != c)
+		return (0);
+	return (i + 1);
+}
+
+int	skip_rdir(char *s)
+{
+	int i;
+
+	i = 1;
+	if (s[i] == INRDIR || s[i] == OUTRDIR)
+        i++;
+    if (ft_isrdir(s[i]))
+        return (0);
+	return (i);
 }

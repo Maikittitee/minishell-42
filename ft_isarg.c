@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isrdir.c                                        :+:      :+:    :+:   */
+/*   ft_isarg.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/26 10:41:15 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/06/26 12:08:26 by ksaelim          ###   ########.fr       */
+/*   Created: 2023/06/28 10:11:33 by ksaelim           #+#    #+#             */
+/*   Updated: 2023/06/28 11:08:30 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_isrdir(char c)
+int	ft_isarg(char c)
 {
-    return (c == INRDIR || c == OUTRDIR || c == PIPE);
+	return (!ft_isrdir(c) && c != ' ' && c != '\n' && c != '\t');
 }
