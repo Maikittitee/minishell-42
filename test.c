@@ -55,17 +55,17 @@ int	**allocate_pipe(t_pipe piped)
 		
 // }
 
-void	dupper2(int ifd, t_pipe piped)
+void	dupper2(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
 {
 	if (ifd != 0)
 		dup2(piped.fd[0], STDIN_FILENO);
-	else
-		dup2(0, STDIN_FILENO);
+	else if (fd_infile != -1)
+		dup2(fd_infile, STDIN_FILENO);
 
 	if (ifd != piped.npipe)
 		dup2(piped.fd[1], STDOUT_FILENO);	//write
-	else
-		dup2(1, STDOUT_FILENO); // write 1 may change to outfile_fd
+	else if (fd_outfile != -1)
+		dup2(fd_outfile, STDOUT_FILENO); // write 1 may change to outfile_fd
 
 }
 		
@@ -75,28 +75,15 @@ void	ft_child(int ifd, t_pipe piped, char *cmd, int in, int out)
 	char **c;
 
 	c = ft_split(cmd,' ');
-	dup2(in, STDIN_FILENO);
-	dup2(out, STDOUT_FILENO);
+	dupper2(ifd, piped, in, out);
+	// dup2(in, STDIN_FILENO);
+	// dup2(out, STDOUT_FILENO);
 	if (ifd == 0)
 		close(in);
 	else if (ifd == piped.npipe)
 		close(out);
 	close(piped.fd[0]);
 	close(piped.fd[1]);
-	execve(c[0], c, piped.env);
-}
-
-void	ft_child2(int ifd, t_pipe piped)
-{
-	char **c;
-
-	c = ft_split("/bin/sleep 10",' ');
-	dup2(piped.fd[0], STDIN_FILENO);
-	dup2(1, STDOUT_FILENO);
-	// dupper(ifd, piped);
-	close(piped.fd[0]);
-	close(piped.fd[1]);
-	
 	execve(c[0], c, piped.env);
 }
 
@@ -120,18 +107,6 @@ int	main(int ac, char **av, char **env)
 	pcnt = 0;
 	pid = malloc(sizeof(int) * piped.nprocess);
 
-	// pid[0] = fork();
-	// if (pid[0] == 0)
-	// {
-	// 	printf("hello1\n");
-	// 	ft_child(0, piped);
-	// }
-	// pid[1] = fork();
-	// if (pid[1] == 0)
-	// {
-	// 	printf("hello2\n");
-	// 	ft_child2(1, piped);
-	// }
 	int	status;
 
 	int	in_fd = open("infile", O_RDONLY);
