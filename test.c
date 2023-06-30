@@ -124,21 +124,14 @@ int	main(int ac, char **av, char **env)
 		if (pid[pcnt] == 0)
 		{
 			dprintf(2, "i is %d this is the cmd %s\n",i, av[i]);
-			// if (pcnt == 0)
-			// 	ft_child(pcnt, piped, av[i], in_fd, out_fd);
-			// if (pcnt == 1)
 			ft_child(pcnt, piped, av[i], in_fd, out_fd);
 		}
 		pcnt += 1;
 		i++;
 
 	}
-	// close(piped.fd[0]);
-	// close(piped.fd[1]);
 	close_pipe(piped);
 	wait_all(pid, piped, &status);
-	// waitpid(pid[0], NULL, 0);
-	// waitpid(pid[1], &status, 0);
 
 	return (WEXITSTATUS(status));
 }
