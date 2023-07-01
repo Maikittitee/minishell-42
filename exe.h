@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/23 18:40:10 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/01 20:25:16 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ typedef struct s_fd{
 
 typedef struct s_cmd{
 	char			**arg;
-	char			**file;
+	char			**file; 
+	char			**heredoc;
+	char			**append
 	t_fd			*fd;
 	struct s_cmd	*next;
 }	t_cmd;
