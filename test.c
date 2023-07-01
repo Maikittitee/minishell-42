@@ -1,4 +1,5 @@
 #include "exe.h"
+
 typedef struct	s_pipe{
 	int	npipe;
 	int	nprocess;

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/24 02:10:58 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/02 00:52:00 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,38 @@ int	is_pipe(char *input)
 		input++;
 	}
 	return (0);
+}
+
+void	input_pipe(t_cmd **cmd, char *input, char **env)
+{
+	int	i;
+	char **s;
+
+	i = 0;
+	s = ft_split(input, ' ');
+	while (s[i])
+	{
+		if (!ft_strchr(s[i], '|'))
+		{
+			if (i == 0)
+				create_cmd(cmd, new_cmd(s[i], env));
+			else
+				cmd_add(cmd, new_cmd(s[i], env));
+		}
+		i++;
+	}
+	ft_double_free(s);
+	
+}
+
+void	fix_fd_for_pipe(t_cmd *cmd)
+{
+	while (cmd)
+	{
+		cmd->fd->in = -1;
+		cmd->fd->out = -1;
+		cmd = cmd->next;
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -40,8 +72,17 @@ int	main(int ac, char **av, char **env)
 			break;
 		}
 		cmd = malloc(sizeof(t_cmd *));
-		create_cmd(cmd, new_cmd(input, env));
-		executes(cmd, env);
+		if (is_pipe(input))
+		{
+			input_pipe(cmd, input, env);
+			fix_fd_for_pipe(*cmd);
+			do_pipe(cmd, env);
+		}
+		else
+		{
+			create_cmd(cmd, new_cmd(input, env));
+			executes(cmd, env);
+		}
 		free(input);
 	}
 

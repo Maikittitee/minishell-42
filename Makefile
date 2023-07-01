@@ -14,7 +14,10 @@ LIBFT = $(LIBFT_PATH)/libft.a
 SRCS_fILE = exe.c\
 			do_exe.c\
 			cmd.c\
-			exe_free.c 
+			exe_free.c\
+			pipe.c\
+			fork.c\
+			cmd_utils.c 
 	 
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_fILE))
