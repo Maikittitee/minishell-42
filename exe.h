@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/02 22:57:16 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/02 23:26:13 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int		exe_cmd(t_cmd *cmd_d, char **env, char **paths);
 int		get_cmd_path(t_cmd *cmd_d, char **env);
 char	**get_paths(char **env);
 t_cmd	*new_cmd(char *arg, char **env);
-int		new_line(t_line *line, t_cmd *new_cmd);
+int		new_line(t_cmd **head, t_cmd *new_cmd);
 int		cmd_add(t_cmd **head, t_cmd *new_cmd);
-void	print_line(t_line *line);
+void	print_cmd(t_cmd **head);
 void	clear_free_cmd(t_cmd **cmd);
 void	ft_double_free(char **s);
 // void	del_head(t_cmd **cmd);

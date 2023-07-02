@@ -42,11 +42,11 @@ t_cmd	*new_cmd(char *arg, char **env)
 	return (cmd);
 }
 
-int	new_line(t_line *line, t_cmd *new_cmd)
+int	new_line(t_cmd **head, t_cmd *new_cmd)
 {
-	if (!line)
+	if (!head)
 		return (0);
-	line->cmd = &new_cmd;
+	head = &new_cmd;
 	return (1);
 }
 
@@ -61,28 +61,14 @@ int	cmd_add(t_cmd **head, t_cmd *new_cmd)
 	new_cmd->next = NULL;
 	return (1);
 }
-
-void	print_line(t_line *line)
+void	print_cmd(t_cmd **head)
 {
 	t_cmd	*curr;
-	int	i;
-	int	j;
 
-	i = 0;
-	curr = *(line->cmd);
-	while (curr->next)
+	curr = *head;
+	while (curr)
 	{
-		j = 0;
-		printf("%d.", i);
-		while ((curr->arg)[j])
-		{
-			dprintf(1, "what");
-			printf("%s ", curr->arg[j]);
-			j++;
-		}
-		i++;		
+		printf("cmd:%s\n", curr->arg[0]);
 		curr = curr->next;
-		printf("haha\n");
 	}
-	printf("%s --------", curr->arg[0]);
 }
