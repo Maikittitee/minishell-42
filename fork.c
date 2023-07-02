@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/02 20:49:42 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/02 22:58:45 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,20 @@ void	ft_child(t_cmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, cha
 	else if (pcnt == pipe_data.npipe && fd_out != 1)
 		close(fd_out);
 	close_pipe(pipe_data);
+	dprintf(2, "hello\n");
 	// if (is_builin)
 	// 	do_buildin();
 	// else
 		execve(cmd->arg[0], cmd->arg, env);
 }
 
-void	do_fork(t_line *line, t_pipe pipe_data, int *status, char **env)
+void	do_fork(t_cmd **cmd, t_line *line, t_pipe pipe_data, int *status, char **env)
 {
 	int	process_cnt;
 	int	*pid;
 	t_cmd *curr;
 	
-	curr = *(line->cmd);
+	curr = *cmd;
 	process_cnt = 0;
 	pid = malloc(sizeof(int) * pipe_data.nprocess);
 	while (process_cnt < pipe_data.nprocess)

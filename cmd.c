@@ -33,12 +33,8 @@ t_cmd	*new_cmd(char *arg, char **env)
 	char	**paths;
 
 	paths = get_paths(env);
-	(void)paths;
 	cmd = malloc(sizeof(t_cmd));
 	cmd->arg = ft_split(arg, ' ');
-	// cmd->fd = malloc(sizeof(t_fd));
-	// cmd->fd->in = 0;
-	// cmd->fd->out = 1;
 	cmd->next = NULL;
 	if (!join_path(cmd, paths))
 		ft_putendl_fd(RED"Path not found."RESET, 2);
@@ -46,11 +42,11 @@ t_cmd	*new_cmd(char *arg, char **env)
 	return (cmd);
 }
 
-int	create_cmd(t_cmd **head, t_cmd *new_cmd)
+int	new_line(t_line *line, t_cmd *new_cmd)
 {
-	if (!head)
+	if (!line)
 		return (0);
-	*head = new_cmd;
+	line->cmd = &new_cmd;
 	return (1);
 }
 
@@ -74,16 +70,19 @@ void	print_line(t_line *line)
 
 	i = 0;
 	curr = *(line->cmd);
-	while (curr)
+	while (curr->next)
 	{
 		j = 0;
 		printf("%d.", i);
-		while (curr->arg[j])
+		while ((curr->arg)[j])
 		{
-			printf("%s ", curr->arg[i]);
+			dprintf(1, "what");
+			printf("%s ", curr->arg[j]);
 			j++;
 		}
 		i++;		
 		curr = curr->next;
+		printf("haha\n");
 	}
+	printf("%s --------", curr->arg[0]);
 }

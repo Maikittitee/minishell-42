@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/02 20:56:49 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/02 22:49:38 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,32 @@ int	is_pipe(char *input)
 	return (0);
 }
 
-void	input_pipe(t_cmd **cmd, char *input, char **env)
-{
-	int	i;
-	char **s;
+// void	input_pipe(t_cmd **cmd, char *input, char **env)
+// {
+// 	int	i;
+// 	char **s;
 
-	i = 0;
-	s = ft_split(input, ' ');
-	while (s[i])
-	{
-		if (!ft_strchr(s[i], '|'))
-		{
-			if (i == 0)
-				create_cmd(cmd, new_cmd(s[i], env));
-			else
-				cmd_add(cmd, new_cmd(s[i], env));
-		}
-		i++;
-	}
-	ft_double_free(s);
+// 	i = 0;
+// 	s = ft_split(input, ' ');
+// 	while (s[i])
+// 	{
+// 		if (!ft_strchr(s[i], '|'))
+// 		{
+// 			if (i == 0)
+// 				create_cmd(cmd, new_cmd(s[i], env));
+// 			else
+// 				cmd_add(cmd, new_cmd(s[i], env));
+// 		}
+// 		i++;
+// 	}
+// 	ft_double_free(s);
 	
-}
+// }
 
-void	init_line(t_line *line, char *infile, char *outfile, char *heredoc, char *append)
+t_line	*init_line(char *infile, char *outfile, char *heredoc, char *append)
 {
+	t_line *line;
+	
 	line = malloc(sizeof(line));
 	line->infile = ft_split(infile, ' ');
 	line->outfile = ft_split(outfile, ' ');
@@ -55,6 +57,7 @@ void	init_line(t_line *line, char *infile, char *outfile, char *heredoc, char *a
 	line->fd_in = 0;
 	line->fd_in = 1;
 	line->cmd = malloc(sizeof(t_cmd *));
+	return (line);
 	
 	
 }
@@ -89,13 +92,17 @@ int	main(int ac, char **av, char **env)
 	// 	}
 	// 	free(input);
 	// }
-	line = NULL;
-	init_line(line, NULL, NULL, NULL, NULL);
-
-	create_cmd(line->cmd, new_cmd("ls -l", env));
+	line = init_line(NULL, NULL, NULL, NULL);
+	if (new_line(line, new_cmd("ls -l", env)))
+	{
+		dprintf(1,"here\n");
+	}
 	// cmd_add(cmd, new_cmd("grep .c", env));
 	// cmd_add(cmd, new_cmd("wc -l", env));
-	print_line(line);
+	dprintf(2, "OK\n");
+	// print_line(line);
+	
+	dprintf(2, "OK2\n");
 	// del_head(cmd);
 	// print_cmd(cmd);
 	do_pipe(line, env);
