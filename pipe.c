@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/02 00:46:28 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/02 19:04:48 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,22 @@ void	start_pipe(t_pipe piped)
 	}
 }
 
+// void	apply_fd(t_cmd **cmd, char **env)
+// {
+	
+	
+// }
 
 int	do_pipe(t_cmd **cmd, char **env)
 {
 	int	status;
-	// int	infile_fd;
-	// int	outfile_fd;
 	t_pipe pipe_data;
 
 	pipe_data.nprocess = cmdsize(*cmd);
-	if (pipe_data.nprocess == 1)
-		return (-1);
 	pipe_data.npipe = pipe_data.nprocess - 1;
 	pipe_data.fd = allocate_pipe(pipe_data.npipe);
 	start_pipe(pipe_data);
-	// infile_fd = open((*cmd)->infile, O_RDONLY);
-	// outfile_fd = open((*cmd)->outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	// if (infile_fd == -1 || outfile_fd == -1)
-	// 	return (-1);
+	// apply_fd(*cmd);
 	do_fork(cmd, pipe_data, &status, env);
 	return (status >> 8);
 }
