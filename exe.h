@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/02 17:37:05 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/02 19:41:00 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,19 @@ typedef struct s_fd{
 
 typedef struct s_cmd{
 	char			**arg;
-	char			**infile; 
-	char			**outfile;
-	char			**heredoc;
-	char			**append;
-	t_fd			*fd;
 	struct s_cmd	*next;
 }	t_cmd;
+
+typedef	struct s_line{
+	char		**infile;
+	char		**outfile;
+	char		**heredoc;
+	char		**append;
+	int			fd_in;
+	int			fd_out;
+	t_cmd		**cmd;
+	
+}
 
 typedef	struct s_pipe{
 	int	**fd;
