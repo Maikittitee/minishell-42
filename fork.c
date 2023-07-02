@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/02 18:58:20 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/02 20:49:42 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,27 @@ void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
 		dup2(fd_outfile, STDOUT_FILENO);
 }
 
-void	ft_child(t_cmd *cmd, int ifd, t_pipe pipe_data, char **env)
+void	ft_child(t_cmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, char **env)
 {
-	ft_dup(ifd, pipe_data, cmd->fd->in, cmd->fd->out);
-	if (ifd == 0 && cmd->fd->in != 0)
-		close(cmd->fd->in);
-	else if (ifd == pipe_data.npipe && cmd->fd->out != 1)
-		close(cmd->fd->out);
+	ft_dup(pcnt, pipe_data, fd_in, fd_out);
+	if (pcnt == 0 && fd_in != 0)
+		close(fd_in);
+	else if (pcnt == pipe_data.npipe && fd_out != 1)
+		close(fd_out);
 	close_pipe(pipe_data);
-	execve(cmd->arg[0], cmd->arg, env);
-	
+	// if (is_builin)
+	// 	do_buildin();
+	// else
+		execve(cmd->arg[0], cmd->arg, env);
 }
 
-void	do_fork(t_cmd **cmd, t_pipe pipe_data, int *status, char **env)
+void	do_fork(t_line *line, t_pipe pipe_data, int *status, char **env)
 {
 	int	process_cnt;
 	int	*pid;
 	t_cmd *curr;
 	
-	curr = *cmd;
+	curr = *(line->cmd);
 	process_cnt = 0;
 	pid = malloc(sizeof(int) * pipe_data.nprocess);
 	while (process_cnt < pipe_data.nprocess)
@@ -79,7 +81,7 @@ void	do_fork(t_cmd **cmd, t_pipe pipe_data, int *status, char **env)
 		pid[process_cnt] = fork();
 		if (pid[process_cnt] == 0)
 		{
-			ft_child(curr, process_cnt, pipe_data, env);
+			ft_child(curr, line->fd_in, line->fd_out, process_cnt, pipe_data, env);
 		}
 		curr = curr->next;
 		process_cnt += 1;

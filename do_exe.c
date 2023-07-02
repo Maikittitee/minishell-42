@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:13:01 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/24 02:08:24 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/02 20:52:07 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,33 @@ char	**get_paths(char **env)
 	return (ret_path);
 }
 
-int	executes(t_cmd **cmd, char **env)
-{
-	t_cmd *curr;
+// int	executes(t_cmd **cmd, char **env)
+// {
+// 	t_cmd *curr;
 	
-	curr = *cmd;
-	while (curr)
-	{
-		execute(curr, env);
-		curr = curr->next;
-	}
-	// clear_free_cmd(cmd);
-	return (1);
+// 	curr = *cmd;
+// 	while (curr)
+// 	{
+// 		execute(curr, env);
+// 		curr = curr->next;
+// 	}
+// 	// clear_free_cmd(cmd);
+// 	return (1);
 	
-}
+// }
 
-int	execute(t_cmd *cmd, char **env)
-{
-	int	pid;
-	int	status;
+// int	execute(t_cmd *cmd, char **env)
+// {
+// 	int	pid;
+// 	int	status;
 
-	dup2(cmd->fd->in, STDIN_FILENO);
-	dup2( cmd->fd->out, STDOUT_FILENO);
-	pid = fork();
-	if (pid == 0)
-	{
-		execve(cmd->arg[0], cmd->arg, env);
-	}
-	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status));
-}
+// 	dup2(cmd->fd->in, STDIN_FILENO);
+// 	dup2( cmd->fd->out, STDOUT_FILENO);
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		execve(cmd->arg[0], cmd->arg, env);
+// 	}
+// 	waitpid(pid, &status, 0);
+// 	return (WEXITSTATUS(status));
+// }

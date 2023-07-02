@@ -21,11 +21,6 @@ void	free_cmd(t_cmd *cmd)
 	if (!cmd)
 		return ;
 	ft_double_free(cmd->arg);
-	ft_double_free(cmd->infile);
-	ft_double_free(cmd->outfile);
-	ft_double_free(cmd->heredoc);
-	ft_double_free(cmd->append);
-	free(cmd->fd);
 	free(cmd);
 }
 

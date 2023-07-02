@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/02 19:04:24 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/02 20:56:49 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,23 @@ void	input_pipe(t_cmd **cmd, char *input, char **env)
 	
 }
 
-void	fix_fd_for_pipe(t_cmd *cmd)
+void	init_line(t_line *line, char *infile, char *outfile, char *heredoc, char *append)
 {
-	while (cmd)
-	{
-		cmd->fd->in = -1;
-		cmd->fd->out = -1;
-		cmd = cmd->next;
-	}
+	line = malloc(sizeof(line));
+	line->infile = ft_split(infile, ' ');
+	line->outfile = ft_split(outfile, ' ');
+	line->heredoc = ft_split(heredoc, ' ');
+	line->append = ft_split(append, ' ');
+	line->fd_in = 0;
+	line->fd_in = 1;
+	line->cmd = malloc(sizeof(t_cmd *));
+	
+	
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_cmd	**cmd;
+	t_line	*line;
 	// char	*input;
 
 	(void)ac;
@@ -85,19 +89,18 @@ int	main(int ac, char **av, char **env)
 	// 	}
 	// 	free(input);
 	// }
+	line = NULL;
+	init_line(line, NULL, NULL, NULL, NULL);
 
-	cmd = NULL;
-	cmd = malloc(sizeof(t_cmd *));
-
-	create_cmd(cmd, new_cmd("ls -l", env));
+	create_cmd(line->cmd, new_cmd("ls -l", env));
 	// cmd_add(cmd, new_cmd("grep .c", env));
 	// cmd_add(cmd, new_cmd("wc -l", env));
-	print_cmd(cmd);
+	print_line(line);
 	// del_head(cmd);
 	// print_cmd(cmd);
-	do_pipe(cmd, env);
+	do_pipe(line, env);
 	
-	clear_free_cmd(cmd);
+	// clear_free_cmd(cmd);
 	// get_cmd_path(*cmd, env);
 	return(0);
 }
