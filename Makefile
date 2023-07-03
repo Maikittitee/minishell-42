@@ -17,8 +17,7 @@ SRCS_fILE = exe.c\
 			exe_free.c\
 			pipe.c\
 			fork.c\
-			cmd_utils.c\
-			line.c 
+			cmd_utils.c
 	 
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_fILE))

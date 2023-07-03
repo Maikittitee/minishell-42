@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/03 17:47:18 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/04 00:04:23 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,5 @@ void	do_fork(t_cmd **cmd, t_line *line, t_pipe pipe_data, int *status, char **en
 int		do_pipe(t_line *line, char **env);
 
 
-void	add_cmd_to_line(t_line **line, t_cmd *cmd);
 
 #endif

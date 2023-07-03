@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/03 17:56:40 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:49:49 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_line	*init_line(char *infile, char *outfile, char *heredoc, char *append)
 	line->heredoc = ft_split(heredoc, ' ');
 	line->append = ft_split(append, ' ');
 	line->fd_in = 0;
-	line->fd_in = 1;
+	line->fd_out = 1;
 	line->cmd = NULL;
 	line->cmd = malloc(sizeof(t_cmd *));
 	if (!line->cmd)
@@ -82,7 +82,7 @@ int	main(int ac, char **av, char **env)
 	line = init_line("infile", "outfile", NULL, NULL);
 	cmd_create(cmd, new_cmd("ls -l", env));
 	cmd_add(cmd, new_cmd("grep .c", env));
-	cmd_add(cmd, new_cmd("wc -l", env));
+	// cmd_add(cmd, new_cmd("wc -l", env));
 	line->cmd = cmd;	
 	// line = malloc(sizeof(line));
 	// cmd = NULL;
@@ -90,11 +90,11 @@ int	main(int ac, char **av, char **env)
 	// printf("")
 
 	print_cmd(line->cmd);
-	printf("ending");
+	// printf("ending");
 	
 	// del_head(cmd);
 	// print_cmd(cmd);
-	// do_pipe(line, env);
+	do_pipe(line, env);
 	
 	// clear_free_cmd(cmd);
 	// ft_double_free(line->infile);
