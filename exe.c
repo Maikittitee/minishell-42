@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/02 23:26:51 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/03 17:56:40 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_line	*init_line(char *infile, char *outfile, char *heredoc, char *append)
 	line->append = ft_split(append, ' ');
 	line->fd_in = 0;
 	line->fd_in = 1;
+	line->cmd = NULL;
 	line->cmd = malloc(sizeof(t_cmd *));
 	if (!line->cmd)
 		perror("malloc failed.");
@@ -69,52 +70,39 @@ t_line	*init_line(char *infile, char *outfile, char *heredoc, char *append)
 int	main(int ac, char **av, char **env)
 {
 	t_line	*line;
-	// char	*input;
+	t_cmd	**cmd;
 
 	(void)ac;
 	(void)av;
 	(void)env;
 
-	// while (1)
-	// {
-	// 	input = readline(GRN"mainishell $ "RESET);
-	// 	if (ft_strncmp(input, "exit", 4) == 0)
-	// 	{
-	// 		free(input);
-	// 		break;
-	// 	}
-	// 	cmd = malloc(sizeof(t_cmd *));
-	// 	if (is_pipe(input))
-	// 	{
-	// 		input_pipe(cmd, input, env);
-	// 		fix_fd_for_pipe(*cmd);
-	// 		do_pipe(cmd, env);
-	// 	}
-	// 	else
-	// 	{
-	// 		create_cmd(cmd, new_cmd(input, env));
-	// 		executes(cmd, env);
-	// 	}
-	// 	free(input);
-	// }
-	line = init_line(NULL, NULL, NULL, NULL);
-	new_line(line->cmd, new_cmd("ls -l", env));
-	// cmd_add(line->cmd, new_cmd("grep .c", env));
-	// cmd_add(line->cmd, new_cmd("wc -l", env));
+	cmd = NULL;
+	// line = NULL;
+	cmd = malloc(sizeof(t_cmd *));
+	line = init_line("infile", "outfile", NULL, NULL);
+	cmd_create(cmd, new_cmd("ls -l", env));
+	cmd_add(cmd, new_cmd("grep .c", env));
+	cmd_add(cmd, new_cmd("wc -l", env));
+	line->cmd = cmd;	
+	// line = malloc(sizeof(line));
+	// cmd = NULL;
+	// line->cmd = &new; //ok
 	// printf("")
+
 	print_cmd(line->cmd);
+	printf("ending");
 	
 	// del_head(cmd);
 	// print_cmd(cmd);
 	// do_pipe(line, env);
 	
 	// clear_free_cmd(cmd);
-	ft_double_free(line->infile);
-	ft_double_free(line->outfile);
-	ft_double_free(line->heredoc);
-	ft_double_free(line->append);
-	// free(line->cmd);
-	free(line);
+	// ft_double_free(line->infile);
+	// ft_double_free(line->outfile);
+	// ft_double_free(line->heredoc);
+	// ft_double_free(line->append);
+	// // free(line->cmd);
+	// free(line);
 	// get_cmd_path(*cmd, env);
 	return(0);
 }

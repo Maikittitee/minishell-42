@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = gcc
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 LIBFT_PATH = lib/libft
 SRCS_PATH = 
@@ -17,7 +17,8 @@ SRCS_fILE = exe.c\
 			exe_free.c\
 			pipe.c\
 			fork.c\
-			cmd_utils.c 
+			cmd_utils.c\
+			line.c 
 	 
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_fILE))
