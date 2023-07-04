@@ -64,11 +64,22 @@ int	cmd_add(t_cmd **head, t_cmd *new_cmd)
 void	print_cmd(t_cmd **head)
 {
 	t_cmd	*curr;
+	int		i;
+	int		j;
 
+	i = 1;
 	curr = *head;
 	while (curr)
 	{
-		printf("cmd:%s\n", curr->arg[0]);
+		j = 0;
+		printf("%d.", i);
+		while (curr->arg[j])
+		{
+			printf("%s ", curr->arg[j]);
+			j++;
+		}
+		printf("\n");
 		curr = curr->next;
+		i++;
 	}
 }
