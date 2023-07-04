@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/03 23:48:01 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/04 20:48:44 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	do_pipe(t_line *line, char **env) // incase of error should return -1
 	pipe_data.npipe = pipe_data.nprocess - 1;
 	pipe_data.fd = allocate_pipe(pipe_data.npipe);
 	start_pipe(pipe_data);
-	// apply_fd(*cmd);
+	// if (!apply_fd(line))
+	// 	return (-1);
 	do_fork(line->cmd, line, pipe_data, &status, env);
-	return (status >> 8);
+	return (WEXITSTATUS(status));
 }

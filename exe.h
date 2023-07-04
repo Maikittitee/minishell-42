@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/04 00:04:23 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/04 20:36:17 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ typedef	struct s_pipe{
 	int	nprocess;
 	
 }t_pipe;
+
+#define FILE_ERR 1
+#define CMD_ERR 2
+
 
 int		exe_cmd(t_cmd *cmd_d, char **env, char **paths);
 int		get_cmd_path(t_cmd *cmd_d, char **env);

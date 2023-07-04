@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/04 16:15:03 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/04 21:08:25 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,10 @@ int	main(int ac, char **av, char **env)
 	// line = NULL;
 	cmd = malloc(sizeof(t_cmd *));
 	line = init_line("cantread nofile chmod000 infile", "cantwrite cantread existfile outfile", NULL, NULL);
-	cmd_create(cmd, new_cmd("ls -l", env));
-	cmd_add(cmd, new_cmd("grep .c", env));
+	apply_fd(line);
+	cmd_create(cmd, new_cmd("k", env));
+	// cmd_add(cmd, new_cmd("grep .c", env));
 	line->cmd = cmd;	
-	print_cmd(line->cmd);
-	
-	do_pipe(line, env);
-	
-	return(0);
+	print_cmd(line->cmd);	
+	return (do_pipe(line, env));
 }
