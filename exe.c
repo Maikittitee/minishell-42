@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/04 15:38:54 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/04 16:15:03 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,30 +79,13 @@ int	main(int ac, char **av, char **env)
 	cmd = NULL;
 	// line = NULL;
 	cmd = malloc(sizeof(t_cmd *));
-	line = init_line("infile", "outfile", NULL, NULL);
+	line = init_line("cantread nofile chmod000 infile", "cantwrite cantread existfile outfile", NULL, NULL);
 	cmd_create(cmd, new_cmd("ls -l", env));
 	cmd_add(cmd, new_cmd("grep .c", env));
-	// cmd_add(cmd, new_cmd("wc -l", env));
 	line->cmd = cmd;	
-	// line = malloc(sizeof(line));
-	// cmd = NULL;
-	// line->cmd = &new; //ok
-	// printf("")
-
 	print_cmd(line->cmd);
-	// printf("ending");
 	
-	// del_head(cmd);
-	// print_cmd(cmd);
 	do_pipe(line, env);
 	
-	// clear_free_cmd(cmd);
-	// ft_double_free(line->infile);
-	// ft_double_free(line->outfile);
-	// ft_double_free(line->heredoc);
-	// ft_double_free(line->append);
-	// // free(line->cmd);
-	// free(line);
-	// get_cmd_path(*cmd, env);
 	return(0);
 }
