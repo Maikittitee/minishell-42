@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/04 20:36:17 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:08:40 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,31 @@ typedef struct s_fd{
 	int	out;
 }	t_fd;
 
+enum e_type
+{
+	HEREDOC,
+	INFILE,
+	APPEND,
+	OUTFILE
+};
+
+
 typedef struct s_cmd{
 	char			**arg;
 	struct s_cmd	*next;
 }	t_cmd;
 
+
+typedef	struct s_file{
+	int	type;
+	char *filename;
+	int	index;
+	
+} t_file;
+
 typedef	struct s_line{
-	char		**infile;
-	char		**outfile;
-	char		**heredoc;
-	char		**append;
+	t_file		*in_here;
+	t_file		*out_append;
 	int			fd_in;
 	int			fd_out;
 	t_cmd		**cmd;	
@@ -67,7 +82,7 @@ void	ft_double_free(char **s);
 int		cmdsize(t_cmd *cmd);
 void	do_fork(t_cmd **cmd, t_line *line, t_pipe pipe_data, int *status, char **env);
 int		do_pipe(t_line *line, char **env);
-
+int	ft_heredoc(char *eof);
 
 
 #endif
