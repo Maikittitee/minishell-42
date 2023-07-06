@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/04 21:13:44 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:53:07 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,53 @@ int	strstrlen(char **s)
 	return (i);
 }
 
+int	count_file(t_file **file)
+{
+	int	i;
+
+	i = 0;
+	while (file[i])
+		i++;
+	return (i);
+}
+
 // void	raise_error(char *msg, int mode)
 // {
 	
 	
 // }
 
-void	apply_fd(t_line *line)
+int	open_promax(char *filemame, int	type)
 {
-	int	i;
-	int	*in_fd;
+	
+	
+}
 
-	in_fd = malloc(sizeof(int) * strstrlen(line->infile));
+void	check_fd(t_file **file, int	*fd)
+{
+	
+	int	i;
 
 	i = 0;
-	while (line->infile[i])
+	while(file[i])
 	{
-		in_fd[i] = open(line->infile[i], O_RDONLY);
-		if (in_fd[i] == -1)
-			return (raise_err(line->infile[i], FILE_ERR));
-		i++;
+		
+		
 	}
-	return (1);
+}
+
+void	get_fd(t_line *line)
+{
+	// int	i;
+	int	*in_fd;
+
+	// i = 0;
+	if (line->in_here != NULL)
+	{
+		in_fd = malloc(sizeof(int) * count_file(line->in_here)); 
+		check_fd(line->in_here, in_fd);
+	}
+	
+	// while ()
+	
 }
