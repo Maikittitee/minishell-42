@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/06 16:57:55 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/08 00:11:07 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ void	ft_double_free(char **s);
 int		cmdsize(t_cmd *cmd);
 void	do_fork(t_cmd **cmd, t_line *line, t_pipe pipe_data, int *status, char **env);
 int		do_pipe(t_line *line, char **env);
-int	ft_heredoc(char *eof);
-int	apply_fd(t_line *line);
-
-
+int	ft_heredoc(char *start, char *eof);
+void	get_fd(t_line *line);
+int	count_file_by_type(t_file **file, int type);
+int	count_file(t_file **file);
+int	do_here(t_file **in_here);
 #endif

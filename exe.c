@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/06 14:58:22 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/06 18:04:32 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	main(int ac, char **av, char **env)
 	cmd = malloc(sizeof(t_cmd *));
 	
 	line = init_line(indoc, outapp);
-	apply_fd(line);
+	get_fd(line);
 	cmd_create(cmd, new_cmd("ls -l", env));
 	// cmd_add(cmd, new_cmd("grep .c", env));
 	line->cmd = cmd;

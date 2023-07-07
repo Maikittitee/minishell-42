@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/06 17:53:07 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/07 23:34:46 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,22 @@ int	strstrlen(char **s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+int	count_file_by_type(t_file **file, int type)
+{
+	int	i;
+	int	cnt;
+
+	i = 0;
+	cnt = 0;
+	while (file[i])
+	{
+		if (file[i]->type == type)
+			cnt++;
+		i++;
+	}
+	return (cnt);
 }
 
 int	count_file(t_file **file)
@@ -38,37 +54,41 @@ int	count_file(t_file **file)
 	
 // }
 
-int	open_promax(char *filemame, int	type)
-{
+// int	open_promax(char *filemame, int	type)
+// {
 	
 	
-}
+// }
 
-void	check_fd(t_file **file, int	*fd)
-{
+// void	check_fd(t_file **file, int	*fd)
+// {
 	
-	int	i;
+// 	int	i;
 
-	i = 0;
-	while(file[i])
-	{
+// 	i = 0;
+// 	while(file[i])
+// 	{
 		
 		
-	}
-}
+// 	}
+// }
 
 void	get_fd(t_line *line)
 {
+	
 	// int	i;
-	int	*in_fd;
+	// // int	*in_fd;
 
 	// i = 0;
-	if (line->in_here != NULL)
-	{
-		in_fd = malloc(sizeof(int) * count_file(line->in_here)); 
-		check_fd(line->in_here, in_fd);
-	}
-	
-	// while ()
+	// if (line->in_here != NULL)
+	// {
+		do_here(line->in_here);
+		// printf("here doc %d\n", count_file_by_type(line->in_here, HEREDOC));
+		// in_fd = malloc(sizeof(int) * count_file(line->in_here)); 
+		// check_fd(line->in_here, in_fd);
+		// if heredoc is lastone ? -> return fd here;
+		// else -> return max in_fd;
+			
+	// }
 	
 }
