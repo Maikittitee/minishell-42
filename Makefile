@@ -19,7 +19,8 @@ SRCS_fILE = exe.c\
 			fork.c\
 			cmd_utils.c\
 			heredoc.c\
-			fd.c
+			fd.c\
+			file_utils.c
 	 
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_fILE))

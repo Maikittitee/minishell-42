@@ -10,7 +10,8 @@ void	ft_double_free(char **s)
 		return ;
 	while (s[i])
 	{
-		free(s[i]);
+		if (s[i])
+			free(s[i]);
 		i++;
 	}
 	free(s);
@@ -24,36 +25,19 @@ void	free_cmd(t_cmd *cmd)
 	free(cmd);
 }
 
-void	del_head(t_cmd **cmd)
-{
-	t_cmd	*tar;
-	t_cmd	*next;
-
-	if (!cmd)
-		return ;
-	if (!*cmd)
-		return ;
-	tar = *cmd;
-	next = tar->next;
-	(*cmd) = next;
-	free_cmd(tar);
-	
-}
-
 void	clear_free_cmd(t_cmd **cmd)
 {
 	t_cmd	*next;
 	t_cmd	*curr;
-	
+
 	curr = *cmd;
-	next = NULL;
+	next = curr->next;
 	while (curr)
 	{
-		free_cmd(next);
-		next = curr;
-		curr = curr->next;
+		free_cmd(curr);
+		curr = next;
+		next = next->next;
 	}
-	free_cmd(next);
-	free(cmd);
+	free_cmd(curr);
 }
 

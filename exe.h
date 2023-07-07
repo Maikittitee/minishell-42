@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/08 00:11:07 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/08 00:44:50 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ enum e_type
 	OUTFILE
 };
 
+#define HEREDOC_FILENAME ".heredoc"
 
 typedef struct s_cmd{
 	char			**arg;
@@ -87,4 +88,6 @@ void	get_fd(t_line *line);
 int	count_file_by_type(t_file **file, int type);
 int	count_file(t_file **file);
 int	do_here(t_file **in_here);
+void	ft_free_file(t_file **file);
+void	ft_free_line(t_line *line);
 #endif

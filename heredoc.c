@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:43 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/08 00:36:47 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/08 00:48:09 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_heredoc(char *start, char *eof) // return fd;
 	int	here_fd;
 	char *buffer;
 
-	here_fd = open(".here", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	here_fd = open(HEREDOC_FILENAME, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (here_fd == -1)
 		write(2, "here_fd ERROR\n", 14);
 	while (start)
@@ -41,7 +41,12 @@ int	ft_heredoc(char *start, char *eof) // return fd;
 			break;
 		}
 		write(here_fd, buffer, ft_strlen(buffer));
+		free(buffer);
 	}
+	if (start)
+		free(start);
+	if (eof)
+		free(eof);
 	return (here_fd);
 }
 
@@ -90,6 +95,6 @@ int	do_here(t_file **in_here)
 	else
 		start = ft_strdup(heredoc[nheredoc - 2]->filename);
 	end = ft_strdup(heredoc[nheredoc - 1]->filename);
-	// free heredoc
+	ft_free_file(heredoc);
 	return (ft_heredoc(start, end));
 }

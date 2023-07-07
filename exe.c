@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/06 18:04:32 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/08 01:15:02 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ t_line	*init_line(t_file **in_here, t_file **out_append)
 	line->in_here = in_here;
 	line->out_append = out_append;
 	line->cmd = NULL;
-	line->cmd = malloc(sizeof(t_cmd *));
-	if (!line->cmd)
-		perror("malloc failed.");
+	// line->cmd = malloc(sizeof(t_cmd *));
+	// if (!line->cmd)
+	// 	perror("malloc failed.");
 	return (line);
 	
 	
@@ -118,11 +118,11 @@ int	main(int ac, char **av, char **env)
 {
 	t_line	*line;
 	t_cmd	**cmd;
-	t_file	**indoc;
-	t_file	**outapp;
+	// t_file	**indoc;
+	// t_file	**outapp;
 
-	indoc = create_file();
-	outapp = create_file2();
+	// indoc = create_file();
+	// outapp = create_file2();
 	
 
 	(void)ac;
@@ -130,18 +130,17 @@ int	main(int ac, char **av, char **env)
 	(void)env;
 
 	cmd = NULL;
-	// line = NULL;
+	line = NULL;
 	cmd = malloc(sizeof(t_cmd *));
-	
-	line = init_line(indoc, outapp);
-	get_fd(line);
+	line = init_line(NULL, NULL);
+	// get_fd(line);
 	cmd_create(cmd, new_cmd("ls -l", env));
-	// cmd_add(cmd, new_cmd("grep .c", env));
+	cmd_add(cmd, new_cmd("grep .c", env));
 	line->cmd = cmd;
-	print_line(line);	
-	// print_cmd(line->cmd);	
+	// print_line(line);
+
+	// free(line->cmd);
+	// clear_free_cmd(cmd);
+	ft_free_line(line);
 	// return (do_pipe(line, env));
-	// ft_heredoc("EOF");
-	usleep(1000000);
-	// unlink(".here");
 }

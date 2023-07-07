@@ -1,5 +1,3 @@
-ss
-fsdg
-fdhlkalkf
-EOF
-eof
+hello
+void	ft_free_file(t_file **file)
+HERE_RAI

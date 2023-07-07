@@ -36,8 +36,6 @@ t_cmd	*new_cmd(char *arg, char **env)
 	cmd = malloc(sizeof(t_cmd));
 	cmd->arg = ft_split(arg, ' ');
 	cmd->next = NULL;
-	if (!join_path(cmd, paths))
-		ft_putendl_fd(RED"Path not found."RESET, 1);
 	ft_double_free(paths);
 	return (cmd);
 }
