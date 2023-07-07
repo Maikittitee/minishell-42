@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/08 01:15:02 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/08 01:15:48 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,5 @@ int	main(int ac, char **av, char **env)
 	// free(line->cmd);
 	// clear_free_cmd(cmd);
 	ft_free_line(line);
-	// return (do_pipe(line, env));
+	return (do_pipe(line, env));
 }
