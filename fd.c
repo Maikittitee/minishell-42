@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/07 23:34:46 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/09 02:00:05 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,47 +48,95 @@ int	count_file(t_file **file)
 	return (i);
 }
 
-// void	raise_error(char *msg, int mode)
-// {
-	
-	
-// }
+void	raise_error(char *msg, int mode)
+{
+	if (mode == NOFILE_ERR)
+		msg = ft_strjoin(msg, ": No such file or directory");
+	if (mode == NOPERMISSION_ERR)
+		msg = ft_strjoin(msg, ": Permission denied");
+	ft_putstr_fd(msg, STDERR_FILENO);
+	free(msg);
+}
 
-// int	open_promax(char *filemame, int	type)
-// {
-	
-	
-// }
+int	check_fd_in(t_file **file, int *fd)
+{
+	int	i;
 
-// void	check_fd(t_file **file, int	*fd)
-// {
+	i = 0;
+	if (count_file_by_type(file, HEREDOC) == 0)
+		fd[i] = do_here(file);
+	else
+		fd[i] = -1;
+	i++;
+	while (file[i])
+	{
+		if (file[i]->type == INFILE)
+		{
+			fd[i] = open(file[i]->filename, O_RDONLY);
+			if (fd[i] == -1)
+			{
+				raise_error(file[i]->filename, NOFILE_ERR);
+				return (-1);
+			}
+		}
+		else 
+			fd[i] = -1;
+		i++;
+	}
+	return (1);
+}
+
+int	check_fd_out(t_file **file)
+{
+	int	i;
+	int	*fd;
+
+	i = 0;
+	fd = malloc(sizeof(int) * count_file(file));
+	while (file[i])
+	{
+		if (file[i]->type == APPEND)
+			fd[i] = open(file[i]->filename, O_RDWR | O_CREAT | O_APPEND);
+		if (file[i]->type == OUTFILE)
+			fd[i] = open(file[i]->filename, O_RDWR | O_CREAT | O_TRUNC);
+		if (fd[i] == -1)
+		{
+			raise_error(file[i]->filename, NOPERMISSION_ERR);
+			free(fd);
+			return (-1);
+		}
+		i++;
+	}
+	return (ft_max(fd, count_file(file)));
 	
-// 	int	i;
+}
 
-// 	i = 0;
-// 	while(file[i])
-// 	{
-		
-		
-// 	}
-// }
-
-void	get_fd(t_line *line)
+int	get_fd(t_line *line)
 {
 	
-	// int	i;
-	// // int	*in_fd;
+	int	*fd_in;
 
-	// i = 0;
-	// if (line->in_here != NULL)
-	// {
-		do_here(line->in_here);
-		// printf("here doc %d\n", count_file_by_type(line->in_here, HEREDOC));
-		// in_fd = malloc(sizeof(int) * count_file(line->in_here)); 
-		// check_fd(line->in_here, in_fd);
-		// if heredoc is lastone ? -> return fd here;
-		// else -> return max in_fd;
-			
-	// }
-	
+	if (line->in_here != NULL)
+	{
+		fd_in = malloc(sizeof(int) * (count_file(line->in_here)));
+		if (check_fd_in(line->in_here, fd_in) == -1)
+		{
+			free(fd_in);
+			return (-1);
+		}
+		// if heredoc is lastone ? { line->fd_in = fd[0];}
+		// else {line->fd_in = ft_max(fd);}	
+		free(fd_in);
+	}
+	else
+		line->fd_in = 0;
+	if (line->out_append != NULL)
+	{
+		line->fd_out = check_fd_out(line->out_append);
+		if (line->fd_out == -1)
+			return (-1);
+	}
+	else
+		line->fd_out = 1;
+	return (1);
 }

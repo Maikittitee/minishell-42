@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/08 01:15:48 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/09 02:21:24 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ t_line	*init_line(t_file **in_here, t_file **out_append)
 	line->in_here = in_here;
 	line->out_append = out_append;
 	line->cmd = NULL;
-	// line->cmd = malloc(sizeof(t_cmd *));
-	// if (!line->cmd)
-	// 	perror("malloc failed.");
+	
 	return (line);
 	
 	
@@ -96,15 +94,16 @@ void	print_line(t_line *line)
 
 	i = 0;
 
+	printf("line addr2 %p\n", line);
 	printf("--- INFILE AND HEREDOC --- \n")	;
-	while (line->in_here[i])
+	while (line->in_here && line->in_here[i])
 	{
 		printf("index: %d filename: %s type: %d\n",line->in_here[i]->index, line->in_here[i]->filename, line->in_here[i]->type);
 		i++;	
 	}
 	i = 0;
 	printf("--- OUTFILE AND APPEND --- \n");
-	while (line->out_append[i])
+	while (line->out_append && line->out_append[i])
 	{
 		printf("index: %d filename: %s type: %d\n",line->out_append[i]->index, line->out_append[i]->filename, line->out_append[i]->type);
 		i++;
@@ -130,17 +129,23 @@ int	main(int ac, char **av, char **env)
 	(void)env;
 
 	cmd = NULL;
-	line = NULL;
+	// line = NULL;
 	cmd = malloc(sizeof(t_cmd *));
 	line = init_line(NULL, NULL);
+	// printf("the file infile_fd is %d\n", line->fd_in);
+	// printf("the file outfile_fd is %d\n", line->fd_out);
 	// get_fd(line);
 	cmd_create(cmd, new_cmd("ls -l", env));
 	cmd_add(cmd, new_cmd("grep .c", env));
 	line->cmd = cmd;
+	// printf("line addr %p\n", line);
 	// print_line(line);
+	print_cmd(cmd);
 
 	// free(line->cmd);
 	// clear_free_cmd(cmd);
-	ft_free_line(line);
-	return (do_pipe(line, env));
+	// ft_free_line(line);
+	// unlink(HEREDOC_FILENAME);
+	do_pipe(line, env);
+	return (1);
 }

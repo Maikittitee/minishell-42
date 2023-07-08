@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/08 00:44:50 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/09 02:28:19 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ enum e_type
 
 #define HEREDOC_FILENAME ".heredoc"
 
+typedef struct s_global{
+	int	return_code;
+	char **env;
+} t_global;
+
 typedef struct s_cmd{
 	char			**arg;
 	struct s_cmd	*next;
@@ -52,9 +57,9 @@ typedef	struct s_file{
 typedef	struct s_line{
 	t_file		**in_here;
 	t_file		**out_append;
+	t_cmd		**cmd;	
 	int			fd_in;
 	int			fd_out;
-	t_cmd		**cmd;	
 }	t_line;
 
 typedef	struct s_pipe{
@@ -64,8 +69,9 @@ typedef	struct s_pipe{
 	
 }t_pipe;
 
-#define FILE_ERR 1
-#define CMD_ERR 2
+#define NOFILE_ERR 1
+#define NOPERMISSION_ERR 2
+#define CMD_ERR 3
 
 
 int		exe_cmd(t_cmd *cmd_d, char **env, char **paths);
@@ -84,10 +90,12 @@ int		cmdsize(t_cmd *cmd);
 void	do_fork(t_cmd **cmd, t_line *line, t_pipe pipe_data, int *status, char **env);
 int		do_pipe(t_line *line, char **env);
 int	ft_heredoc(char *start, char *eof);
-void	get_fd(t_line *line);
+int	get_fd(t_line *line);
 int	count_file_by_type(t_file **file, int type);
 int	count_file(t_file **file);
 int	do_here(t_file **in_here);
 void	ft_free_file(t_file **file);
 void	ft_free_line(t_line *line);
+int	ft_max(int *fd, int size);
+
 #endif

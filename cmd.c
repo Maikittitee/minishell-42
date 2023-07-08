@@ -67,7 +67,7 @@ void	print_cmd(t_cmd **head)
 
 	i = 1;
 	curr = *head;
-	while (curr)
+	while (curr != NULL)
 	{
 		j = 0;
 		printf("%d.", i);
