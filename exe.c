@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/09 02:21:24 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/09 02:45:44 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_line	*init_line(t_file **in_here, t_file **out_append)
 	line->fd_out = 1;
 	line->in_here = in_here;
 	line->out_append = out_append;
-	line->cmd = NULL;
 	
 	return (line);
 	
@@ -110,7 +109,7 @@ void	print_line(t_line *line)
 	}
 	printf("fd_in: %d\n", line->fd_in);
 	printf("fd_out: %d\n", line->fd_out);
-	print_cmd(line->cmd);
+	// print_cmd(line->cmd);
 }
 
 int	main(int ac, char **av, char **env)
@@ -132,20 +131,19 @@ int	main(int ac, char **av, char **env)
 	// line = NULL;
 	cmd = malloc(sizeof(t_cmd *));
 	line = init_line(NULL, NULL);
-	// printf("the file infile_fd is %d\n", line->fd_in);
-	// printf("the file outfile_fd is %d\n", line->fd_out);
-	// get_fd(line);
+	get_fd(line);
 	cmd_create(cmd, new_cmd("ls -l", env));
 	cmd_add(cmd, new_cmd("grep .c", env));
-	line->cmd = cmd;
 	// printf("line addr %p\n", line);
 	// print_line(line);
 	print_cmd(cmd);
+	printf("the file infile_fd is %d\n", line->fd_in);
+	printf("the file outfile_fd is %d\n", line->fd_out);
 
 	// free(line->cmd);
 	// clear_free_cmd(cmd);
 	// ft_free_line(line);
 	// unlink(HEREDOC_FILENAME);
-	do_pipe(line, env);
+	do_pipe(line, cmd, env);
 	return (1);
 }

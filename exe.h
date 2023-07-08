@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/09 02:32:43 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/09 02:45:33 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,10 @@ typedef	struct s_file{
 } t_file;
 
 typedef	struct s_line{
-	t_file		**in_here;
-	t_file		**out_append;
-	t_cmd		**cmd;	
 	int			fd_in;
 	int			fd_out;
+	t_file		**in_here;
+	t_file		**out_append;
 }	t_line;
 
 typedef	struct s_pipe{
@@ -88,7 +87,7 @@ void	ft_double_free(char **s);
 // int		executes(t_cmd **cmd, char **env);
 int		cmdsize(t_cmd *cmd);
 void	do_fork(t_cmd **cmd, t_line *line, t_pipe pipe_data, int *status, char **env);
-int		do_pipe(t_line *line, char **env);
+int	do_pipe(t_line *line, t_cmd **cmd, char **env);
 int	ft_heredoc(char *start, char *eof);
 int	get_fd(t_line *line);
 int	count_file_by_type(t_file **file, int type);
