@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/09 02:45:44 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:23:59 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,11 @@ int	main(int ac, char **av, char **env)
 {
 	t_line	*line;
 	t_cmd	**cmd;
-	// t_file	**indoc;
-	// t_file	**outapp;
+	t_file	**indoc;
+	t_file	**outapp;
 
-	// indoc = create_file();
-	// outapp = create_file2();
+	indoc = create_file();
+	outapp = create_file2();
 	
 
 	(void)ac;
@@ -128,14 +128,13 @@ int	main(int ac, char **av, char **env)
 	(void)env;
 
 	cmd = NULL;
-	// line = NULL;
 	cmd = malloc(sizeof(t_cmd *));
-	line = init_line(NULL, NULL);
-	get_fd(line);
+	line = init_line(indoc, outapp);
+	print_line(line);
+	if (get_fd(line) == -1)
+		return (EXIT_FAILURE);
 	cmd_create(cmd, new_cmd("ls -l", env));
 	cmd_add(cmd, new_cmd("grep .c", env));
-	// printf("line addr %p\n", line);
-	// print_line(line);
 	print_cmd(cmd);
 	printf("the file infile_fd is %d\n", line->fd_in);
 	printf("the file outfile_fd is %d\n", line->fd_out);

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/09 02:00:05 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:26:58 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,27 +61,30 @@ void	raise_error(char *msg, int mode)
 int	check_fd_in(t_file **file, int *fd)
 {
 	int	i;
+	int	j;
 
+	j = 0;
 	i = 0;
-	if (count_file_by_type(file, HEREDOC) == 0)
-		fd[i] = do_here(file);
+	if (count_file_by_type(file, HEREDOC) != 0)
+		fd[j] = do_here(file);
 	else
-		fd[i] = -1;
-	i++;
+		fd[j] = -1;
+	j++;
 	while (file[i])
 	{
 		if (file[i]->type == INFILE)
 		{
-			fd[i] = open(file[i]->filename, O_RDONLY);
-			if (fd[i] == -1)
+			fd[j] = open(file[i]->filename, O_RDONLY);
+			if (fd[j] == -1)
 			{
 				raise_error(file[i]->filename, NOFILE_ERR);
 				return (-1);
 			}
 		}
 		else 
-			fd[i] = -1;
+			fd[j] = -1;
 		i++;
+		j++;
 	}
 	return (1);
 }
@@ -129,7 +132,10 @@ int	get_fd(t_line *line)
 		free(fd_in);
 	}
 	else
+	{
+		printf("no infile\n");
 		line->fd_in = 0;
+	}
 	if (line->out_append != NULL)
 	{
 		line->fd_out = check_fd_out(line->out_append);
@@ -137,6 +143,9 @@ int	get_fd(t_line *line)
 			return (-1);
 	}
 	else
+	{
+		printf("no outfile\n");
 		line->fd_out = 1;
+	}
 	return (1);
 }
