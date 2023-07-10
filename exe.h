@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/10 14:18:15 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/10 17:29:49 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef struct s_cmd{
 
 
 typedef	struct s_file{
-	int	type;
 	char *filename;
+	int	type;
 	int	index;
 	
 } t_file;

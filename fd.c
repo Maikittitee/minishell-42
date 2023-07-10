@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/10 14:26:58 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/10 17:27:48 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,7 @@ int	get_fd(t_line *line)
 		// else {line->fd_in = ft_max(fd);}	
 		free(fd_in);
 	}
-	else
-	{
-		printf("no infile\n");
-		line->fd_in = 0;
-	}
+	printf("in get_fd line->out_append addr is %p\n", line->out_append);
 	if (line->out_append != NULL)
 	{
 		line->fd_out = check_fd_out(line->out_append);
@@ -143,9 +139,6 @@ int	get_fd(t_line *line)
 			return (-1);
 	}
 	else
-	{
 		printf("no outfile\n");
-		line->fd_out = 1;
-	}
 	return (1);
 }
