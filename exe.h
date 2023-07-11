@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/10 17:29:49 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/11 12:17:15 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,8 @@ int	do_here(t_file **in_here);
 void	ft_free_file(t_file **file);
 void	ft_free_line(t_line *line);
 int	ft_max(int *fd, int size);
+int	check_fd_in(t_file **file);
+int	check_fd_out(t_file **file);
+
 
 #endif

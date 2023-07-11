@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/10 17:28:43 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/11 12:17:26 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,11 @@ int	main(int ac, char **av, char **env)
 	line = init_line(indoc, outapp);
 	printf("in main line->out_append addr is %p\n", line->out_append);
 	// print_line(line);
-	if (get_fd(line) == -1)
-		return (EXIT_FAILURE);
+	line->fd_in = check_fd_in(indoc);
+	line->fd_out = check_fd_out(indoc);
+	printf("in main line->out_append addr is %p\n", line->out_append);
+	// if (get_fd(line) == -1)
+	// 	return (EXIT_FAILURE);
 	cmd_create(cmd, new_cmd("ls -l", env));
 	cmd_add(cmd, new_cmd("grep .c", env));
 	// print_cmd(cmd);

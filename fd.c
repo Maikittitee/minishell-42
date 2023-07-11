@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/10 17:27:48 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/11 12:16:10 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,15 @@ void	raise_error(char *msg, int mode)
 	free(msg);
 }
 
-int	check_fd_in(t_file **file, int *fd)
+int	check_fd_in(t_file **file)
 {
 	int	i;
 	int	j;
+	int	*fd;
 
 	j = 0;
 	i = 0;
+	fd = malloc(sizeof(int) * count_file(file));
 	if (count_file_by_type(file, HEREDOC) != 0)
 		fd[j] = do_here(file);
 	else
@@ -78,15 +80,16 @@ int	check_fd_in(t_file **file, int *fd)
 			if (fd[j] == -1)
 			{
 				raise_error(file[i]->filename, NOFILE_ERR);
+				free(fd);
 				return (-1);
 			}
 		}
 		else 
 			fd[j] = -1;
-		i++;
-		j++;
+		i ++;
+		j ++;
 	}
-	return (1);
+	return (ft_max(fd, count_file(file)));
 }
 
 int	check_fd_out(t_file **file)
@@ -99,9 +102,9 @@ int	check_fd_out(t_file **file)
 	while (file[i])
 	{
 		if (file[i]->type == APPEND)
-			fd[i] = open(file[i]->filename, O_RDWR | O_CREAT | O_APPEND);
+			fd[i] = open(file[i]->filename, O_RDWR | O_CREAT | O_APPEND, 0777);
 		if (file[i]->type == OUTFILE)
-			fd[i] = open(file[i]->filename, O_RDWR | O_CREAT | O_TRUNC);
+			fd[i] = open(file[i]->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
 		if (fd[i] == -1)
 		{
 			raise_error(file[i]->filename, NOPERMISSION_ERR);
@@ -117,21 +120,20 @@ int	check_fd_out(t_file **file)
 int	get_fd(t_line *line)
 {
 	
-	int	*fd_in;
 
+	
+	printf("in get_fd1 line->out_append addr is %p\n", line->out_append);
 	if (line->in_here != NULL)
 	{
-		fd_in = malloc(sizeof(int) * (count_file(line->in_here)));
-		if (check_fd_in(line->in_here, fd_in) == -1)
+		if (check_fd_in(line->in_here) == -1)
 		{
-			free(fd_in);
+			// free(fd_input);
 			return (-1);
 		}
 		// if heredoc is lastone ? { line->fd_in = fd[0];}
 		// else {line->fd_in = ft_max(fd);}	
-		free(fd_in);
 	}
-	printf("in get_fd line->out_append addr is %p\n", line->out_append);
+	printf("in get_fd2 line->out_append addr is %p\n", line->out_append);
 	if (line->out_append != NULL)
 	{
 		line->fd_out = check_fd_out(line->out_append);
