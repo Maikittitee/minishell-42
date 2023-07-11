@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/11 18:51:21 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/12 01:12:14 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ typedef	struct s_pipe{
 	int	nprocess;
 	
 }t_pipe;
+
+typedef struct s_fd{
+	int	*fd;
+	int	nfile;
+	int correct_fd;
+	
+}t_fd;
 
 #define NOFILE_ERR 1
 #define NOPERMISSION_ERR 2

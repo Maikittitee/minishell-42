@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/11 18:53:10 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/11 21:44:57 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_pipe(char *input)
 	return (0);
 }
 
-t_line	*init_line(t_file **in_here, t_file **out_append)
+t_line	*init_line(void)
 {
 	t_line *line;
 	
@@ -33,9 +33,6 @@ t_line	*init_line(t_file **in_here, t_file **out_append)
 	
 	line->fd_in = 0;
 	line->fd_out = 1;
-	line->in_here = in_here;
-	line->out_append = out_append;
-	printf("in init line->out_append addr is %p\n", line->out_append);
 	return (line);
 	
 	
@@ -74,21 +71,15 @@ int	main(int ac, char **av, char **env)
 	t_file	**file;
 
 	
-	// indoc = create_file();
-	// outapp = create_file2();
-
-	indoc = NULL;
-	outapp = NULL;
 	(void)ac;
 	(void)av;
 	(void)env;
 
 	cmd = NULL;
 	cmd = malloc(sizeof(t_cmd *));
-	line = init_line(indoc, outapp);
+	line = init_line();
 	printf("in main line addr is %p\n", line);
-	line->fd_in = check_fd_in(indoc);
-	line->fd_out = check_fd_out(outapp);
+	apply_fd(line, file);
 	
 	
 	

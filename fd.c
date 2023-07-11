@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/11 18:06:37 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/12 01:20:06 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	check_fd_in(t_file **file)
 		i ++;
 		j ++;
 	}
+	// need to check heredoc;
 	return (ft_max(fd, count_file(file)));
 }
 
@@ -98,63 +99,42 @@ int	check_fd_out(t_file **file)
 {
 	int	i;
 	int	j;
-	int	*fd;
+	t_fd fd_data;
 
 	i = 0;
 	j = 0;
 	if (file == NULL)
 		return (1);
-	fd = malloc(sizeof(int) * count_file(file));
+	fd_data.nfile = count_file_by_type(file, APPEND) + count_file_by_type(file, OUTFILE);
+	fd_data.fd = malloc(sizeof(int) * fd_data.nfile);
 	while (file[i])
 	{
-		if (file[i]->type == APPEND)
-		{
-			printf("APPEND fd[%d]=%d\n", j, fd[j]);
-			fd[j] = open(file[i]->filename, O_RDWR | O_CREAT | O_APPEND, 0777);
-		}
+		if (file[i]->type == APPEND) ///////////// 
+			fd_data.fd[j] = open(file[i]->filename, O_RDWR | O_CREAT | O_APPEND, 0777);
 		if (file[i]->type == OUTFILE)
-		{
-			printf("OUTFILE fd[%d]=%d\n", j, fd[j]);
-			fd[j] = open(file[i]->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
-		}
-		if (fd[j] == -1)
+			fd_data.fd[j] = open(file[i]->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		if (fd_data.fd[j] == -1) 
 		{
 			raise_error(file[i]->filename, NOPERMISSION_ERR);
-			free(fd);
+			free(fd_data.fd);
 			return (-1);
-		}
+		} ////////////////////////////////////////// -> Can Make it as function
 		i++;
 		j++;
 	}
-	printf("this is max %d\n", ft_max(fd, count_file(file)));
-	return (ft_max(fd, count_file(file)));
+	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile); /// optimize
+	free(fd_data.fd);
+	return (fd_data.correct_fd);
 	
 }
 
-int	get_fd(t_line *line)
+int	apply_fd(t_line *line, t_file **file)
 {
+	line->fd_in = check_fd_in(file);
+	line->fd_out = check_fd_out(file);
 	
-
-	
-	printf("in get_fd1 line->out_append addr is %p\n", line->out_append);
-	if (line->in_here != NULL)
-	{
-		if (check_fd_in(line->in_here) == -1)
-		{
-			// free(fd_input);
-			return (-1);
-		}
-		// if heredoc is lastone ? { line->fd_in = fd[0];}
-		// else {line->fd_in = ft_max(fd);}	
-	}
-	printf("in get_fd2 line->out_append addr is %p\n", line->out_append);
-	if (line->out_append != NULL)
-	{
-		line->fd_out = check_fd_out(line->out_append);
-		if (line->fd_out == -1)
-			return (-1);
-	}
-	else
-		printf("no outfile\n");
+	if (line->fd_out < 0 || line->fd_in < 0)
+		return (-1);
 	return (1);
+		
 }
