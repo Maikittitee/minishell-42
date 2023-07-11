@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/11 12:17:15 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/11 18:51:21 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ typedef	struct s_file{
 typedef	struct s_line{
 	int			fd_in;
 	int			fd_out;
-	t_file		**in_here;
-	t_file		**out_append;
 }	t_line;
 
 typedef	struct s_pipe{

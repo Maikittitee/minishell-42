@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:43 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/08 00:48:09 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/11 17:53:46 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_file **get_here_doc(t_file **in_here)
 	{
 		if (in_here[i]->type == HEREDOC)
 		{
-			// printf(">>>hello\n");
 			here[j] = malloc(sizeof(t_file));
 			here[j]->filename = in_here[i]->filename;
 			here[j]->type = in_here[i]->type;

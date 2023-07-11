@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/11 12:16:10 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/11 18:06:37 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	check_fd_in(t_file **file)
 
 	j = 0;
 	i = 0;
+	if (file == NULL)
+		return (0);
 	fd = malloc(sizeof(int) * count_file(file));
 	if (count_file_by_type(file, HEREDOC) != 0)
 		fd[j] = do_here(file);
@@ -95,24 +97,36 @@ int	check_fd_in(t_file **file)
 int	check_fd_out(t_file **file)
 {
 	int	i;
+	int	j;
 	int	*fd;
 
 	i = 0;
+	j = 0;
+	if (file == NULL)
+		return (1);
 	fd = malloc(sizeof(int) * count_file(file));
 	while (file[i])
 	{
 		if (file[i]->type == APPEND)
-			fd[i] = open(file[i]->filename, O_RDWR | O_CREAT | O_APPEND, 0777);
+		{
+			printf("APPEND fd[%d]=%d\n", j, fd[j]);
+			fd[j] = open(file[i]->filename, O_RDWR | O_CREAT | O_APPEND, 0777);
+		}
 		if (file[i]->type == OUTFILE)
-			fd[i] = open(file[i]->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
-		if (fd[i] == -1)
+		{
+			printf("OUTFILE fd[%d]=%d\n", j, fd[j]);
+			fd[j] = open(file[i]->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		}
+		if (fd[j] == -1)
 		{
 			raise_error(file[i]->filename, NOPERMISSION_ERR);
 			free(fd);
 			return (-1);
 		}
 		i++;
+		j++;
 	}
+	printf("this is max %d\n", ft_max(fd, count_file(file)));
 	return (ft_max(fd, count_file(file)));
 	
 }
