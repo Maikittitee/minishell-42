@@ -1,15 +1,1 @@
--rw-r--r--  1 maikittitee  staff   1311 Jul  9 02:50 cmd.c
--rw-r--r--  1 maikittitee  staff   4960 Jul 10 17:33 cmd.o
--rw-r--r--  1 maikittitee  staff   1155 Jul  8 01:15 cmd_utils.c
--rw-r--r--  1 maikittitee  staff   2896 Jul 10 17:33 cmd_utils.o
--rw-r--r--  1 maikittitee  staff   2581 Jun 23 18:39 colors.h
--rw-r--r--  1 maikittitee  staff   1797 Jul  2 20:52 do_exe.c
--rw-r--r--  1 maikittitee  staff   3641 Jul 11 18:04 exe.c
--rw-r--r--  1 maikittitee  staff    439 Jul  8 01:13 exe_free.c
--rw-r--r--  1 maikittitee  staff   3261 Jul 11 18:03 fd.c
--rw-r--r--  1 maikittitee  staff    417 Jul  9 01:14 file_utils.c
--rw-r--r--  1 maikittitee  staff   2489 Jul  9 02:47 fork.c
--rw-r--r--  1 maikittitee  staff   2495 Jul 11 17:53 heredoc.c
--rw-r--r--  1 maikittitee  staff   5152 Jul 11 17:54 heredoc.o
--rw-r--r--  1 maikittitee  staff   1717 Jul  9 02:46 pipe.c
--rw-r--r--  1 maikittitee  staff   2156 Jul  2 17:31 test.c
+line

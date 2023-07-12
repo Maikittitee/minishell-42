@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/11 21:44:57 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/12 23:57:39 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,23 @@ t_file **create_file(void)
 {
 	t_file **ret;
 
-	ret = malloc(sizeof(t_file *) * 4);
+	ret = malloc(sizeof(t_file *) * 3);
+	// ret[0] = malloc(sizeof(t_file));
+	// ret[0]->filename = ft_strdup("infile");
+	// ret[0]->index = 0;
+	// ret[0]->type = INFILE;
+	
 	ret[0] = malloc(sizeof(t_file));
-	ret[0]->filename = ft_strdup("fake_infile");
-	ret[0]->index = 0;
-	ret[0]->type = INFILE;
+	ret[0]->filename = ft_strdup("eof");
+	ret[0]->index = 1;
+	ret[0]->type = HEREDOC;
 	
 	ret[1] = malloc(sizeof(t_file));
-	ret[1]->filename = ft_strdup("eof");
-	ret[1]->index = 1;
-	ret[1]->type = HEREDOC;
-	
-	ret[2] = malloc(sizeof(t_file));
-	ret[2]->filename = ft_strdup("real_infile");
-	ret[2]->index = 2;
-	ret[2]->type = INFILE;
+	ret[1]->filename = ft_strdup("outfile");
+	ret[1]->index = 2;
+	ret[1]->type = OUTFILE;
 
-	ret[3] = NULL;
+	ret[2] = NULL;
 
 	return (ret);
 }
@@ -78,15 +78,17 @@ int	main(int ac, char **av, char **env)
 	cmd = NULL;
 	cmd = malloc(sizeof(t_cmd *));
 	line = init_line();
+	file = create_file();
 	printf("in main line addr is %p\n", line);
-	apply_fd(line, file);
+	if (apply_fd(line, file) == -1)
+		return (EXIT_FAILURE);
 	
 	
 	
 	printf("the file infile_fd is %d\n", line->fd_in);
 	printf("the file outfile_fd is %d\n", line->fd_out);
-	cmd_create(cmd, new_cmd("ls -l", env));
-	cmd_add(cmd, new_cmd("grep .c", env));
+	cmd_create(cmd, new_cmd("cat", env));
+	cmd_add(cmd, new_cmd("grep line", env));
 	// print_cmd(cmd);
 
 	// free(line->cmd);

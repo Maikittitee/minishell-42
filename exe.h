@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/12 01:12:14 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/12 23:31:22 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "lib/libft/libft.h"
-
-typedef struct s_fd{
-	int	in;
-	int	out;
-}	t_fd;
 
 enum e_type
 {
@@ -70,7 +65,6 @@ typedef struct s_fd{
 	int	*fd;
 	int	nfile;
 	int correct_fd;
-	
 }t_fd;
 
 #define NOFILE_ERR 1
@@ -94,15 +88,12 @@ int		cmdsize(t_cmd *cmd);
 void	do_fork(t_cmd **cmd, t_line *line, t_pipe pipe_data, int *status, char **env);
 int	do_pipe(t_line *line, t_cmd **cmd, char **env);
 int	ft_heredoc(char *start, char *eof);
-int	get_fd(t_line *line);
 int	count_file_by_type(t_file **file, int type);
 int	count_file(t_file **file);
 int	do_here(t_file **in_here);
 void	ft_free_file(t_file **file);
-void	ft_free_line(t_line *line);
 int	ft_max(int *fd, int size);
 int	check_fd_in(t_file **file);
-int	check_fd_out(t_file **file);
-
+int	apply_fd(t_line *line, t_file **file);
 
 #endif
