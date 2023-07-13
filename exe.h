@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/12 23:31:22 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:14:32 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,20 @@ typedef struct s_fd{
 	int correct_fd;
 }t_fd;
 
+typedef enum e_buin{
+	e_echo,
+	e_cd,
+	e_pwd,
+	e_export,
+	e_unset,
+	e_env,
+	e_exit,
+}	t_buin;
+
 #define NOFILE_ERR 1
 #define NOPERMISSION_ERR 2
 #define CMD_ERR 3
+#define TOO_MUCH_ARG 4
 
 
 int		exe_cmd(t_cmd *cmd_d, char **env, char **paths);
@@ -95,5 +106,10 @@ void	ft_free_file(t_file **file);
 int	ft_max(int *fd, int size);
 int	check_fd_in(t_file **file);
 int	apply_fd(t_line *line, t_file **file);
+void	raise_error(char *msg, int mode);
+int	do_built_in(t_cmd *cmd, t_buin *buin);
+int	is_built_in(char *cmd, t_buin *buin);
+int	ft_pwd(char **arg);
+
 
 #endif

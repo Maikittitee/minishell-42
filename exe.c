@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/12 23:57:39 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:18:31 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	main(int ac, char **av, char **env)
 	cmd = NULL;
 	cmd = malloc(sizeof(t_cmd *));
 	line = init_line();
-	file = create_file();
+	// file = create_file();
+	file = NULL;
 	printf("in main line addr is %p\n", line);
 	if (apply_fd(line, file) == -1)
 		return (EXIT_FAILURE);
@@ -87,8 +88,8 @@ int	main(int ac, char **av, char **env)
 	
 	printf("the file infile_fd is %d\n", line->fd_in);
 	printf("the file outfile_fd is %d\n", line->fd_out);
-	cmd_create(cmd, new_cmd("cat", env));
-	cmd_add(cmd, new_cmd("grep line", env));
+	cmd_create(cmd, new_cmd("pwd", env));
+	// cmd_add(cmd, new_cmd("grep line", env));
 	// print_cmd(cmd);
 
 	// free(line->cmd);
