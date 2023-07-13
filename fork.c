@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 00:13:58 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:52:09 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,20 @@ void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
 
 void	ft_child(t_cmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, char **env)
 {
-	t_buin *buin_flag;
+	t_buin buin_flag;
 	
-	buin_flag = NULL;
 	ft_dup(pcnt, pipe_data, fd_in, fd_out);
 	if (pcnt == 0 && fd_in != 0)
 		close(fd_in);
 	else if (pcnt == pipe_data.npipe && fd_out != 1)
 		close(fd_out);
 	close_pipe(pipe_data);
-	if (is_built_in(cmd->arg[0], buin_flag))
-		do_built_in(cmd, buin_flag);
+	printf("cmd is %s\n", cmd->arg[0]);
+	if (is_built_in(cmd->arg[0], &buin_flag))
+	{
+		printf("this is built in\n");
+		exit (do_built_in(cmd, &buin_flag));
+	}
 	else
 		execve(cmd->arg[0], cmd->arg, env);
 }

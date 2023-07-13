@@ -30,14 +30,17 @@ int	join_path(t_cmd *cmd, char **paths)
 t_cmd	*new_cmd(char *arg, char **env)
 {
 	t_cmd	*cmd;
+	t_buin	dummy;
 	char	**paths;
 
+	// dummy = NULL;
 	paths = get_paths(env);
 	cmd = malloc(sizeof(t_cmd));
 	cmd->arg = ft_split(arg, ' ');
 	cmd->next = NULL;
 	// get_cmd_path(cmd, env);
-	join_path(cmd, paths);
+	if (!is_built_in(cmd->arg[0], &dummy))
+		join_path(cmd, paths);
 	ft_double_free(paths);
 	return (cmd);
 }

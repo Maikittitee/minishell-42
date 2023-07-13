@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 00:18:31 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:52:35 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ int	main(int ac, char **av, char **env)
 	
 	printf("the file infile_fd is %d\n", line->fd_in);
 	printf("the file outfile_fd is %d\n", line->fd_out);
-	cmd_create(cmd, new_cmd("pwd", env));
-	// cmd_add(cmd, new_cmd("grep line", env));
+	cmd_create(cmd, new_cmd("pwd 55555", env));
+	// cmd_add(cmd, new_cmd("", env));
 	// print_cmd(cmd);
 
 	// free(line->cmd);
 	// clear_free_cmd(cmd);
 	// ft_free_line(line);
 	// unlink(HEREDOC_FILENAME);
-	do_pipe(line, cmd, env);
-	return (1);
+	// do_pipe(line, cmd, env);
+	return (do_pipe(line, cmd, env));
 }
