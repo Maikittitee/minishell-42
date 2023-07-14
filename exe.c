@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 15:53:19 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/14 18:04:22 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,13 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	// (void)env;
 	env = dup_env(env);
-	global_data->env_dict = get_env_dict(env);
+	global_data.env_dict = get_env_dict(env);
+
+	printf("this is the value of $PWD: %s", dict_get_by_key(global_data.env_dict, "PWD"));
+
+	ft_double_free(env);
+	ft_free_dict(global_data.env_dict);
+
 	// printf("sizeof(env)=%lu\n", sizeof(env));
 	// cmd = NULL;
 	// cmd = malloc(sizeof(t_cmd *));

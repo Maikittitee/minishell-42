@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 15:53:10 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/14 18:06:17 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ typedef	struct s_dict{
 
 typedef struct s_global{
 	int	return_code;
-	t_dict	env_dict;
+	t_dict	**env_dict;
 	
 } t_global;
 
-t_global *global_data;
+t_global global_data;
 // extern char **environ;
 
 typedef struct s_cmd{
@@ -121,8 +121,9 @@ void	raise_error(char *msg, int mode);
 int	do_built_in(t_cmd *cmd, t_buin *buin);
 int	is_built_in(char *cmd, t_buin *buin);
 int	ft_pwd(char **arg);
-char *dup_env(char **env);
-char *get_env_dict(char **env);
-
+char **dup_env(char **env);
+t_dict **get_env_dict(char **env);
+void	ft_free_dict(t_dict **dict);
+char *printf("this is the value of $PWD: %s", dict_get_by_key(global_data.env_dict, "PWD"));(t_dict **dict, char *target_str);
 
 #endif
