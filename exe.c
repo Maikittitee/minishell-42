@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 00:52:35 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:53:19 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,36 +66,31 @@ t_file **create_file(void)
 
 int	main(int ac, char **av, char **env)
 {
-	t_line *line;
-	t_cmd	**cmd;
-	t_file	**file;
-
+	// t_line *line;
+	// t_cmd	**cmd;
+	// t_file	**file;
 	
 	(void)ac;
 	(void)av;
-	(void)env;
-
-	cmd = NULL;
-	cmd = malloc(sizeof(t_cmd *));
-	line = init_line();
-	// file = create_file();
-	file = NULL;
-	printf("in main line addr is %p\n", line);
-	if (apply_fd(line, file) == -1)
-		return (EXIT_FAILURE);
+	// (void)env;
+	env = dup_env(env);
+	global_data->env_dict = get_env_dict(env);
+	// printf("sizeof(env)=%lu\n", sizeof(env));
+	// cmd = NULL;
+	// cmd = malloc(sizeof(t_cmd *));
+	// line = init_line();
+	// // file = create_file();
+	// file = NULL;
+	// printf("in main line addr is %p\n", line);
+	// if (apply_fd(line, file) == -1)
+	// 	return (EXIT_FAILURE);
 	
 	
 	
-	printf("the file infile_fd is %d\n", line->fd_in);
-	printf("the file outfile_fd is %d\n", line->fd_out);
-	cmd_create(cmd, new_cmd("pwd 55555", env));
+	// printf("the file infile_fd is %d\n", line->fd_in);
+	// printf("the file outfile_fd is %d\n", line->fd_out);
+	// cmd_create(cmd, new_cmd("ls", env));
 	// cmd_add(cmd, new_cmd("", env));
-	// print_cmd(cmd);
-
-	// free(line->cmd);
-	// clear_free_cmd(cmd);
-	// ft_free_line(line);
-	// unlink(HEREDOC_FILENAME);
-	// do_pipe(line, cmd, env);
-	return (do_pipe(line, cmd, env));
+	return (1);	
+	// return (do_pipe(line, cmd, env));
 }

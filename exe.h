@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 00:14:32 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:53:10 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,19 @@ enum e_type
 
 #define HEREDOC_FILENAME ".heredoc"
 
+typedef	struct s_dict{
+	char	*key;
+	char	*value;
+}t_dict;
+
 typedef struct s_global{
 	int	return_code;
-	char **env;
+	t_dict	env_dict;
+	
 } t_global;
+
+t_global *global_data;
+// extern char **environ;
 
 typedef struct s_cmd{
 	char			**arg;
@@ -106,10 +115,14 @@ void	ft_free_file(t_file **file);
 int	ft_max(int *fd, int size);
 int	check_fd_in(t_file **file);
 int	apply_fd(t_line *line, t_file **file);
+int	strstrlen(char **s);
+
 void	raise_error(char *msg, int mode);
 int	do_built_in(t_cmd *cmd, t_buin *buin);
 int	is_built_in(char *cmd, t_buin *buin);
 int	ft_pwd(char **arg);
+char *dup_env(char **env);
+char *get_env_dict(char **env);
 
 
 #endif
