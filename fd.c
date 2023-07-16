@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/12 23:56:55 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/16 23:37:21 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,59 @@ void	raise_error(char *msg, int mode)
 	free(msg);
 }
 
+int	get_infile_index(t_file **file)
+{
+	int	i;
+	int	target;
+
+	i = 0;
+	target = 0;
+	while (file[i])
+	{
+		if (file[i]->type == INFILE || file[i]->type == HEREDOC)
+			target = file[i]->index;
+		i++;
+	}
+	if (target == 0)
+		return (-1);
+	return (target);
+}
+
+
 int	check_fd_in(t_file **file)
 {
-	// int	i;
-	// int	j;
-	// t_fd fd_data;
-
-	// j = 0;
-	// i = 0;
+	int	i;
+	int	j;
+	t_fd fd_data;
+	int	real_index;
+	int	heredoc_fd;
+	
 	if (file == NULL)
 		return (0);
-	// fd_data.nfile = count_file_by_type(file, INFILE) + count_file_by_type(file, HEREDOC);
-	// fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
-	return (do_here(file));
+	real_index = get_infile_index(file);
+	if (real_index == -1)
+		return (0);
+	heredoc_fd = do_here(file);
+	fd_data.nfile = count_file_by_type(file, INFILE);
+	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
+	j = 0;
+	i = 0;
+	while (file[i])
+	{
+		if (file[i]->type == INFILE)
+		{
+			fd_data.fd[j] = open(file[i]->filename, O_RDONLY);
+			if (fd_data.fd[j] == -1)
+			{
+				raise_error(file[i]->filename, NOFILE_ERR);
+				free(fd_data.fd);
+				return (-1);
+			}	
+		}
+		i++;
+		j++;
+	}
+	// return ();
 }
 
 int	check_fd_out(t_file **file)

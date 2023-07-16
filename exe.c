@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/16 21:45:52 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/16 22:35:59 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,24 @@ t_line	*init_line(void)
 	
 }
 
-t_file **create_file(void)
+t_file *create_file(void)
 {
-	t_file **ret;
+	t_file *ret;
 
-	ret = malloc(sizeof(t_file *) * 3);
+	ret = malloc(sizeof(t_file ) * 3);
 	// ret[0] = malloc(sizeof(t_file));
 	// ret[0]->filename = ft_strdup("infile");
 	// ret[0]->index = 0;
 	// ret[0]->type = INFILE;
 	
-	ret[0] = malloc(sizeof(t_file));
-	ret[0]->filename = ft_strdup("eof");
-	ret[0]->index = 1;
-	ret[0]->type = HEREDOC;
+	ret[0].filename = ft_strdup("eof");
+	ret[0].index = 1;
+	ret[0].type = HEREDOC;
 	
-	ret[1] = malloc(sizeof(t_file));
-	ret[1]->filename = ft_strdup("outfile");
-	ret[1]->index = 2;
-	ret[1]->type = OUTFILE;
+	ret[1].filename = ft_strdup("outfile");
+	ret[1].index = 2;
+	ret[1].type = OUTFILE;
 
-	ret[2] = NULL;
 
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:43 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/12 23:59:30 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/16 23:22:37 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ t_file **get_here_doc(t_file **in_here)
 	i = 0;
 	j = 0;
 	nhere = count_file_by_type(in_here, HEREDOC);
+	if (nhere == 0)
+		return (NULL);
 	here = malloc(sizeof(t_file *) * (nhere + 1));
 	while (in_here[i])
 	{
@@ -76,8 +78,6 @@ t_file **get_here_doc(t_file **in_here)
 		i++ ;
 	}
 	return (here);
-	
-	
 }
 
 int	do_here(t_file **in_here)
@@ -86,7 +86,9 @@ int	do_here(t_file **in_here)
 	char	*end;
 	t_file	**heredoc;
 	int		nheredoc;
-	heredoc = get_here_doc(in_here); 
+	heredoc = get_here_doc(in_here);
+	if (heredoc == NULL)
+		return (-1);
 	nheredoc = count_file(heredoc);
 	if (nheredoc != 1)
 		return (-1);

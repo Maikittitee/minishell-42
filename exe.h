@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/16 21:44:51 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/16 22:36:49 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ typedef	struct s_file{
 	char *filename;
 	int	type;
 	int	index;
-	
+	struct s_file *next;
+
 } t_file;
 
 typedef	struct s_line{
