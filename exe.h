@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 18:06:17 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/16 21:44:51 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,6 @@ int	ft_pwd(char **arg);
 char **dup_env(char **env);
 t_dict **get_env_dict(char **env);
 void	ft_free_dict(t_dict **dict);
-char *printf("this is the value of $PWD: %s", dict_get_by_key(global_data.env_dict, "PWD"));(t_dict **dict, char *target_str);
+char *dict_get_by_key(t_dict **dict, char *target_str);
 
 #endif

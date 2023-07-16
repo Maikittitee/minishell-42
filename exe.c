@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 18:04:22 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/16 21:45:52 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,34 @@ t_file **create_file(void)
 }
 
 
+void	print_file(t_file **file)
+{
+	int	i;
+
+	i = 0;
+	while (file[i])
+	{
+		printf("%d.%s[%d]\n", i + 1, file[i]->filename, file[i]->type);
+		i++;
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	// t_line *line;
 	// t_cmd	**cmd;
-	// t_file	**file;
+	t_file	**file;
 	
 	(void)ac;
 	(void)av;
 	// (void)env;
 	env = dup_env(env);
 	global_data.env_dict = get_env_dict(env);
+	file = create_file();
+	print_file(file);
+	
+	
 
-	printf("this is the value of $PWD: %s", dict_get_by_key(global_data.env_dict, "PWD"));
 
 	ft_double_free(env);
 	ft_free_dict(global_data.env_dict);
