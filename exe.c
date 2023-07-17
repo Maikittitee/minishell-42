@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/16 22:35:59 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:03:51 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,31 @@ t_line	*init_line(void)
 	
 }
 
-t_file *create_file(void)
+t_file **create_file(void)
 {
-	t_file *ret;
+	t_file **ret;
 
-	ret = malloc(sizeof(t_file ) * 3);
+	ret = malloc(sizeof(t_file *) * 4);
 	// ret[0] = malloc(sizeof(t_file));
 	// ret[0]->filename = ft_strdup("infile");
 	// ret[0]->index = 0;
 	// ret[0]->type = INFILE;
 	
-	ret[0].filename = ft_strdup("eof");
-	ret[0].index = 1;
-	ret[0].type = HEREDOC;
+	ret[0] = malloc(sizeof(t_file));
+	ret[0]->filename = ft_strdup("eof");
+	ret[0]->index = 0;
+	ret[0]->type = INFILE;
 	
-	ret[1].filename = ft_strdup("outfile");
-	ret[1].index = 2;
-	ret[1].type = OUTFILE;
+	ret[1] = malloc(sizeof(t_file));
+	ret[1]->filename = ft_strdup("infile");
+	ret[1]->index = 1;
+	ret[1]->type = INFILE;
+	
+	ret[2] = malloc(sizeof(t_file));
+	ret[2]->filename = ft_strdup("outfile");
+	ret[2]->index = 2;
+	ret[2]->type = OUTFILE;
+	ret[3] = NULL;
 
 
 	return (ret);
@@ -75,39 +83,42 @@ void	print_file(t_file **file)
 
 int	main(int ac, char **av, char **env)
 {
-	// t_line *line;
-	// t_cmd	**cmd;
+	t_line *line;
+	t_cmd	**cmd;
 	t_file	**file;
 	
 	(void)ac;
 	(void)av;
 	// (void)env;
 	env = dup_env(env);
+	line = init_line();
 	global_data.env_dict = get_env_dict(env);
 	file = create_file();
+	if (apply_fd(line, file) == -1)
+		return (EXIT_FAILURE);
 	print_file(file);
+	printf("the file infile_fd is %d\n", line->fd_in);
+	printf("the file outfile_fd is %d\n", line->fd_out);
 	
 	
 
 
-	ft_double_free(env);
-	ft_free_dict(global_data.env_dict);
+	// ft_double_free(env);
+	// ft_free_dict(global_data.env_dict);
 
 	// printf("sizeof(env)=%lu\n", sizeof(env));
 	// cmd = NULL;
-	// cmd = malloc(sizeof(t_cmd *));
-	// line = init_line();
+	cmd = malloc(sizeof(t_cmd *));
 	// // file = create_file();
 	// file = NULL;
 	// printf("in main line addr is %p\n", line);
-	// if (apply_fd(line, file) == -1)
-	// 	return (EXIT_FAILURE);
 	
-	
+	// (void)cmd;
 	
 	// printf("the file infile_fd is %d\n", line->fd_in);
 	// printf("the file outfile_fd is %d\n", line->fd_out);
-	// cmd_create(cmd, new_cmd("ls", env));
+	cmd_create(cmd, new_cmd("cat", env));
+	do_pipe(line, cmd, env);
 	// cmd_add(cmd, new_cmd("", env));
 	return (1);	
 	// return (do_pipe(line, cmd, env));

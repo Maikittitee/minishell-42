@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/16 23:37:21 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:58:11 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,13 @@ int	get_infile_index(t_file **file)
 	int	target;
 
 	i = 0;
-	target = 0;
+	target = -1;
 	while (file[i])
 	{
 		if (file[i]->type == INFILE || file[i]->type == HEREDOC)
 			target = file[i]->index;
 		i++;
 	}
-	if (target == 0)
-		return (-1);
 	return (target);
 }
 
@@ -106,11 +104,15 @@ int	check_fd_in(t_file **file)
 				free(fd_data.fd);
 				return (-1);
 			}	
+			j++;
 		}
 		i++;
-		j++;
 	}
-	// return ();
+	if (file[real_index]->type == HEREDOC)
+		return (heredoc_fd);
+	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile);
+	free(fd_data.fd);
+	return (fd_data.correct_fd);
 }
 
 int	check_fd_out(t_file **file)
@@ -148,7 +150,6 @@ int	check_fd_out(t_file **file)
 		i++;
 	}
 	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile); /// optimize
-	printf("this is fd out %d\n", fd_data.correct_fd);
 	free(fd_data.fd);
 	return (fd_data.correct_fd);
 	

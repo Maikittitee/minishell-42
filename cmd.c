@@ -38,7 +38,6 @@ t_cmd	*new_cmd(char *arg, char **env)
 	cmd = malloc(sizeof(t_cmd));
 	cmd->arg = ft_split(arg, ' ');
 	cmd->next = NULL;
-	// get_cmd_path(cmd, env);
 	if (!is_built_in(cmd->arg[0], &dummy))
 		join_path(cmd, paths);
 	ft_double_free(paths);

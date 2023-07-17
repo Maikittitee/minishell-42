@@ -30,6 +30,7 @@ int	ft_max(int *fd, int size)
 	max = fd[0];
 	while (i < size)
 	{
+
 		if (fd[i] > max)
 			max = fd[i];
 		i++;
