@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/17 16:03:51 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 00:46:56 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_file **create_file(void)
 	ret[0] = malloc(sizeof(t_file));
 	ret[0]->filename = ft_strdup("eof");
 	ret[0]->index = 0;
-	ret[0]->type = INFILE;
+	ret[0]->type = HEREDOC;
 	
 	ret[1] = malloc(sizeof(t_file));
 	ret[1]->filename = ft_strdup("infile");
@@ -89,37 +89,28 @@ int	main(int ac, char **av, char **env)
 	
 	(void)ac;
 	(void)av;
-	// (void)env;
 	env = dup_env(env);
 	line = init_line();
 	global_data.env_dict = get_env_dict(env);
-	file = create_file();
+	// file = create_file();
+	file = NULL;
 	if (apply_fd(line, file) == -1)
 		return (EXIT_FAILURE);
-	print_file(file);
+	// print_file(file);
 	printf("the file infile_fd is %d\n", line->fd_in);
 	printf("the file outfile_fd is %d\n", line->fd_out);
 	
 	
 
-
+	cmd = malloc(sizeof(t_cmd *));
+	cmd_create(cmd, new_cmd("ls -l", env));
+	cmd_add(cmd, new_cmd("wc -l", env));
+	do_pipe(line, cmd, env);
+	
 	// ft_double_free(env);
 	// ft_free_dict(global_data.env_dict);
-
-	// printf("sizeof(env)=%lu\n", sizeof(env));
-	// cmd = NULL;
-	cmd = malloc(sizeof(t_cmd *));
-	// // file = create_file();
-	// file = NULL;
-	// printf("in main line addr is %p\n", line);
-	
-	// (void)cmd;
-	
-	// printf("the file infile_fd is %d\n", line->fd_in);
-	// printf("the file outfile_fd is %d\n", line->fd_out);
-	cmd_create(cmd, new_cmd("cat", env));
-	do_pipe(line, cmd, env);
-	// cmd_add(cmd, new_cmd("", env));
+	// ft_free_file(file);
+	// clear_free_cmd(cmd);
 	return (1);	
 	// return (do_pipe(line, cmd, env));
 }
