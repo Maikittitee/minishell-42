@@ -6,13 +6,13 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 21:13:26 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/12 23:31:20 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 21:38:11 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-int	cmdsize(t_cmd *cmd)
+int	cmdsize(t_scmd *cmd)
 {
 	int	i;
 

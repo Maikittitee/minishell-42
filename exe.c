@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 17:15:02 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 21:42:50 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ void	link_cmd(t_scmd **head, t_scmd *cmd)
 	curr->next = cmd;
 }
 
-int	executor(t_scmd *cmd)
+int	executor(t_scmd *cmd, char **env)
 {
-	t_line line;
-	t_scmd *curr;
 
-	do_pipe()
+	global_data.return_code = do_pipe(cmd, env);
+	return (1);
+	
 	
 }
 
@@ -119,7 +119,7 @@ int	main(int ac, char **av, char **env)
 	cmd = init_cmd(new_node("ls -l"));
 	link_cmd(cmd, new_node("wc -l"));
 	print_cmd(cmd);
-	executor(*cmd);
+	executor(*cmd, env);
 		
 		
 	ft_double_free(env);

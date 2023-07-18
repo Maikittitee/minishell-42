@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 17:29:58 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:04:36 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
 		dup2(fd_outfile, STDOUT_FILENO);
 }
 
-void	ft_child(t_cmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, char **env)
+void	ft_child(t_scmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, char **env)
 {
 	t_buin buin_flag;
 	
@@ -65,14 +65,12 @@ void	ft_child(t_cmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, cha
 	else if (pcnt == pipe_data.npipe && fd_out != 1)
 		close(fd_out);
 	close_pipe(pipe_data);
-	printf("cmd is %s\n", cmd->arg[0]);
-	if (is_built_in(cmd->arg[0], &buin_flag))
+	if (is_built_in(cmd->cmd[0], &buin_flag))
 	{
-		printf("this is built in\n");
 		exit (do_built_in(cmd, &buin_flag));
 	}
 	else
-		execve(cmd->arg[0], cmd->arg, env);
+		execve(cmd->cmd[0], cmd->cmd, env);
 }
 
 void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
@@ -81,14 +79,17 @@ void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 	int	*pid;
 	t_scmd *curr;
 	t_line line;
+	char **path;
 	
 	curr = cmd;
 	process_cnt = 0;
+	path = get_paths(env);
 	pid = malloc(sizeof(int) * pipe_data.nprocess);
 	while (process_cnt < pipe_data.nprocess)
 	{
-		if (apply_fd(&line, curr->file) != -1)
-			return (-1);
+		join_path(curr, path);
+		if (apply_fd(&line, curr->file) < 0)
+			return ;
 		pid[process_cnt] = fork();
 		if (pid[process_cnt] == 0)
 			ft_child(curr, line.fd_in, line.fd_out, process_cnt, pipe_data, env);
@@ -97,4 +98,5 @@ void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 	}
 	close_pipe(pipe_data);
 	wait_all(pid, pipe_data, status);
+	ft_double_free(path);
 }

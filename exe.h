@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 15:22:26 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 21:50:06 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ void	ft_double_free(char **s);
 // void	del_head(t_cmd **cmd);
 // int		execute(t_cmd *cmd, char **env);
 // int		executes(t_cmd **cmd, char **env);
-int		cmdsize(t_cmd *cmd);
-void	do_fork(t_cmd **cmd, t_line *line, t_pipe pipe_data, int *status, char **env);
-int	do_pipe(t_line *line, t_cmd **cmd, char **env);
+int		cmdsize(t_scmd *cmd);
+void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env);
+int	do_pipe(t_scmd *cmd, char **env);
 int	ft_heredoc(char *start, char *eof);
 int	count_file_by_type(t_file *file, t_rdir type);
 int	count_file(t_file *file);
@@ -128,8 +128,10 @@ int	check_fd_in(t_file *file);
 int	apply_fd(t_line *line, t_file *file);
 int	strstrlen(char **s);
 
+int	join_path(t_scmd *cmd, char **paths);
+char	**get_paths(char **env);
 void	raise_error(char *msg, int mode);
-int	do_built_in(t_cmd *cmd, t_buin *buin);
+int	do_built_in(t_scmd *cmd, t_buin *buin);
 int	is_built_in(char *cmd, t_buin *buin);
 int	ft_pwd(char **arg);
 char **dup_env(char **env);
