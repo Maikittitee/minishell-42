@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 12:25:28 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/07/18 14:12:51 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/07/18 21:12:54 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,14 @@ void	print_rdir(t_scmd *scmd)
 	while (scmd)
 	{
 		i = 0;
-		tmp = scmd->cmd;
-		printf("cmd = ");
-		while (*tmp)
-			printf("%s ", *(tmp)++);
-		printf("\n");
+		if (scmd->cmd)
+		{
+			tmp = scmd->cmd;
+			printf("cmd = ");
+			while (*tmp)
+				printf("%s ", *(tmp)++);
+			printf("\n");
+		}
 		if (scmd->file)
 		{
 			while (scmd->file[i].type)
@@ -89,3 +92,10 @@ void	print_rdir(t_scmd *scmd)
 		scmd = scmd->next;
 	}
 }
+
+// void	print_form(t_scmd *scmd)
+// {
+// 	t_form	form;
+
+
+// }

@@ -64,6 +64,13 @@ typedef struct s_scmd
 	struct s_scmd	*next;
 }	t_scmd;
 
+typedef struct s_form
+{
+	char	**infile;
+	char	**outfile;
+	char	**append;
+	char	**heredoc;
+}	t_form;
 
 typedef struct s_shell
 {
