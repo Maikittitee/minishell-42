@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 00:52:09 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 17:29:58 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ft_child(t_cmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, cha
 {
 	t_buin buin_flag;
 	
+	// if (!ft_dup_to_file() )
+	// else
 	ft_dup(pcnt, pipe_data, fd_in, fd_out);
 	if (pcnt == 0 && fd_in != 0)
 		close(fd_in);
@@ -73,20 +75,23 @@ void	ft_child(t_cmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, cha
 		execve(cmd->arg[0], cmd->arg, env);
 }
 
-void	do_fork(t_cmd **cmd, t_line *line, t_pipe pipe_data, int *status, char **env)
+void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 {
 	int	process_cnt;
 	int	*pid;
-	t_cmd *curr;
+	t_scmd *curr;
+	t_line line;
 	
-	curr = *cmd;
+	curr = cmd;
 	process_cnt = 0;
 	pid = malloc(sizeof(int) * pipe_data.nprocess);
 	while (process_cnt < pipe_data.nprocess)
 	{
+		if (apply_fd(&line, curr->file) != -1)
+			return (-1);
 		pid[process_cnt] = fork();
 		if (pid[process_cnt] == 0)
-			ft_child(curr, line->fd_in, line->fd_out, process_cnt, pipe_data, env);
+			ft_child(curr, line.fd_in, line.fd_out, process_cnt, pipe_data, env);
 		curr = curr->next;
 		process_cnt += 1;
 	}

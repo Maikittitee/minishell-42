@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/09 02:46:21 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 17:15:44 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ void	start_pipe(t_pipe piped)
 	}
 }
 
-int	do_pipe(t_line *line, t_cmd **cmd, char **env) // incase of error should return -1
+int	do_pipe(t_cmd **cmd, char **env) // incase of error should return -1
 {
 	int	status;
+	t_line *line;
 	t_pipe pipe_data;
 
 	pipe_data.nprocess = cmdsize(*cmd);

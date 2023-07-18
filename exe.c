@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 15:25:03 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 17:15:02 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_scmd *new_node(char *str)
 
 	cmd = malloc(sizeof(t_scmd));
 	cmd->cmd = ft_split(str, ' ');
+	cmd->file = NULL;
 	cmd->next = NULL;
 	return (cmd);
 	
@@ -97,35 +98,33 @@ void	link_cmd(t_scmd **head, t_scmd *cmd)
 	curr->next = cmd;
 }
 
+int	executor(t_scmd *cmd)
+{
+	t_line line;
+	t_scmd *curr;
+
+	do_pipe()
+	
+}
+
 int	main(int ac, char **av, char **env)
 {
-	t_line *line;
 	t_scmd **cmd;
-	t_file	*file;
 	
 	(void)ac;
 	(void)av;
 	env = dup_env(env);
-	line = init_line();
 	global_data.env_dict = get_env_dict(env);
-	// file = create_file();
-	file = NULL;
-	if (apply_fd(line, file) == -1)
-		return (EXIT_FAILURE);
-	print_file(file);
-	printf("the file infile_fd is %d\n", line->fd_in);
-	printf("the file outfile_fd is %d\n", line->fd_out);
-
+	
 	cmd = init_cmd(new_node("ls -l"));
 	link_cmd(cmd, new_node("wc -l"));
 	print_cmd(cmd);
+	executor(*cmd);
 		
-	
+		
 	ft_double_free(env);
 	ft_free_dict(global_data.env_dict);
-	ft_free_file(file);
 	clear_free_cmd(*cmd);
-	free(line);
 	free(cmd);
 	return (0);	
 }
