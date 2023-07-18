@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ksaelim <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 23:51:55 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/06/23 23:52:09 by ksaelim          ###   ########.fr       */
+/*   Created: 2022/02/17 16:50:35 by ksaelim           #+#    #+#             */
+/*   Updated: 2022/09/05 00:00:04 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../minishell.h>
+#include "libft.h"
 
-int	ft_isspace(char *arg)
+int	ft_isdigit(int c)
 {
-	if (*arg == '$')
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (c >= '0' && c <= '9');
 }

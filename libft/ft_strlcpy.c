@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isrdir.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ksaelim <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/26 10:41:15 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/06/26 10:42:48 by ksaelim          ###   ########.fr       */
+/*   Created: 2022/03/03 15:53:23 by ksaelim           #+#    #+#             */
+/*   Updated: 2022/03/16 01:11:41 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_isrdir(char c)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-    return (c == INRDIR || c == OUTRDIR || c == PIPE);
+	size_t	i;
+
+	i = 0;
+	if (dstsize > 0)
+	{
+		while (src[i] != '\0' && i < dstsize - 1)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	while (src[i] != '\0')
+		i++;
+	return (i);
 }

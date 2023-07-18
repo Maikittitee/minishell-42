@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isquote.c                                       :+:      :+:    :+:   */
+/*   ft_isarg.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 16:23:30 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/06/25 15:41:40 by ksaelim          ###   ########.fr       */
+/*   Created: 2023/06/28 10:11:33 by ksaelim           #+#    #+#             */
+/*   Updated: 2023/07/13 22:27:12 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	ft_isquote(char c)
+int	ft_isarg(char c)
 {
-	return (c == DQUOTE || c == SQUOTE);
+	return (!ft_isrdir(c) && !ft_isspace(c));
 }
