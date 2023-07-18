@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 21:42:50 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:53:28 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	main(int ac, char **av, char **env)
 	cmd = init_cmd(new_node("ls -l"));
 	link_cmd(cmd, new_node("wc -l"));
 	print_cmd(cmd);
-	executor(*cmd, env);
+	executor(*cmd, env); // this line is funtion u need to call
 		
 		
 	ft_double_free(env);
