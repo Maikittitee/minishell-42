@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 22:57:30 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:34:39 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
 		dup2(fd_outfile, STDOUT_FILENO);
 }
 
-int	ft_dup_to_file()
-{
+// int	ft_dup_to_file()
+// {
 	
-}
+// }
 
 void	ft_child(t_scmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, char **env)
 {
 	t_buin buin_flag;
 	
-	if (!ft_dup_to_file())
+	// if (!ft_dup_to_file())
 		ft_dup(pcnt, pipe_data, fd_in, fd_out);
 	if (pcnt == 0 && fd_in != 0)
 		close(fd_in);
