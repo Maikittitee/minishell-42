@@ -17,27 +17,27 @@ void	ft_double_free(char **s)
 	free(s);
 }
 
-void	free_cmd(t_cmd *cmd)
+void	free_cmd(t_scmd *cmd)
 {
 	if (!cmd)
 		return ;
-	ft_double_free(cmd->arg);
+	ft_double_free(cmd->cmd);
 	free(cmd);
 }
 
-void	clear_free_cmd(t_cmd **cmd)
+void	clear_free_cmd(t_scmd *cmd)
 {
-	t_cmd	*next;
-	t_cmd	*curr;
+	t_scmd	*tmp;
 
-	curr = *cmd;
-	next = curr->next;
-	while (curr)
+	tmp = cmd;
+	while (cmd)
 	{
-		free_cmd(curr);
-		curr = next;
-		next = next->next;
+		tmp = tmp->next;
+		free_cmd(cmd);
+		cmd = tmp;
 	}
-	free_cmd(curr);
+	// free_cmd(tmp);
+	// free(cmd);
+
 }
 

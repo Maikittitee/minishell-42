@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 14:54:33 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:25:03 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,8 @@ void	link_cmd(t_scmd **head, t_scmd *cmd)
 	(void)cmd;
 	curr = *head;
 	while (curr->next != NULL)
-	{
 		curr = curr->next;
-	}
-	printf("before link : lastest cmd is %s\n", curr->cmd[0]);
 	curr->next = cmd;
-	curr = curr -> next;
-	printf("after link : lastest cmd is %s\n", curr->cmd[0]);
 }
 
 int	main(int ac, char **av, char **env)
@@ -123,14 +118,14 @@ int	main(int ac, char **av, char **env)
 
 	cmd = init_cmd(new_node("ls -l"));
 	link_cmd(cmd, new_node("wc -l"));
-	// printf("cmd is %s\n", (*cmd)->cmd[0]);
-	printf("--------\n");
 	print_cmd(cmd);
 		
 	
-	// ft_double_free(env);
-	// ft_free_dict(global_data.env_dict);
-	// ft_free_file(file);
-	// clear_free_cmd(cmd);
+	ft_double_free(env);
+	ft_free_dict(global_data.env_dict);
+	ft_free_file(file);
+	clear_free_cmd(*cmd);
+	free(line);
+	free(cmd);
 	return (0);	
 }
