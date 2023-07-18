@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 21:50:06 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:49:27 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 # include <readline/history.h>
 # include "lib/libft/libft.h"
 
-typedef	enum e_rdir{
-	none,
-	infile,
-	outfile,
-	append,
-	heredoc
-} t_rdir;
+// typedef	enum e_rdir{
+// 	none,
+// 	infile,
+// 	outfile,
+// 	append,
+// 	heredoc
+// } t_rdir;
 
 #define HEREDOC_FILENAME ".heredoc"
 

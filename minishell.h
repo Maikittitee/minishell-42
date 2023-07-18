@@ -55,6 +55,7 @@ typedef struct s_file
 {
 	char	*filename;
 	t_rdir	type;
+	
 }	t_file;
 
 typedef struct s_scmd
