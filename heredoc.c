@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:43 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/16 23:22:37 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:03:55 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,41 +52,41 @@ int	ft_heredoc(char *start, char *eof) // return fd;
 }
 
 
-t_file **get_here_doc(t_file **in_here)
+t_file *get_here_doc(t_file *file)
 {
 	int	nhere;
-	t_file **here;
+	t_file *here;
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	nhere = count_file_by_type(in_here, HEREDOC);
+	nhere = count_file_by_type(file, heredoc);
 	if (nhere == 0)
 		return (NULL);
-	here = malloc(sizeof(t_file *) * (nhere + 1));
-	while (in_here[i])
+	here = malloc(sizeof(t_file) * (nhere + 1));
+	while (file[i].type == none)
 	{
-		if (in_here[i]->type == HEREDOC)
+		if (file[i].type == heredoc)
 		{
-			here[j] = malloc(sizeof(t_file));
-			here[j]->filename = in_here[i]->filename;
-			here[j]->type = in_here[i]->type;
-			here[j]->index = in_here[i]->index;
+			here[j].filename = file[i].filename;
+			here[j].type = file[i].type;
+			here[j].index = file[i].index;
 			j++;
 		}
 		i++ ;
 	}
+	here[j].type = none;
 	return (here);
 }
 
-int	do_here(t_file **in_here)
+int	do_here(t_file *file)
 {
 	char	*start;
 	char	*end;
-	t_file	**heredoc;
+	t_file	*heredoc;
 	int		nheredoc;
-	heredoc = get_here_doc(in_here);
+	heredoc = get_here_doc(file);
 	if (heredoc == NULL)
 		return (-1);
 	nheredoc = count_file(heredoc);
@@ -95,8 +95,8 @@ int	do_here(t_file **in_here)
 	if (nheredoc == 1)
 		start = NULL;
 	else
-		start = ft_strdup(heredoc[nheredoc - 2]->filename);
-	end = ft_strdup(heredoc[nheredoc - 1]->filename);
+		start = ft_strdup(heredoc[nheredoc - 2].filename);
+	end = ft_strdup(heredoc[nheredoc - 1].filename);
 	ft_free_file(heredoc);
 	return (ft_heredoc(start, end));
 }

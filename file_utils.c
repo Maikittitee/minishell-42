@@ -1,18 +1,16 @@
 #include "exe.h"
 
-void	ft_free_file(t_file **file)
+void	ft_free_file(t_file *file)
 {
 	int	i;
 
 	i = 0;
 	if (!file)
 		return ;
-	while (file[i])
+	while (file[i].type != none)
 	{
-		if (file[i]->filename)
-			free(file[i]->filename);
-		if (file[i])
-			free(file[i]);
+		if (file[i].filename)
+			free(file[i].filename);
 		i++;
 	}
 	if (file)

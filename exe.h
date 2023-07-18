@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/16 22:36:49 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:53:59 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 # include <readline/history.h>
 # include "lib/libft/libft.h"
 
-enum e_type
-{
-	HEREDOC,
-	INFILE,
-	APPEND,
-	OUTFILE
-};
+typedef	enum e_rdir{
+	none,
+	infile,
+	outfile,
+	append,
+	heredoc
+} t_rdir;
 
 #define HEREDOC_FILENAME ".heredoc"
 
@@ -53,7 +53,7 @@ typedef struct s_cmd{
 
 typedef	struct s_file{
 	char *filename;
-	int	type;
+	t_rdir type;
 	int	index;
 	struct s_file *next;
 
@@ -87,6 +87,16 @@ typedef enum e_buin{
 	e_exit,
 }	t_buin;
 
+typedef struct s_scmd
+{
+    char **cmd;
+    t_file *file;
+    struct s_scmd *next;
+}    t_scmd;
+
+
+
+
 #define NOFILE_ERR 1
 #define NOPERMISSION_ERR 2
 #define CMD_ERR 3
@@ -99,7 +109,7 @@ char	**get_paths(char **env);
 t_cmd	*new_cmd(char *arg, char **env);
 int		cmd_create(t_cmd **head, t_cmd *new_cmd);
 int		cmd_add(t_cmd **head, t_cmd *new_cmd);
-void	print_cmd(t_cmd **head);
+void	print_cmd(t_scmd **head);
 void	clear_free_cmd(t_cmd **cmd);
 void	ft_double_free(char **s);
 // void	del_head(t_cmd **cmd);
@@ -109,13 +119,13 @@ int		cmdsize(t_cmd *cmd);
 void	do_fork(t_cmd **cmd, t_line *line, t_pipe pipe_data, int *status, char **env);
 int	do_pipe(t_line *line, t_cmd **cmd, char **env);
 int	ft_heredoc(char *start, char *eof);
-int	count_file_by_type(t_file **file, int type);
-int	count_file(t_file **file);
-int	do_here(t_file **in_here);
-void	ft_free_file(t_file **file);
+int	count_file_by_type(t_file *file, t_rdir type);
+int	count_file(t_file *file);
+int	do_here(t_file *in_here);
+void	ft_free_file(t_file *file);
 int	ft_max(int *fd, int size);
-int	check_fd_in(t_file **file);
-int	apply_fd(t_line *line, t_file **file);
+int	check_fd_in(t_file *file);
+int	apply_fd(t_line *line, t_file *file);
 int	strstrlen(char **s);
 
 void	raise_error(char *msg, int mode);

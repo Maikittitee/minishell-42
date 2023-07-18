@@ -63,9 +63,9 @@ int	cmd_add(t_cmd **head, t_cmd *new_cmd)
 	new_cmd->next = NULL;
 	return (1);
 }
-void	print_cmd(t_cmd **head)
+void	print_cmd(t_scmd **head)
 {
-	t_cmd	*curr;
+	t_scmd	*curr;
 	int		i;
 	int		j;
 
@@ -75,9 +75,9 @@ void	print_cmd(t_cmd **head)
 	{
 		j = 0;
 		printf("%d.", i);
-		while (curr->arg[j])
+		while (curr->cmd[j])
 		{
-			printf("%s ", curr->arg[j]);
+			printf("%s ", curr->cmd[j]);
 			j++;
 		}
 		printf("\n");

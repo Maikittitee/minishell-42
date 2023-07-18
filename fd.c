@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/17 15:58:11 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:09:47 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,28 @@ int	strstrlen(char **s)
 	return (i);
 }
 
-int	count_file_by_type(t_file **file, int type)
+int	count_file_by_type(t_file *file, t_rdir type)
 {
 	int	i;
 	int	cnt;
 
 	i = 0;
 	cnt = 0;
-	while (file[i])
+	while (file[i].type != none)
 	{
-		if (file[i]->type == type)
+		if (file[i].type == type)
 			cnt++;
 		i++;
 	}
 	return (cnt);
 }
 
-int	count_file(t_file **file)
+int	count_file(t_file *file)
 {
 	int	i;
 
 	i = 0;
-	while (file[i])
+	while (file[i].type != none)
 		i++;
 	return (i);
 }
@@ -58,49 +58,49 @@ void	raise_error(char *msg, int mode)
 	free(msg);
 }
 
-int	get_infile_index(t_file **file)
+int	get_infile_index(t_file *file)
 {
 	int	i;
 	int	target;
 
 	i = 0;
 	target = -1;
-	while (file[i])
+	while (file[i].type != none)
 	{
-		if (file[i]->type == INFILE || file[i]->type == HEREDOC)
-			target = file[i]->index;
+		if (file[i].type == infile || file[i].type == heredoc)
+			target = file[i].index;
 		i++;
 	}
 	return (target);
 }
 
 
-int	check_fd_in(t_file **file)
+int	check_fd_in(t_file *file)
 {
 	int	i;
 	int	j;
 	t_fd fd_data;
 	int	real_index;
 	int	heredoc_fd;
-	
+
 	if (file == NULL)
 		return (0);
 	real_index = get_infile_index(file);
 	if (real_index == -1)
 		return (0);
 	heredoc_fd = do_here(file);
-	fd_data.nfile = count_file_by_type(file, INFILE);
+	fd_data.nfile = count_file_by_type(file, infile);
 	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
 	j = 0;
 	i = 0;
-	while (file[i])
+	while (file[i].type != none)
 	{
-		if (file[i]->type == INFILE)
+		if (file[i].type == infile)
 		{
-			fd_data.fd[j] = open(file[i]->filename, O_RDONLY);
+			fd_data.fd[j] = open(file[i].filename, O_RDONLY);
 			if (fd_data.fd[j] == -1)
 			{
-				raise_error(file[i]->filename, NOFILE_ERR);
+				raise_error(file[i].filename, NOFILE_ERR);
 				free(fd_data.fd);
 				return (-1);
 			}	
@@ -108,14 +108,14 @@ int	check_fd_in(t_file **file)
 		}
 		i++;
 	}
-	if (file[real_index]->type == HEREDOC)
+	if (file[real_index].type == heredoc)
 		return (heredoc_fd);
 	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile);
 	free(fd_data.fd);
 	return (fd_data.correct_fd);
 }
 
-int	check_fd_out(t_file **file)
+int	check_fd_out(t_file *file)
 {
 	int	i;
 	int	j;
@@ -125,25 +125,25 @@ int	check_fd_out(t_file **file)
 	j = 0;
 	if (file == NULL)
 		return (1);
-	fd_data.nfile = count_file_by_type(file, APPEND) + count_file_by_type(file, OUTFILE);
+	fd_data.nfile = count_file_by_type(file, append) + count_file_by_type(file, outfile);
 	if (fd_data.nfile == 0)
 		return (1);
 	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
-	while (file[i])
+	while (file[i].type != none)
 	{
-		if (file[i]->type == APPEND) ///////////// 
+		if (file[i].type == append) ///////////// 
 		{
-			fd_data.fd[j] = open(file[i]->filename, O_RDWR | O_CREAT | O_APPEND, 0777);
+			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_APPEND, 0777);
 			j++;
 		}
-		else if (file[i]->type == OUTFILE)
+		else if (file[i].type == outfile)
 		{
-			fd_data.fd[j] = open(file[i]->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
 			j++;
 		}
 		if (fd_data.fd[j] == -1) 
 		{
-			raise_error(file[i]->filename, NOPERMISSION_ERR);
+			raise_error(file[i].filename, NOPERMISSION_ERR);
 			free(fd_data.fd);
 			return (-1);
 		} ////////////////////////////////////////// -> Can Make it as function
@@ -155,7 +155,7 @@ int	check_fd_out(t_file **file)
 	
 }
 
-int	apply_fd(t_line *line, t_file **file)
+int	apply_fd(t_line *line, t_file *file)
 {
 	line->fd_in = check_fd_in(file);
 	line->fd_out = check_fd_out(file);
