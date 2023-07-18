@@ -1,55 +1,74 @@
 NAME = minishell
 
-CC = gcc
+INCLUDE = minishell.h
 
-FLAGS = -Wall -Werror -Wextra -g
+#### libft ###
+LIBFT_HEAD = -I$(LIBFT_DIR)
+LIBFT_DIR = libft/
 
-LIBFT_PATH = lib/libft
-SRCS_PATH = 
+### readline ###
+RD_HEAD = -I$(RD_DIR)include
+RD_DIR = /usr/local/Cellar/readline/8.2.1/
 
-LIBFT_FLAG = -Llib/libft -lft
+### lexer ###
+LEXER_DIR = lexer/
 
-LIBFT = $(LIBFT_PATH)/libft.a
+LEXER_FUNCT	= valid_quote.c \
+			valid_token.c \
+			trim_qoute.c
 
-SRCS_fILE = exe.c\
-			do_exe.c\
-			cmd.c\
-			exe_free.c\
-			pipe.c\
-			fork.c\
-			cmd_utils.c\
-			heredoc.c\
-			fd.c\
-			file_utils.c\
-			built_in_utils.c\
-			ft_built_in_1.c\
-			env.c
-	 
+### parser ###
+# PARSER_DIR = parser/
 
-SRCS = $(addprefix $(SRCS_PATH), $(SRCS_fILE))
+# PARSER_FUNCT = parser.c
+
+### utils ###
+UTILS_DIR = utils/
+
+UTILS_FUNCT = skip_operator.c \
+			ft_isquote.c \
+			ft_isrdir.c \
+			ft_isarg.c \
+			ft_isspace.c \
+			token.c \
+			scmd.c
+
+### flags ###
+CFLAGS = -Wall -Werror -Wextra -g
+RDFLAGS = -L$(RD_DIR)lib -lreadline
+LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
+
+# SRCS = $(addprefix $(LEXER_DIR), $(LEXER_FUNCT)) \
+# 			$(addprefix $(PARSER_DIR), $(PARSER_FUNCT)) \
+# 			$(addprefix $(UTILS_DIR), $(UTILS_FUNCT)) \
+# 			main.c
+
+SRCS = $(addprefix $(UTILS_DIR), $(UTILS_FUNCT)) \
+		$(addprefix $(LEXER_DIR), $(LEXER_FUNCT)) \
+		main.c \
+		debug.c
+
+CC = cc
+
 
 OBJS = $(SRCS:.c=.o)
 
-all: $(LIBFT) $(PRINTF) $(NAME)
+%o: %c $(INCLUDE)
+	$(CC) $(CFLAGS) $(LIBFT_HEAD) $(RD_HEAD) -c $< -o $@
 
-$(LIBFT): 
-	make -C $(LIBFT_PATH)
-
-%.o:%.c
-	$(CC) $(FLAGS) -c $< -o $@
+all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -lreadline $(LIBFT_FLAG) $(OBJS) -o $(NAME)
+	@make -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_FLAGS) $(RDFLAGS) -o $(NAME)
 
 clean:
-	rm -rf $(OBJS) $(LIBFT_PATH)/*.o
+	@make fclean -C $(LIBFT_DIR)
+	rm -f $(OBJS)
 
 fclean: clean
-	rm -rf $(NAME) $(LIBFT_PATH)/*.a
+	rm -f $(NAME)
 
 re: fclean all
 
-test:
-	gcc test.c $(LIBFT_PATH)/*.c
-
-.PHONY: clean fclean all re
+.PHONY: all clean fclean re
