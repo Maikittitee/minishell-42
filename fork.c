@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 23:34:39 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/19 18:10:59 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,19 @@ void	wait_all(int *pid, t_pipe pipe_data, int *status)
 
 void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
 {
-	if (ifd != 0)
-		dup2(piped.fd[ifd - 1][0], STDIN_FILENO);
-	else if (fd_infile != 0)
+	if (fd_infile != 0)
 		dup2(fd_infile, STDIN_FILENO);
-	if (ifd != piped.npipe)
-		dup2(piped.fd[ifd][1], STDOUT_FILENO);
-	else if (fd_outfile != 1)
+	if (fd_outfile != 1)
 		dup2(fd_outfile, STDOUT_FILENO);
+	else
+	{
+		if (ifd != 0)
+			dup2(piped.fd[ifd - 1][0], STDIN_FILENO);
+		if (ifd != piped.npipe)
+		dup2(piped.fd[ifd][1], STDOUT_FILENO);
+		
+	}	
 }
-
-// int	ft_dup_to_file()
-// {
-	
-// }
 
 void	ft_child(t_scmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, char **env)
 {
@@ -82,7 +81,7 @@ void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 	int	process_cnt;
 	int	*pid;
 	t_scmd *curr;
-	t_line line;
+	t_line *line;
 	char **path;
 	
 	curr = cmd;
@@ -91,12 +90,13 @@ void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 	pid = malloc(sizeof(int) * pipe_data.nprocess);
 	while (process_cnt < pipe_data.nprocess)
 	{
+		line = apply_fd(curr->file);
 		join_path(curr, path);
-		if (apply_fd(&line, curr->file) < 0)
+		if (line == NULL)
 			return ;
 		pid[process_cnt] = fork();
 		if (pid[process_cnt] == 0)
-			ft_child(curr, line.fd_in, line.fd_out, process_cnt, pipe_data, env);
+			ft_child(curr, line->fd_in, line->fd_out, process_cnt, pipe_data, env);
 		curr = curr->next;
 		process_cnt += 1;
 	}

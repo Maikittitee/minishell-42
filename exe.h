@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 21:50:06 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/19 13:15:29 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	do_here(t_file *in_here);
 void	ft_free_file(t_file *file);
 int	ft_max(int *fd, int size);
 int	check_fd_in(t_file *file);
-int	apply_fd(t_line *line, t_file *file);
+t_line *apply_fd(t_file *file);
 int	strstrlen(char **s);
 
 int	join_path(t_scmd *cmd, char **paths);

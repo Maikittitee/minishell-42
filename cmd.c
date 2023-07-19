@@ -19,7 +19,10 @@ int	join_path(t_scmd *cmd, char **paths)
 		check = ft_strjoin(paths[i], cmd->cmd[0]);
 	}
 	if (paths[i] == NULL)
+	{
+		free(check);
 		return (0);
+	}
 	temp = cmd->cmd[0];
 	cmd->cmd[0] = ft_strdup(check);
 	free(check);

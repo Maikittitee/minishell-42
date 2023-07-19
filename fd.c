@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 17:26:20 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/19 13:12:12 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,13 +155,16 @@ int	check_fd_out(t_file *file)
 	
 }
 
-int	apply_fd(t_line *line, t_file *file)
+t_line	*apply_fd(t_file *file)
 {
+	t_line *line;
+	
+	line = malloc(sizeof(t_line));
 	line->fd_in = check_fd_in(file);
 	line->fd_out = check_fd_out(file);
 	
 	if (line->fd_out < 0 || line->fd_in < 0)
-		return (-1);
-	return (1);
+		return (NULL);
+	return (line);
 		
 }
