@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/19 18:10:59 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:36:38 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,10 @@ void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
 		dup2(fd_infile, STDIN_FILENO);
 	if (fd_outfile != 1)
 		dup2(fd_outfile, STDOUT_FILENO);
-	else
-	{
-		if (ifd != 0)
-			dup2(piped.fd[ifd - 1][0], STDIN_FILENO);
-		if (ifd != piped.npipe)
-		dup2(piped.fd[ifd][1], STDOUT_FILENO);
-		
-	}	
+	if (ifd != 0 && fd_infile == 0)
+		dup2(piped.fd[ifd - 1][0], STDIN_FILENO);
+	if (ifd != piped.npipe && fd_outfile == 1)
+		dup2(piped.fd[ifd][1], STDOUT_FILENO);	
 }
 
 void	ft_child(t_scmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, char **env)
@@ -62,7 +58,7 @@ void	ft_child(t_scmd *cmd, int fd_in, int fd_out, int pcnt, t_pipe pipe_data, ch
 	t_buin buin_flag;
 	
 	// if (!ft_dup_to_file())
-		ft_dup(pcnt, pipe_data, fd_in, fd_out);
+	ft_dup(pcnt, pipe_data, fd_in, fd_out);
 	if (pcnt == 0 && fd_in != 0)
 		close(fd_in);
 	else if (pcnt == pipe_data.npipe && fd_out != 1)

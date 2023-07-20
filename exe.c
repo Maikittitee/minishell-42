@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/19 18:18:20 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:37:15 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,11 @@ t_file *create_file(void)
 {
 	t_file *ret;
 
-	ret = malloc(sizeof(t_file) * 3);
-	ret[0].filename = ft_strdup("infile");
-	ret[0].index = 1;
-	ret[0].type = infile;
-	ret[1].filename = ft_strdup("outfile");
-	ret[1].index = 2;
-	ret[1].type = outfile;
-	ret[3].type = none;
+	ret = malloc(sizeof(t_file) * 2);
+	ret[0].filename = ft_strdup("eof");
+	ret[0].index = 0;
+	ret[0].type = heredoc;
+	ret[1].type = none;
 	return (ret);
 }
 
@@ -76,6 +73,18 @@ t_scmd **init_cmd(t_scmd *cmd)
 }
 
 t_scmd *new_node(char *str)
+{
+	t_scmd *cmd;
+
+	cmd = malloc(sizeof(t_scmd));
+	cmd->cmd = ft_split(str, ' ');
+	cmd->file = NULL;
+	cmd->next = NULL;
+	return (cmd);
+	
+}
+
+t_scmd *new_node2(char *str)
 {
 	t_scmd *cmd;
 
@@ -116,8 +125,9 @@ int	main(int ac, char **av, char **env)
 	env = dup_env(env);
 	global_data.env_dict = get_env_dict(env);
 	
-	cmd = init_cmd(new_node("ls -l"));
-	// link_cmd(cmd, new_node("wc -l"));
+	cmd = init_cmd(new_node("cat exe.h"));
+	link_cmd(cmd, new_node2("grep int"));
+	link_cmd(cmd, new_node2("wc -l"));
 	print_cmd(cmd);
 	executor(*cmd, env);
 		

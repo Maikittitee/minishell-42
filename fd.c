@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/19 13:12:12 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/19 20:22:31 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	check_fd_in(t_file *file)
 	if (real_index == -1)
 		return (0);
 	heredoc_fd = do_here(file);
+	printf("heredoc fd is %d\n", heredoc_fd);
 	fd_data.nfile = count_file_by_type(file, infile);
 	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
 	j = 0;

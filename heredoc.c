@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:43 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 14:03:55 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/19 20:34:06 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_file *get_here_doc(t_file *file)
 	if (nhere == 0)
 		return (NULL);
 	here = malloc(sizeof(t_file) * (nhere + 1));
-	while (file[i].type == none)
+	while (file[i].type != none)
 	{
 		if (file[i].type == heredoc)
 		{
