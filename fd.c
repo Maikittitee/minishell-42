@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/21 02:09:49 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:14:03 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	raise_error(char *msg, int mode)
 		msg = ft_strjoin(msg, ": Permission denied");
 	ft_putstr_fd(msg, STDERR_FILENO);
 	free(msg);
+	return (1);
 }
 
 int	get_infile_index(t_file *file)

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/21 02:07:58 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:21:48 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	ft_child(t_scmd *cmd, int pcnt, t_pipe pipe_data, char **env)
 int	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 {
 	int	process_cnt;
+	t_buin dummy;
 	int	*pid;
 	t_scmd *curr;
 	char **path;
@@ -84,7 +85,8 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 	{
 		if (!apply_fd(curr->file, &pipe_data))
 			return (0);
-		join_path(curr, path);
+		if (!is_built_in(curr->cmd[0], &dummy))
+			join_path(curr, path);
 		pid[process_cnt] = fork();
 		if (pid[process_cnt] == -1)
 			return (raise_error("fork error", 0));
@@ -97,4 +99,5 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 	wait_all(pid, pipe_data, status);
 	free(pid);
 	ft_double_free(path);
+	return (1);
 }

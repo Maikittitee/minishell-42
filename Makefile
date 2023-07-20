@@ -22,7 +22,7 @@ SRCS_fILE = exe.c\
 			fd.c\
 			file_utils.c\
 			built_in_utils.c\
-			ft_built_in_1.c\
+			built_in_1.c\
 			env.c
 	 
 

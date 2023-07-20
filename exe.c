@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/21 01:52:02 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:22:04 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	main(int ac, char **av, char **env)
 	env = dup_env(env);
 	global_data.env_dict = get_env_dict(env);
 	
-	cmd = init_cmd(new_node("cat exe.h"));
-	link_cmd(cmd, new_node("grep int"));
-	link_cmd(cmd, new_node("wc -l"));
+	cmd = init_cmd(new_node("env"));
+	// link_cmd(cmd, new_node("grep int"));
+	// link_cmd(cmd, new_node("wc -l"));
 	print_cmd(cmd);
 	executor(*cmd, env);
 		

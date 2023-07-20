@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_built_in_1.c                                    :+:      :+:    :+:   */
+/*   built_in_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 00:32:01 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:18:51 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,19 @@ int	ft_pwd(char **arg)
 	}
 	printf("%s\n", cwd);
 	free(cwd);
+	return (EXIT_SUCCESS);
+}
+
+int	ft_env(char **arg)
+{
+	int	i;
+
+	i = 0;
+	(void)arg;
+	while (global_data.env_dict[i])
+	{
+		printf("%s=%s\n", global_data.env_dict[i]->key, global_data.env_dict[i]->value);
+		i++;
+	}
 	return (EXIT_SUCCESS);
 }
