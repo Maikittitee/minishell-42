@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/20 23:30:25 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:07:58 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,16 @@ void	ft_child(t_scmd *cmd, int pcnt, t_pipe pipe_data, char **env)
 		close(pipe_data.fd_in);
 	close_pipe(pipe_data);
 	if (is_built_in(cmd->cmd[0], &buin_flag))
-	{
-		exit (do_built_in(cmd, &buin_flag));
-	}
+		do_built_in(cmd, &buin_flag);
 	else
 		execve(cmd->cmd[0], cmd->cmd, env);
 }
 
-void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
+int	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 {
 	int	process_cnt;
 	int	*pid;
 	t_scmd *curr;
-	t_line *line;
 	char **path;
 	
 	curr = cmd;
@@ -85,14 +82,12 @@ void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 	pid = malloc(sizeof(int) * pipe_data.nprocess);
 	while (process_cnt < pipe_data.nprocess)
 	{
-		line = apply_fd(curr->file);
-		pipe_data.fd_in = line->fd_in;
-		pipe_data.fd_out = line->fd_out;
-		free(line);
+		if (!apply_fd(curr->file, &pipe_data))
+			return (0);
 		join_path(curr, path);
-		if (line == NULL)
-			return ;
 		pid[process_cnt] = fork();
+		if (pid[process_cnt] == -1)
+			return (raise_error("fork error", 0));
 		if (pid[process_cnt] == 0)
 			ft_child(curr, process_cnt, pipe_data, env);
 		curr = curr->next;

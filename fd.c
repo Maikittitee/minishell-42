@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/20 23:17:26 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:09:49 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	count_file(t_file *file)
 	return (i);
 }
 
-void	raise_error(char *msg, int mode)
+int	raise_error(char *msg, int mode)
 {
 	if (mode == NOFILE_ERR)
 		msg = ft_strjoin(msg, ": No such file or directory");
@@ -89,7 +89,6 @@ int	check_fd_in(t_file *file)
 	if (real_index == -1)
 		return (0);
 	heredoc_fd = do_here(file);
-	printf("heredoc fd is %d\n", heredoc_fd);
 	fd_data.nfile = count_file_by_type(file, infile);
 	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
 	j = 0;
@@ -156,16 +155,14 @@ int	check_fd_out(t_file *file)
 	
 }
 
-t_line	*apply_fd(t_file *file)
+int	apply_fd(t_file *file, t_pipe *pipe_data)
 {
-	t_line *line;
 	
-	line = malloc(sizeof(t_line));
-	line->fd_in = check_fd_in(file);
-	line->fd_out = check_fd_out(file);
+	pipe_data->fd_in = check_fd_in(file);
+	pipe_data->fd_out = check_fd_out(file);
 	
-	if (line->fd_out < 0 || line->fd_in < 0)
-		return (NULL);
-	return (line);
+	if (pipe_data->fd_out < 0 || pipe_data->fd_in < 0)
+		return (0);
+	return (1);
 		
 }

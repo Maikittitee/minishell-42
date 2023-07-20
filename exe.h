@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/20 23:22:13 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:04:31 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,28 +110,28 @@ void	print_cmd(t_scmd **head);
 void	clear_free_cmd(t_scmd *cmd);
 void	ft_double_free(char **s);
 int		cmdsize(t_scmd *cmd);
-void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env);
-int	do_pipe(t_scmd *cmd, char **env);
-int	ft_heredoc(char *start, char *eof);
-int	do_here(t_file *in_here);
-int	count_file_by_type(t_file *file, t_rdir type);
-int	count_file(t_file *file);
+int		do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env);
+int		do_pipe(t_scmd *cmd, char **env);
+int		ft_heredoc(char *start, char *eof);
+int		do_here(t_file *in_here);
+int		count_file_by_type(t_file *file, t_rdir type);
+int		count_file(t_file *file);
 void	ft_free_file(t_file *file);
-int	ft_max(int *fd, int size);
-int	check_fd_in(t_file *file);
-t_line *apply_fd(t_file *file);
-int	strstrlen(char **s);
-int	join_path(t_scmd *cmd, char **paths);
+int		ft_max(int *fd, int size);
+int		check_fd_in(t_file *file);
+int		apply_fd(t_file *file, t_pipe *pipe_data);
+int		strstrlen(char **s);
+int		join_path(t_scmd *cmd, char **paths);
 char	**get_paths(char **env);
-int	do_built_in(t_scmd *cmd, t_buin *buin);
-int	is_built_in(char *cmd, t_buin *buin);
-int	ft_pwd(char **arg);
-char **dup_env(char **env);
-t_dict **get_env_dict(char **env);
+int		do_built_in(t_scmd *cmd, t_buin *buin);
+int		is_built_in(char *cmd, t_buin *buin);
+int		ft_pwd(char **arg);
+char 	**dup_env(char **env);
+t_dict 	**get_env_dict(char **env);
 void	ft_free_dict(t_dict **dict);
-char *dict_get_by_key(t_dict **dict, char *target_str);
+char 	*dict_get_by_key(t_dict **dict, char *target_str);
 
-void	raise_error(char *msg, int mode);
+int	raise_error(char *msg, int mode);
 
 
 

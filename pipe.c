@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/20 23:29:47 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:06:57 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,18 @@ int	**allocate_pipe(int npipe)
 	return (buffer);
 }
 
-void	start_pipe(t_pipe piped)
+int	start_pipe(t_pipe piped)
 {
 	int	i;
 
 	i = 0;
 	while (i < piped.npipe)
 	{
-		pipe(piped.fd[i]);
+		if (pipe(piped.fd[i]) == -1)
+			return (0);
 		i++;
 	}
+	return (1);
 }
 
 void	free_pipe(int **fd)
@@ -60,11 +62,14 @@ int	do_pipe(t_scmd *cmd, char **env) // incase of error should return -1
 	t_pipe pipe_data;
 
 	pipe_data.nprocess = cmdsize(cmd);
-	printf("the number of child process is %d\n", pipe_data.nprocess);
 	pipe_data.npipe = pipe_data.nprocess - 1;
 	pipe_data.fd = allocate_pipe(pipe_data.npipe);
-	start_pipe(pipe_data);
-	do_fork(cmd, pipe_data, &status, env);
+	if (!start_pipe(pipe_data))
+	{
+		free_pipe(pipe_data.fd);
+		return (raise_error("pipe error", 0)); //errno is on -> use perror and should return 1	
+	}
+	if (!do_fork(cmd, pipe_data, &status, env))
 	free_pipe(pipe_data.fd);
 	return (WEXITSTATUS(status));
 }

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:06:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/14 17:47:46 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/21 01:47:47 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,10 @@ char *dict_get_by_key(t_dict **dict, char *target_str)
 }
 
 // int	update_env_dict(char **env)
-// {
 
-// }
+// int	add_new_env(char **env, char *new_env)
+
+// int	change_env(char **env, char *key, char *value)
+
+// int	delete_env(char **env, char *key)
+

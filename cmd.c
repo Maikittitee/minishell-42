@@ -1,5 +1,37 @@
 #include "exe.h"
 
+t_scmd **init_cmd(t_scmd *cmd)
+{
+	t_scmd **head;
+	head = malloc(sizeof(t_scmd *));
+	*head = cmd;
+	return (head);
+}
+
+t_scmd *new_node(char *str)
+{
+	t_scmd *cmd;
+
+	cmd = malloc(sizeof(t_scmd));
+	cmd->cmd = ft_split(str, ' ');
+	cmd->file = NULL;
+	cmd->next = NULL;
+	return (cmd);
+	
+}
+
+
+void	link_cmd(t_scmd **head, t_scmd *cmd)
+{
+	t_scmd *curr;
+
+	(void)cmd;
+	curr = *head;
+	while (curr->next != NULL)
+		curr = curr->next;
+	curr->next = cmd;
+}
+
 int	join_path(t_scmd *cmd, char **paths)
 {
 	int	i;
