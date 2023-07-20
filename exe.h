@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/19 13:15:29 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/20 23:22:13 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ typedef	struct s_line{
 }	t_line;
 
 typedef	struct s_pipe{
+	char **env;
 	int	**fd;
 	int	npipe;
 	int	nprocess;
-	
+	int	fd_in;
+	int	fd_out;
 }t_pipe;
 
 typedef struct s_fd{
@@ -103,34 +105,24 @@ typedef struct s_scmd
 #define TOO_MUCH_ARG 4
 
 
-int		exe_cmd(t_cmd *cmd_d, char **env, char **paths);
-int		get_cmd_path(t_cmd *cmd_d, char **env);
 char	**get_paths(char **env);
-t_cmd	*new_cmd(char *arg, char **env);
-int		cmd_create(t_cmd **head, t_cmd *new_cmd);
-int		cmd_add(t_cmd **head, t_cmd *new_cmd);
 void	print_cmd(t_scmd **head);
 void	clear_free_cmd(t_scmd *cmd);
 void	ft_double_free(char **s);
-// void	del_head(t_cmd **cmd);
-// int		execute(t_cmd *cmd, char **env);
-// int		executes(t_cmd **cmd, char **env);
 int		cmdsize(t_scmd *cmd);
 void	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env);
 int	do_pipe(t_scmd *cmd, char **env);
 int	ft_heredoc(char *start, char *eof);
+int	do_here(t_file *in_here);
 int	count_file_by_type(t_file *file, t_rdir type);
 int	count_file(t_file *file);
-int	do_here(t_file *in_here);
 void	ft_free_file(t_file *file);
 int	ft_max(int *fd, int size);
 int	check_fd_in(t_file *file);
 t_line *apply_fd(t_file *file);
 int	strstrlen(char **s);
-
 int	join_path(t_scmd *cmd, char **paths);
 char	**get_paths(char **env);
-void	raise_error(char *msg, int mode);
 int	do_built_in(t_scmd *cmd, t_buin *buin);
 int	is_built_in(char *cmd, t_buin *buin);
 int	ft_pwd(char **arg);
@@ -138,5 +130,9 @@ char **dup_env(char **env);
 t_dict **get_env_dict(char **env);
 void	ft_free_dict(t_dict **dict);
 char *dict_get_by_key(t_dict **dict, char *target_str);
+
+void	raise_error(char *msg, int mode);
+
+
 
 #endif
