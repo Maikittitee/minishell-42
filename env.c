@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:06:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/21 01:47:47 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/22 01:43:52 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,45 @@ char *dict_get_by_key(t_dict **dict, char *target_str)
 
 // int	update_env_dict(char **env)
 
-// int	add_new_env(char **env, char *new_env)
+int	add_new_env(char **env, char *new_env)
+{
+	int	i;
+	char **new_envp;
 
-// int	change_env(char **env, char *key, char *value)
+	i = 0;
+	new_envp = malloc(sizeof(char *) * (strstrlen(env) + 2));
+	while (env[i])
+	{
+		new_envp[i] = ft_strdup(env[i]);
+		i++;
+	}
+	new_envp[i] = ft_strdup(new_env);
+	new_envp[i + 1] = NULL;
+	ft_double_free(env);
+	env = new_envp;
+	return (1);
+}
+
+int	change_env(char **env, char *key, char *value)
+{
+	int	i;
+	char *tmp;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], key, ft_strlen(key) + 1) == 0)
+		{
+			tmp = ft_strjoin(key, "=");
+			free(env[i]);
+			env[i] = ft_strjoin(tmp, value);
+			free(tmp);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 // int	delete_env(char **env, char *key)
 
