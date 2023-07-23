@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,16 +19,14 @@ char	*ft_strdup(char *s1)
 	char	*dst;
 
 	i = 0;
-	while (s1[i] != '\0')
+	while (s1[i])
 		i++;
 	dst = malloc(sizeof(char) * (i + 1));
 	if (!dst)
 		return (NULL);
 	i = -1;
-	while (s1[++i] != '\0')
-	{
+	while (s1[++i])
 		dst[i] = s1[i];
-	}
 	dst[i] = '\0';
 	return (dst);
 }

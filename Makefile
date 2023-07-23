@@ -33,6 +33,8 @@ UTILS_FUNCT = skip_operator.c \
 			token.c \
 			scmd.c
 
+EXE_DIR = exec/
+
 EXE_FUNCT = exe.c\
 			do_exe.c\
 			cmd.c\
@@ -47,6 +49,7 @@ EXE_FUNCT = exe.c\
 			ft_built_in_1.c\
 			env.c
 
+# mexe : mv $(EXE_FUNCT) exec
 ### flags ###
 CFLAGS = -Wall -Werror -Wextra -g
 RDFLAGS = -L$(RD_DIR)lib -lreadline
@@ -59,9 +62,9 @@ LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 
 SRCS = $(addprefix $(UTILS_DIR), $(UTILS_FUNCT)) \
 		$(addprefix $(LEXER_DIR), $(LEXER_FUNCT)) \
+		$(addprefix $(EXE_DIR), $(EXE_FUNCT)) \
 		main.c \
-		debug.c \
-		EXE_FUNCT
+		debug.c
 
 CC = cc
 

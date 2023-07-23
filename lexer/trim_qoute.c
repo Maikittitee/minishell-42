@@ -6,20 +6,19 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:42:29 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/07/18 21:30:59 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/07/19 16:26:05 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-void	trim_quote(t_token **token)
+void trim_quote(t_token **token)
 {
-	int		i;
-	int		q;
-	char	*trimed;
-	char	*str;
-	t_token	*tmp;
+	int i;
+	int q;
+	char *trimed;
+	char *str;
+	t_token *tmp;
 
 	tmp = *token;
 	while (tmp)
@@ -44,6 +43,7 @@ void	trim_quote(t_token **token)
 			}
 			trimed[i] = '\0';
 			free(tmp->content);
+			tmp->content = NULL;
 			tmp->content = ft_strdup(trimed);
 			free(trimed);
 		}

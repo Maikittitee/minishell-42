@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 12:25:28 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/07/18 21:12:54 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/07/19 22:06:09 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ void	print_rdir(t_scmd *scmd)
 				printf("%s ", *(tmp)++);
 			printf("\n");
 		}
+		else
+		{
+			printf("cmd = ");
+			printf("\033[2;31m" "%s\n" "\033[0m", NULL);
+		}
+		
 		if (scmd->file)
 		{
 			while (scmd->file[i].type)

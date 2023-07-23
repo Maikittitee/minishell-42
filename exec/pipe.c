@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 21:43:03 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/23 19:40:01 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-int	**allocate_pipe(int npipe)
+int **allocate_pipe(int npipe)
 {
-	int	i;
-	int	**buffer;
+	int i;
+	int **buffer;
 
 	i = 0;
 	if (npipe == 0)
@@ -29,9 +29,9 @@ int	**allocate_pipe(int npipe)
 	return (buffer);
 }
 
-void	start_pipe(t_pipe piped)
+void start_pipe(t_pipe piped)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < piped.npipe)
@@ -41,9 +41,9 @@ void	start_pipe(t_pipe piped)
 	}
 }
 
-int	do_pipe(t_scmd *cmd, char **env) // incase of error should return -1
+int do_pipe(t_scmd *cmd, char **env) // incase of error should return -1
 {
-	int	status;
+	int status;
 	t_pipe pipe_data;
 
 	pipe_data.nprocess = cmdsize(cmd);

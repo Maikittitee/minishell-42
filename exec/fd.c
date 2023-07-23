@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 17:26:20 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:13:46 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ int	get_infile_index(t_file *file)
 	return (target);
 }
 
-
-int	check_fd_in(t_file *file)
+int	check_fd_in(t_file *file, int *dup_in)
 {
 	int	i;
 	int	j;
@@ -93,6 +92,7 @@ int	check_fd_in(t_file *file)
 	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
 	j = 0;
 	i = 0;
+	dup2(*dup_in, 0);
 	while (file[i].type != none)
 	{
 		if (file[i].type == infile)
@@ -103,7 +103,7 @@ int	check_fd_in(t_file *file)
 				raise_error(file[i].filename, NOFILE_ERR);
 				free(fd_data.fd);
 				return (-1);
-			}	
+			}
 			j++;
 		}
 		i++;
@@ -111,16 +111,21 @@ int	check_fd_in(t_file *file)
 	if (file[real_index].type == heredoc)
 		return (heredoc_fd);
 	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile);
+	if (fd_data.correct_fd != 0)
+	{
+		dup2(fd_data.correct_fd, 0);
+	}
 	free(fd_data.fd);
 	return (fd_data.correct_fd);
 }
 
-int	check_fd_out(t_file *file)
+int	check_fd_out(t_file *file, int *dup_out)
 {
 	int	i;
 	int	j;
 	t_fd fd_data;
 
+	(void)dup_out;
 	i = 0;
 	j = 0;
 	if (file == NULL)
@@ -131,7 +136,7 @@ int	check_fd_out(t_file *file)
 	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
 	while (file[i].type != none)
 	{
-		if (file[i].type == append) ///////////// 
+		if (file[i].type == append) /////////////
 		{
 			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_APPEND, 0777);
 			j++;
@@ -141,7 +146,7 @@ int	check_fd_out(t_file *file)
 			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
 			j++;
 		}
-		if (fd_data.fd[j] == -1) 
+		if (fd_data.fd[j] == -1)
 		{
 			raise_error(file[i].filename, NOPERMISSION_ERR);
 			free(fd_data.fd);
@@ -152,16 +157,21 @@ int	check_fd_out(t_file *file)
 	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile); /// optimize
 	free(fd_data.fd);
 	return (fd_data.correct_fd);
-	
+
 }
 
 int	apply_fd(t_line *line, t_file *file)
 {
-	line->fd_in = check_fd_in(file);
-	line->fd_out = check_fd_out(file);
-	
+	int	dup_in;
+	int	dup_out;
+
+	dup_in = dup(0);
+	dup_out = dup(1);
+	line->fd_in = check_fd_in(file, &dup_in);
+	line->fd_out = check_fd_out(file, &dup_out);
+
 	if (line->fd_out < 0 || line->fd_in < 0)
 		return (-1);
 	return (1);
-		
+
 }

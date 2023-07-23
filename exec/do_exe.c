@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_exe.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:13:01 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/02 20:52:07 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/19 11:15:45 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	**get_paths(char **env)
 	char	**ret_path;
 
 	i = 0;
+	path = NULL;
 	while (env[i])
 	{
 		if (ft_strnstr(env[i], "PATH", 5))
@@ -42,7 +43,7 @@ char	**get_paths(char **env)
 // int	executes(t_cmd **cmd, char **env)
 // {
 // 	t_cmd *curr;
-	
+
 // 	curr = *cmd;
 // 	while (curr)
 // 	{
@@ -51,7 +52,7 @@ char	**get_paths(char **env)
 // 	}
 // 	// clear_free_cmd(cmd);
 // 	return (1);
-	
+
 // }
 
 // int	execute(t_cmd *cmd, char **env)
