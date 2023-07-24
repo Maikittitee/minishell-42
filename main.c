@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:17:25 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/07/24 02:02:36 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/07/24 16:56:41 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char *ft_restr(char *re, char *token, char var_len, int *start)
 	int i;
 	int j;
 
+	if (!re)
+		re = "";
 	re_len = ft_strlen(re);
 	new = malloc(sizeof(char) * (ft_strlen(token) - var_len + re_len + 1));
 	if (!new)
@@ -50,6 +52,7 @@ char *ft_restr(char *re, char *token, char var_len, int *start)
 		new[i++] = token[j++];
 	new[i] = '\0';
 	*start += re_len;
+	printf("end_new: %d\n", *start);
 	free(token);
 	return (new);
 }
@@ -73,7 +76,7 @@ int ft_isvar(char c)
 	return (ft_isalpha(c) || ft_isdigit(c) || c == '_');
 }
 
-char *ft_get_var(char *token, int len)
+char *ft_get_var(char *token)
 {
 	int i;
 
@@ -81,7 +84,7 @@ char *ft_get_var(char *token, int len)
 	while (global_data.env_dict[i])
 	{
 		// printf("%s\n", global_data.env_dict[i]->key);
-		if (!ft_strncmp(global_data.env_dict[i]->key, token, len))
+		if (!ft_strcmp(global_data.env_dict[i]->key, token))
 		{
 			printf("stop\n");
 			printf("get_correct: %s\n", global_data.env_dict[i]->value);
@@ -97,17 +100,17 @@ char *get_value(char *token, int *start, int var_len)
 	char *var;
 	char *correct_var;
 
-	var = ft_strndup(&token[1], var_len - 1);
+	var = ft_strndup(&token[*start + 1], var_len - 1);
 	printf("var: %s\n", var);
-	correct_var = ft_get_var(var, ft_strlen(var));
+	correct_var = ft_get_var(var);
 	printf("correct_var: %s\n", correct_var);
-	if (!correct_var)
-		return (free(token), NULL);
-	token = ft_restr(correct_var, token, var_len + 1, start);
+	free(var);
+	token = ft_restr(correct_var, token, var_len, start);
 	if (!token)
 		return (NULL);
 	// *start += ft_strlen(correct_var) + 1;
 	free(correct_var);
+	printf("uuuuu\n");
 	return (token);
 }
 
@@ -133,8 +136,9 @@ char *ft_expander(char **token, int *start)
 	else if (check_1stchar_var(c))
 	{
 		printf("here\n");
-		*token = get_value(&token[0][*start], start, ft_varlen(&token[0][*start + 1]));
-		// printf("why: %s\n", *token);
+		printf("var_len: %d\n", ft_varlen(&token[0][*start + 1]) + 1);
+		*token = get_value(*token, start, ft_varlen(&token[0][*start + 1]) + 1);
+		printf("why: %s\n", *token);
 	}
 	else
 		(*start)++;
@@ -160,19 +164,21 @@ void expand_token(t_token **token)
 			if (tmp->content[i] == '$')
 			{
 				printf("1\n");
+				// exit(0);
 				tmp->content = ft_expander(&tmp->content, &i);
 				tmp->dollar--;
-			}
-			if (tmp->content[i++] == DQUOTE)
-			{
-				printf("2\n");
-				is_dq = (is_dq + 1) % 2;
-				i++;
 			}
 			else if (tmp->content[i] == SQUOTE && !is_dq)
 			{
 				printf("3\n");
-				i += skip_qoute(tmp->content, tmp->content[i], NULL);
+				printf("see:----> %c\n", tmp->content[i]);
+				printf("%s\n", &tmp->content[i]);
+				i += skip_qoute(&tmp->content[i], tmp->content[i], NULL);
+			}
+			else if (tmp->content[i++] == DQUOTE)
+			{
+				printf("2\n");
+				is_dq = (is_dq + 1) % 2;
 			}
 		}
 		tmp = tmp->next;
@@ -296,8 +302,8 @@ int main(int ac, char **av, char **env)
 
 	if (ac != 1)
 		return (0);
-	// int	i = 0;
 	ft_init_shell(&shell, env, av);
+	// int	i = 0;
 	// while (global_data.env_dict[i])
 	// {
 	// 	printf("%s", global_data.env_dict[i]->key);

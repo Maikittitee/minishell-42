@@ -6,7 +6,7 @@
 #    By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/02 14:31:53 by ksaelim           #+#    #+#              #
-#    Updated: 2023/07/23 11:47:36 by ksaelim          ###   ########.fr        #
+#    Updated: 2023/07/24 13:39:44 by ksaelim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SRCS	= ft_isalpha.c \
 	  ft_split.c \
 	  get_next_line.c \
 	  get_next_line_utils.c \
-	  ft_strndup.c
+	  ft_strndup.c \
+	  ft_strcmp.c
 
 BONUS_SRCS	= ft_lstsize.c \
 		  ft_lstnew.c \
