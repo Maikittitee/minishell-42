@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/21 02:17:41 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/24 01:19:14 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef	struct s_dict{
 
 typedef struct s_global{
 	int	return_code;
+	char **env_ptr;
 	t_dict	**env_dict;
 	
 } t_global;

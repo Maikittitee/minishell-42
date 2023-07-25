@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/21 02:18:51 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:21:51 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,25 @@ int	ft_env(char **arg)
 		i++;
 	}
 	return (EXIT_SUCCESS);
+}
+
+int	ft_cd(char **arg)
+{
+	char *oldpwd;
+	char *to_go;
+
+	oldpwd = NULL;
+	
+	oldpwd = getcwd(oldpwd, 0);
+	if (arg[1])
+		to_go = ft_strjoin(oldpwd, arg[1]);
+	if (chdir(to_go) == -1)
+		exit (raise_error(NULL, 0));
+	
+	
+		
+		
+		
+		
+
 }
