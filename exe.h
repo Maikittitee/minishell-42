@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/24 01:19:14 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/26 00:58:07 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,15 +128,20 @@ int		strstrlen(char **s);
 int		join_path(t_scmd *cmd, char **paths);
 char	**get_paths(char **env);
 int		do_built_in(t_scmd *cmd, t_buin *buin);
-int		is_built_in(char *cmd, t_buin *buin);
+int		is_built_in(char *cmd);
+int	assign_buin(char *cmd, t_buin *buin);
 char 	**dup_env(char **env);
 t_dict 	**get_env_dict(char **env);
 void	ft_free_dict(t_dict **dict);
 char 	*dict_get_by_key(t_dict **dict, char *target_str);
+int		change_env(char **env, char *key, char *value);
+int		add_new_env(char **env, char *new_env);
+
 
 int	raise_error(char *msg, int mode);
 
 int		ft_env(char **arg);
 int		ft_pwd(char **arg);
+int		ft_cd(char **arg);
 
 #endif

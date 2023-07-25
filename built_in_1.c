@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/25 16:21:51 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/26 01:23:07 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,47 @@ int	ft_env(char **arg)
 int	ft_cd(char **arg)
 {
 	char *oldpwd;
-	char *to_go;
+	char *newpwd;
+	char *gogo;
+	int	i;
+	// i = 0;
+	// while (global_data.env_dict[i])
+	// {
+	// 	printf("%d %s=%s\n", i, global_data.env_dict[i]->key, global_data.env_dict[i]->value);
+	// 	i++;
+	// }
+	// printf("---------------\n");
 
 	oldpwd = NULL;
 	
 	oldpwd = getcwd(oldpwd, 0);
 	if (arg[1])
-		to_go = ft_strjoin(oldpwd, arg[1]);
-	if (chdir(to_go) == -1)
-		exit (raise_error(NULL, 0));
+		gogo = arg[1];
+	else
+		gogo = dict_get_by_key(global_data.env_dict, "HOME");
+	printf("to do is %s\n", gogo);
+	if (chdir(gogo) == -1)
+		return (raise_error(NULL, 0));
+	newpwd = NULL;
+	newpwd = getcwd(newpwd, 0);
+	printf("the new pwd is %s\n", newpwd);
+	if (change_env(global_data.env_ptr, "PWD", newpwd))
+		printf("Success\n");
+	else
+		printf("CHANGE FAIL\n");
+	if (dict_get_by_key(global_data.env_dict, "OLDPWD"))
+		change_env(global_data.env_ptr, "OLDPWD", oldpwd);
+		
+	free(newpwd);
+	free(oldpwd);
+
+	i = 0;
+	while (global_data.env_ptr[i])
+	{
+		printf("%s\n", global_data.env_ptr[i]);
+		i++;
+	}
+	return (1);
 	
 	
 		

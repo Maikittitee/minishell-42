@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/21 02:21:48 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/25 17:25:52 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,33 @@ void	ft_child(t_scmd *cmd, int pcnt, t_pipe pipe_data, char **env)
 	else if (pcnt == pipe_data.npipe && pipe_data.fd_out != 1)
 		close(pipe_data.fd_in);
 	close_pipe(pipe_data);
-	if (is_built_in(cmd->cmd[0], &buin_flag))
+	if (assign_buin(cmd->cmd[0], &buin_flag))
 		do_built_in(cmd, &buin_flag);
 	else
 		execve(cmd->cmd[0], cmd->cmd, env);
 }
 
+int	do_in_parent(t_scmd *cmd)
+{	
+	printf("this is do in parent\n");
+	if (!is_built_in(cmd->cmd[0]))
+		return (0);
+	if (ft_strncmp(cmd->cmd[0], "export", 7) ==0 && cmd->cmd[1] != NULL)
+		// return (ft_export_arg(cmd->cmd));
+		return (1);
+	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
+		return (ft_cd(cmd->cmd));
+	else if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)
+		// return (ft_unset(cmd->cmd[0]))
+		return (1);
+	else
+		return (0);
+	
+}
+
 int	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 {
 	int	process_cnt;
-	t_buin dummy;
 	int	*pid;
 	t_scmd *curr;
 	char **path;
@@ -85,13 +102,15 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 	{
 		if (!apply_fd(curr->file, &pipe_data))
 			return (0);
-		if (!is_built_in(curr->cmd[0], &dummy))
+		if (!is_built_in(curr->cmd[0]))
 			join_path(curr, path);
-		pid[process_cnt] = fork();
-		if (pid[process_cnt] == -1)
-			return (raise_error("fork error", 0));
-		if (pid[process_cnt] == 0)
-			ft_child(curr, process_cnt, pipe_data, env);
+		if (!do_in_parent(curr))
+			printf("here\n");
+			pid[process_cnt] = fork();
+			if (pid[process_cnt] == -1)
+				return (raise_error("fork error", 0));
+			if (pid[process_cnt] == 0)
+				ft_child(curr, process_cnt, pipe_data, env);
 		curr = curr->next;
 		process_cnt += 1;
 	}

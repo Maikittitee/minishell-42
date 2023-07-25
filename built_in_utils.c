@@ -6,13 +6,13 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:09:21 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/21 02:20:09 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:41:18 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-int	is_built_in(char *cmd, t_buin *buin)
+int	assign_buin(char *cmd, t_buin *buin)
 {
 	if (!cmd)
 		return (0);
@@ -31,6 +31,28 @@ int	is_built_in(char *cmd, t_buin *buin)
 		return (*buin = e_env, 1);
 	else if (ft_strncmp(cmd, "exit", 4) == 0)
 		return (*buin = e_exit, 1);
+	else
+		return (0);
+}
+int	is_built_in(char *cmd)
+{
+	if (!cmd)
+		return (0);
+	
+	if (ft_strncmp(cmd, "echo", 4) == 0)
+		return (1);
+	else if (ft_strncmp(cmd, "cd", 2) == 0)
+		return (1);
+	if (ft_strncmp(cmd, "pwd", 3) == 0)
+		return (1);
+	else if (ft_strncmp(cmd, "export", 6) == 0)
+		return (1);
+	else if (ft_strncmp(cmd, "unset", 5) == 0)
+		return (1);
+	else if (ft_strncmp(cmd, "env", 3) == 0)
+		return (1);
+	else if (ft_strncmp(cmd, "exit", 4) == 0)
+		return (1);
 	else
 		return (0);
 }

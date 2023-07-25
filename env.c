@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:06:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/22 01:43:52 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/26 01:20:50 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ char *dict_get_by_key(t_dict **dict, char *target_str)
 	
 }
 
-// int	update_env_dict(char **env)
 
 int	add_new_env(char **env, char *new_env)
 {
@@ -115,11 +114,14 @@ int	change_env(char **env, char *key, char *value)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], key, ft_strlen(key) + 1) == 0)
+		// printf("env[i] is %s\n", env[i]);
+		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0)
 		{
+			// printf("eiei\n");
 			tmp = ft_strjoin(key, "=");
 			free(env[i]);
 			env[i] = ft_strjoin(tmp, value);
+			printf("env[i] is %s\n", env[i]);
 			free(tmp);
 			return (1);
 		}
@@ -128,5 +130,8 @@ int	change_env(char **env, char *key, char *value)
 	return (0);
 }
 
+
 // int	delete_env(char **env, char *key)
 
+
+// int	update_env_dict(char **env)

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/21 02:06:57 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:26:44 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ int	do_pipe(t_scmd *cmd, char **env) // incase of error should return -1
 		return (raise_error("pipe error", 0)); //errno is on -> use perror and should return 1	
 	}
 	if (!do_fork(cmd, pipe_data, &status, env))
-	free_pipe(pipe_data.fd);
+		free_pipe(pipe_data.fd);
 	return (WEXITSTATUS(status));
 }
