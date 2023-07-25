@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/26 01:23:07 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/26 01:29:41 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,7 @@ int	ft_cd(char **arg)
 	free(oldpwd);
 
 	i = 0;
-	while (global_data.env_ptr[i])
-	{
-		printf("%s\n", global_data.env_ptr[i]);
-		i++;
-	}
+	// update_dict
 	return (1);
 	
 	
