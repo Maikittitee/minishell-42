@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/26 01:29:41 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:18:29 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,6 @@ int	ft_cd(char **arg)
 	char *oldpwd;
 	char *newpwd;
 	char *gogo;
-	int	i;
-	// i = 0;
-	// while (global_data.env_dict[i])
-	// {
-	// 	printf("%d %s=%s\n", i, global_data.env_dict[i]->key, global_data.env_dict[i]->value);
-	// 	i++;
-	// }
-	// printf("---------------\n");
-
 	oldpwd = NULL;
 	
 	oldpwd = getcwd(oldpwd, 0);
@@ -85,7 +76,6 @@ int	ft_cd(char **arg)
 	free(newpwd);
 	free(oldpwd);
 
-	i = 0;
 	// update_dict
 	return (1);
 	

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/25 17:25:52 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:21:47 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ void	wait_all(int *pid, t_pipe pipe_data, int *status)
 	int	i;
 
 	i = 0;
-	while (i < pipe_data.nprocess - 1)
+	while (i < pipe_data.nprocess)
 	{
-		waitpid(pid[i], NULL, 0);
+		if (pid[i] != -1)
+			waitpid(pid[i], status, 0);
 		i++;
 	}
-	waitpid(pid[i], status, 0);
+	
+	// waitpid(pid[i], status, 0);
 	
 }
 
@@ -71,17 +73,24 @@ void	ft_child(t_scmd *cmd, int pcnt, t_pipe pipe_data, char **env)
 
 int	do_in_parent(t_scmd *cmd)
 {	
-	printf("this is do in parent\n");
 	if (!is_built_in(cmd->cmd[0]))
 		return (0);
+	printf("this is do in parent\n");
 	if (ft_strncmp(cmd->cmd[0], "export", 7) ==0 && cmd->cmd[1] != NULL)
-		// return (ft_export_arg(cmd->cmd));
+	{
+		// global_data.return_code = ft_export_arg(cmd->cmd);
 		return (1);
+	}
 	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
-		return (ft_cd(cmd->cmd));
-	else if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)
-		// return (ft_unset(cmd->cmd[0]))
+	{
+		global_data.return_code = ft_cd(cmd->cmd);
 		return (1);
+	}
+	else if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)
+	{
+		// global_data.return_code = ft_unset(cmd->cmd[0]);
+		return (1);
+	}
 	else
 		return (0);
 	
@@ -104,18 +113,22 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 			return (0);
 		if (!is_built_in(curr->cmd[0]))
 			join_path(curr, path);
-		if (!do_in_parent(curr))
-			printf("here\n");
+		if (do_in_parent(curr))
+			pid[process_cnt] = -1;
+		else
+		{
 			pid[process_cnt] = fork();
 			if (pid[process_cnt] == -1)
 				return (raise_error("fork error", 0));
 			if (pid[process_cnt] == 0)
 				ft_child(curr, process_cnt, pipe_data, env);
+		}
 		curr = curr->next;
 		process_cnt += 1;
 	}
 	close_pipe(pipe_data);
 	wait_all(pid, pipe_data, status);
+	// check if the last one is child -> globlal.return_code = status
 	free(pid);
 	ft_double_free(path);
 	return (1);
