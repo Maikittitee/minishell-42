@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/27 22:44:17 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/27 22:48:46 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	do_in_parent(t_scmd *cmd)
 {	
 	if (!is_built_in(cmd->cmd[0]))
 		return (0);
-	printf("this is do in parent\n");
 	if (ft_strncmp(cmd->cmd[0], "export", 7) ==0 && cmd->cmd[1] != NULL)
 	{
 		// global_data.return_code = ft_export_arg(cmd->cmd);
@@ -97,13 +96,15 @@ int	do_in_parent(t_scmd *cmd)
 }
 int	cmd_execute(t_scmd *cmd, t_pipe pipe_data, char **path, int *pid)
 {
+	int	status;
+
 	if (!is_built_in(cmd->cmd[0]))
 		join_path(cmd, path);
-	if (do_in_parent(cmd))
+	status = do_in_parent(cmd);
+	if (status == 1)
 		pid[pipe_data.pcnt] = -2;
 	else
 	{
-		printf("pipe_data pcnt: %d\n", pipe_data.pcnt);
 		pid[pipe_data.pcnt] = fork();
 		if (pid[pipe_data.pcnt] == -1)
 			return (raise_error("fork error", 0));
@@ -127,24 +128,10 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
 	pid = malloc(sizeof(int) * pipe_data.nprocess);
 	while (pipe_data.pcnt < pipe_data.nprocess)
 	{
-		
 		if (!apply_fd(curr->file, &pipe_data))
 			return (0);
-		// dprintf(1, "in:%d, out:%d\n", pipe_data.fd_in, pipe_data.fd_out);
 		if (!cmd_execute(curr, pipe_data, path, pid))
 			return (0);
-		// if (!is_built_in(curr->cmd[0]))
-		// 	join_path(curr, path);
-		// if (do_in_parent(curr))
-		// 	pid[pipe_data.pcnt] = -1;
-		// else
-		// {
-		// 	pid[pipe_data.pcnt] = fork();
-		// 	if (pid[pipe_data.pcnt] == -1)
-		// 		return (raise_error("fork error", 0));
-		// 	if (pid[pipe_data.pcnt] == 0)
-		// 		ft_child(curr, pipe_data.pcnt, pipe_data, env);
-		// }
 		curr = curr->next;
 		pipe_data.pcnt += 1;
 	}
