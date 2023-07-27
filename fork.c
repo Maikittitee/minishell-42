@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/27 22:48:46 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/27 23:18:07 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ void	wait_all(int *pid, t_pipe pipe_data, int *status)
 	while (i < pipe_data.nprocess)
 	{
 		if (pid[i] != -2)
-			waitpid(pid[i], status, 0);
+		{
+			if (status != NULL)
+				waitpid(pid[i], status, 0);
+			else
+				waitpid(pid[i], NULL, 0);
+		}
 		i++;
 	}
 	
@@ -71,44 +76,63 @@ void	ft_child(t_scmd *cmd, t_pipe pipe_data, char **env)
 		execve(cmd->cmd[0], cmd->cmd, env);
 }
 
-int	do_in_parent(t_scmd *cmd)
+int	is_do_in_parent(t_scmd *cmd, t_buin *buin)
 {	
 	if (!is_built_in(cmd->cmd[0]))
 		return (0);
 	if (ft_strncmp(cmd->cmd[0], "export", 7) ==0 && cmd->cmd[1] != NULL)
-	{
-		// global_data.return_code = ft_export_arg(cmd->cmd);
-		return (1);
-	}
+		return (*buin = e_export, 1);
 	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
-	{
-		global_data.return_code = ft_cd(cmd->cmd);
-		return (1);
-	}
+		return (*buin = e_cd, 1);
 	else if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)
-	{
-		// global_data.return_code = ft_unset(cmd->cmd[0]);
-		return (1);
-	}
+		return (*buin = e_unset, 1);
 	else
 		return (0);
+
+	// should return 0 (success) or 1 (error)
 	
 }
-int	cmd_execute(t_scmd *cmd, t_pipe pipe_data, char **path, int *pid)
-{
-	int	status;
 
+int	do_in_parent(t_scmd *cmd, t_buin *buin)
+{	
+	if (*buin == e_export)
+	{
+		printf("hello export");
+		return (EXIT_SUCCESS);
+		// return (ft_export_arg(cmd->cmd));
+	}
+	else if (*buin == e_cd)
+	{
+		return (ft_cd(cmd->cmd));
+	}
+	else if (*buin == e_unset)
+	{
+		printf("hello unset");
+		return (EXIT_SUCCESS);
+	}
+	else
+		return (EXIT_FAILURE);
+
+	// should return 0 (success) or 1 (error)
+	
+}
+int	cmd_execute(t_scmd *cmd, t_pipe pipe_data, char **path, int	*status)
+{
+	t_buin buin;
+	
 	if (!is_built_in(cmd->cmd[0]))
 		join_path(cmd, path);
-	status = do_in_parent(cmd);
-	if (status == 1)
-		pid[pipe_data.pcnt] = -2;
+	if (is_do_in_parent(cmd, &buin))
+	{
+		*status = do_in_parent(cmd, &buin);
+		pipe_data.pid[pipe_data.pcnt] = -2;
+	}
 	else
 	{
-		pid[pipe_data.pcnt] = fork();
-		if (pid[pipe_data.pcnt] == -1)
+		pipe_data.pid[pipe_data.pcnt] = fork();
+		if (pipe_data.pid[pipe_data.pcnt] == -1)
 			return (raise_error("fork error", 0));
-		if (pid[pipe_data.pcnt] == 0)
+		if (pipe_data.pid[pipe_data.pcnt] == 0)
 			ft_child(cmd, pipe_data, global_data.env_ptr);
 		return (1);
 	}
@@ -116,28 +140,34 @@ int	cmd_execute(t_scmd *cmd, t_pipe pipe_data, char **path, int *pid)
 	
 }
 
-int	do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env)
+int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 {
-	int	*pid;
 	t_scmd *curr;
 	char **path;
+	int	status;
 	
 	curr = cmd;
 	pipe_data.pcnt = 0;
 	path = get_paths(env);
-	pid = malloc(sizeof(int) * pipe_data.nprocess);
+	pipe_data.pid = malloc(sizeof(int) * pipe_data.nprocess);
 	while (pipe_data.pcnt < pipe_data.nprocess)
 	{
 		if (!apply_fd(curr->file, &pipe_data))
 			return (0);
-		if (!cmd_execute(curr, pipe_data, path, pid))
+		if (!cmd_execute(curr, pipe_data, path, &status))
 			return (0);
 		curr = curr->next;
 		pipe_data.pcnt += 1;
 	}
 	close_pipe(pipe_data);
-	wait_all(pid, pipe_data, status);
-	free(pid);
+	// check is last pid is -2 or not -> 
+	// if -2 dont pass &status
+	// else pass it
+	wait_all(pipe_data.pid, pipe_data, &status);
+	free(pipe_data.pid);
 	ft_double_free(path);
-	return (1);
+	// if (last pid is not -2)
+		return (WEXITSTATUS(status));
+	// else
+	// 	return (status);
 }

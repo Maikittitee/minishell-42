@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/27 22:21:01 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/27 23:09:01 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef	struct s_line{
 typedef	struct s_pipe{
 	char **env;
 	int	**fd;
+	int	*pid;
 	int	pcnt;
 	int	npipe;
 	int	nprocess;
@@ -115,7 +116,7 @@ void	print_cmd(t_scmd **head);
 void	clear_free_cmd(t_scmd *cmd);
 void	ft_double_free(char **s);
 int		cmdsize(t_scmd *cmd);
-int		do_fork(t_scmd *cmd, t_pipe pipe_data, int *status, char **env);
+int		do_fork(t_scmd *cmd, t_pipe pipe_data, char **env);
 int		do_pipe(t_scmd *cmd, char **env);
 int		ft_heredoc(char *start, char *eof);
 int		do_here(t_file *in_here);

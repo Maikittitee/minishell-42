@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/27 22:33:01 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/27 23:20:07 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	free_pipe(int **fd, int n)
 
 int	do_pipe(t_scmd *cmd, char **env)
 {
-	int	status;
 	t_pipe pipe_data;
 
 	pipe_data.nprocess = cmdsize(cmd);
@@ -69,7 +68,10 @@ int	do_pipe(t_scmd *cmd, char **env)
 		free_pipe(pipe_data.fd, pipe_data.npipe);
 		return (raise_error("pipe error", 0));
 	}
-	do_fork(cmd, pipe_data, &status, env);
+	global_data.return_code = do_fork(cmd, pipe_data, env);
+	printf(GRN"\nexit code is %d\n"RESET, global_data.return_code);
 	free_pipe(pipe_data.fd, pipe_data.npipe);
-	return (WEXITSTATUS(status));
+
+	// return that have no errr
+	return (1);
 }
