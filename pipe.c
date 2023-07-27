@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/25 16:26:44 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/27 22:33:01 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int	start_pipe(t_pipe piped)
 	return (1);
 }
 
-void	free_pipe(int **fd)
+void	free_pipe(int **fd, int n)
 {
 	int	i;
 
 	i = 0;
-	while (fd[i])
+	while (i < n)
 	{
 		free(fd[i]);
 		i++;
@@ -56,7 +56,7 @@ void	free_pipe(int **fd)
 	free(fd);
 }
 
-int	do_pipe(t_scmd *cmd, char **env) // incase of error should return -1
+int	do_pipe(t_scmd *cmd, char **env)
 {
 	int	status;
 	t_pipe pipe_data;
@@ -66,10 +66,10 @@ int	do_pipe(t_scmd *cmd, char **env) // incase of error should return -1
 	pipe_data.fd = allocate_pipe(pipe_data.npipe);
 	if (!start_pipe(pipe_data))
 	{
-		free_pipe(pipe_data.fd);
-		return (raise_error("pipe error", 0)); //errno is on -> use perror and should return 1	
+		free_pipe(pipe_data.fd, pipe_data.npipe);
+		return (raise_error("pipe error", 0));
 	}
-	if (!do_fork(cmd, pipe_data, &status, env))
-		free_pipe(pipe_data.fd);
+	do_fork(cmd, pipe_data, &status, env);
+	free_pipe(pipe_data.fd, pipe_data.npipe);
 	return (WEXITSTATUS(status));
 }

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/21 02:14:03 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/27 22:44:22 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int	apply_fd(t_file *file, t_pipe *pipe_data)
 	
 	pipe_data->fd_in = check_fd_in(file);
 	pipe_data->fd_out = check_fd_out(file);
-	
+	// dprintf(1, "fd_out: %d\n", pipe_data->fd_out);
 	if (pipe_data->fd_out < 0 || pipe_data->fd_in < 0)
 		return (0);
 	return (1);

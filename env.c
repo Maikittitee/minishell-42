@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:06:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/26 01:20:50 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/27 21:46:28 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,8 @@ int	change_env(char **env, char *key, char *value)
 	i = 0;
 	while (env[i])
 	{
-		// printf("env[i] is %s\n", env[i]);
 		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0)
 		{
-			// printf("eiei\n");
 			tmp = ft_strjoin(key, "=");
 			free(env[i]);
 			env[i] = ft_strjoin(tmp, value);

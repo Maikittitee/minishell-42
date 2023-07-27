@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/26 00:58:07 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/27 22:21:01 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef	struct s_line{
 typedef	struct s_pipe{
 	char **env;
 	int	**fd;
+	int	pcnt;
 	int	npipe;
 	int	nprocess;
 	int	fd_in;
