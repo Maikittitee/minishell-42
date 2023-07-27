@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/26 15:18:29 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/28 02:48:06 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_env(char **arg)
 		printf("%s=%s\n", global_data.env_dict[i]->key, global_data.env_dict[i]->value);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	exit (EXIT_SUCCESS);
 }
 
 int	ft_cd(char **arg)
@@ -77,7 +77,7 @@ int	ft_cd(char **arg)
 	free(oldpwd);
 
 	// update_dict
-	return (1);
+	return (EXIT_SUCCESS);
 	
 	
 		

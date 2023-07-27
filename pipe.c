@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/27 23:20:07 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/28 02:39:57 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	do_pipe(t_scmd *cmd, char **env)
 		return (raise_error("pipe error", 0));
 	}
 	global_data.return_code = do_fork(cmd, pipe_data, env);
-	printf(GRN"\nexit code is %d\n"RESET, global_data.return_code);
 	free_pipe(pipe_data.fd, pipe_data.npipe);
 
 	// return that have no errr

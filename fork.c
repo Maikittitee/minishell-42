@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/27 23:18:07 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/28 02:46:58 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,27 @@ int	cmd_execute(t_scmd *cmd, t_pipe pipe_data, char **path, int	*status)
 	
 }
 
+int	last_cmd_is_in_parent(int *pid, int n)
+{
+	int	i;
+
+	i = 0;
+	while (pid[i] && i < n - 1)
+	{
+		i++;
+	}
+	if (pid[i] == -2)
+		return (1);
+	return (0);	
+	
+}
+
 int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 {
 	t_scmd *curr;
 	char **path;
 	int	status;
+	int	in_parent;
 	
 	curr = cmd;
 	pipe_data.pcnt = 0;
@@ -160,14 +176,16 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 		pipe_data.pcnt += 1;
 	}
 	close_pipe(pipe_data);
-	// check is last pid is -2 or not -> 
-	// if -2 dont pass &status
-	// else pass it
-	wait_all(pipe_data.pid, pipe_data, &status);
+	in_parent = last_cmd_is_in_parent(pipe_data.pid, pipe_data.nprocess); 
+	if (in_parent)
+		wait_all(pipe_data.pid, pipe_data, NULL);
+	else
+	{
+		wait_all(pipe_data.pid, pipe_data, &status);
+	}
 	free(pipe_data.pid);
 	ft_double_free(path);
-	// if (last pid is not -2)
+	if (!in_parent)
 		return (WEXITSTATUS(status));
-	// else
-	// 	return (status);
+	return (status);
 }
