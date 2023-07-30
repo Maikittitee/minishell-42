@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 00:46:38 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/31 01:01:20 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int		change_env(char *key, char *value);
 int		add_new_env(char *new_env);
 void	update_env_dict(void);
 
-int	raise_error(char *msg, int mode);
+int		raise_error(char *msg, int mode);
 
 int		ft_env(char **arg);
 int		ft_pwd(char **arg);

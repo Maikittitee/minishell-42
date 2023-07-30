@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 00:36:43 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/31 01:08:24 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **env)
 	global_data.env_dict = get_env_dict(env);
 	global_data.env_ptr = env;	
 	cmd = init_cmd(new_node("cd"));
-	link_cmd(cmd, new_node("ls -l"));
+	link_cmd(cmd, new_node("ls"));
 	// link_cmd(cmd, new_node(""));
 	print_cmd(cmd);
 	executor(*cmd, env);

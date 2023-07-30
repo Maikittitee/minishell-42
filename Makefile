@@ -21,8 +21,8 @@ SRCS_fILE = exe.c\
 			heredoc.c\
 			fd.c\
 			file_utils.c\
-			built_in_utils.c\
-			built_in_1.c\
+			buin_utils.c\
+			buin_pwd_env_cd.c\
 			env.c
 	 
 
