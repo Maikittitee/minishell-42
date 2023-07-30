@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/28 02:46:58 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/31 02:10:05 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,53 +116,34 @@ int	do_in_parent(t_scmd *cmd, t_buin *buin)
 	// should return 0 (success) or 1 (error)
 	
 }
-int	cmd_execute(t_scmd *cmd, t_pipe pipe_data, char **path, int	*status)
+int	cmd_execute(t_scmd *cmd, t_pipe pipe_data, char **path)
 {
-	t_buin buin;
-	
 	if (!is_built_in(cmd->cmd[0]))
 		join_path(cmd, path);
-	if (is_do_in_parent(cmd, &buin))
-	{
-		*status = do_in_parent(cmd, &buin);
-		pipe_data.pid[pipe_data.pcnt] = -2;
-	}
-	else
-	{
-		pipe_data.pid[pipe_data.pcnt] = fork();
-		if (pipe_data.pid[pipe_data.pcnt] == -1)
-			return (raise_error("fork error", 0));
-		if (pipe_data.pid[pipe_data.pcnt] == 0)
-			ft_child(cmd, pipe_data, global_data.env_ptr);
-		return (1);
-	}
+	pipe_data.pid[pipe_data.pcnt] = fork();
+	if (pipe_data.pid[pipe_data.pcnt] == -1)
+		return (raise_error("fork error", 0));
+	if (pipe_data.pid[pipe_data.pcnt] == 0)
+		ft_child(cmd, pipe_data, global_data.env_ptr);
 	return (1);
 	
 }
 
-int	last_cmd_is_in_parent(int *pid, int n)
-{
-	int	i;
 
-	i = 0;
-	while (pid[i] && i < n - 1)
-	{
-		i++;
-	}
-	if (pid[i] == -2)
-		return (1);
-	return (0);	
-	
-}
 
 int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 {
 	t_scmd *curr;
+	t_buin dummy;
 	char **path;
 	int	status;
-	int	in_parent;
 	
 	curr = cmd;
+	if (pipe_data.npipe == 0 && is_do_in_parent(cmd, &dummy))
+	{
+		close_pipe(pipe_data);
+		return (do_in_parent(cmd, &dummy));
+	}
 	pipe_data.pcnt = 0;
 	path = get_paths(env);
 	pipe_data.pid = malloc(sizeof(int) * pipe_data.nprocess);
@@ -170,22 +151,14 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 	{
 		if (!apply_fd(curr->file, &pipe_data))
 			return (0);
-		if (!cmd_execute(curr, pipe_data, path, &status))
+		if (!cmd_execute(curr, pipe_data, path))
 			return (0);
 		curr = curr->next;
 		pipe_data.pcnt += 1;
 	}
 	close_pipe(pipe_data);
-	in_parent = last_cmd_is_in_parent(pipe_data.pid, pipe_data.nprocess); 
-	if (in_parent)
-		wait_all(pipe_data.pid, pipe_data, NULL);
-	else
-	{
-		wait_all(pipe_data.pid, pipe_data, &status);
-	}
+	wait_all(pipe_data.pid, pipe_data, &status);
 	free(pipe_data.pid);
 	ft_double_free(path);
-	if (!in_parent)
-		return (WEXITSTATUS(status));
-	return (status);
+	return (WEXITSTATUS(status));
 }
