@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/28 02:48:06 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/31 00:46:31 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,22 @@ int	ft_cd(char **arg)
 	if (arg[1])
 		gogo = arg[1];
 	else
-		gogo = dict_get_by_key(global_data.env_dict, "HOME");
-	printf("to do is %s\n", gogo);
+		gogo = get_value(global_data.env_dict, "HOME");
 	if (chdir(gogo) == -1)
 		return (raise_error(NULL, 0));
 	newpwd = NULL;
 	newpwd = getcwd(newpwd, 0);
 	printf("the new pwd is %s\n", newpwd);
-	if (change_env(global_data.env_ptr, "PWD", newpwd))
+	if (change_env("PWD", newpwd))
 		printf("Success\n");
 	else
 		printf("CHANGE FAIL\n");
-	if (dict_get_by_key(global_data.env_dict, "OLDPWD"))
-		change_env(global_data.env_ptr, "OLDPWD", oldpwd);
+	if (get_value(global_data.env_dict, "OLDPWD"))
+		change_env("OLDPWD", oldpwd);
 		
 	free(newpwd);
 	free(oldpwd);
 
-	// update_dict
 	return (EXIT_SUCCESS);
 	
 	

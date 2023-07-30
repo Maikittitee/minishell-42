@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:06:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/27 21:46:28 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/31 00:59:27 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_dict **get_env_dict(char **env)
 	
 }
 
-char *dict_get_by_key(t_dict **dict, char *target_str)
+char *get_value(t_dict **dict, char *target_str)
 {
 	int	i;
 
@@ -87,49 +87,78 @@ char *dict_get_by_key(t_dict **dict, char *target_str)
 }
 
 
-int	add_new_env(char **env, char *new_env)
+int	add_new_env(char *new_env)
 {
 	int	i;
 	char **new_envp;
 
 	i = 0;
-	new_envp = malloc(sizeof(char *) * (strstrlen(env) + 2));
-	while (env[i])
+	new_envp = malloc(sizeof(char *) * (strstrlen(global_data.env_ptr) + 2));
+	while (global_data.env_ptr[i])
 	{
-		new_envp[i] = ft_strdup(env[i]);
+		new_envp[i] = ft_strdup(global_data.env_ptr[i]);
 		i++;
 	}
 	new_envp[i] = ft_strdup(new_env);
 	new_envp[i + 1] = NULL;
-	ft_double_free(env);
-	env = new_envp;
+	ft_double_free(global_data.env_ptr);
+	global_data.env_ptr = new_envp;
+	update_env_dict();
 	return (1);
 }
 
-int	change_env(char **env, char *key, char *value)
+int	change_env(char *key, char *value)
 {
 	int	i;
 	char *tmp;
 
 	i = 0;
-	while (env[i])
+	while (global_data.env_ptr[i])
 	{
-		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0)
+		if (ft_strncmp(global_data.env_ptr[i], key, ft_strlen(key)) == 0)
 		{
 			tmp = ft_strjoin(key, "=");
-			free(env[i]);
-			env[i] = ft_strjoin(tmp, value);
-			printf("env[i] is %s\n", env[i]);
+			free(global_data.env_ptr[i]);
+			global_data.env_ptr[i] = ft_strjoin(tmp, value);
 			free(tmp);
 			return (1);
 		}
 		i++;
 	}
+	update_env_dict();
 	return (0);
 }
 
 
-// int	delete_env(char **env, char *key)
+int	delete_env(char *key)
+{
+	int	i;
+	int	j;
+	char **new_envp;
+
+	if (!get_value(global_data.env_dict, key))
+		return (0);
+	i = 0;
+	j = 0;
+	new_envp = malloc(sizeof(char *) * (strstrlen(global_data.env_ptr)));
+	while (global_data.env_ptr[i])
+	{
+		if (ft_strncmp(new_envp[i], key, ft_strlen(key)) != 0)
+		{
+			new_envp[j] = ft_strdup(global_data.env_ptr[i]);
+			j++;
+		}
+		i++;
+	}
+	new_envp[j] = NULL;
+	global_data.env_ptr = new_envp;
+	update_env_dict();
+	return (1);
+}
 
 
-// int	update_env_dict(char **env)
+void	update_env_dict(void)
+{
+	ft_free_dict(global_data.env_dict);
+	global_data.env_dict = get_env_dict(global_data.env_ptr);
+}

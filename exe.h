@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/27 23:09:01 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/31 00:46:38 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,10 @@ int	assign_buin(char *cmd, t_buin *buin);
 char 	**dup_env(char **env);
 t_dict 	**get_env_dict(char **env);
 void	ft_free_dict(t_dict **dict);
-char 	*dict_get_by_key(t_dict **dict, char *target_str);
-int		change_env(char **env, char *key, char *value);
-int		add_new_env(char **env, char *new_env);
-
+char 	*get_value(t_dict **dict, char *target_str);
+int		change_env(char *key, char *value);
+int		add_new_env(char *new_env);
+void	update_env_dict(void);
 
 int	raise_error(char *msg, int mode);
 
