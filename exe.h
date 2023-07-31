@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 01:46:37 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/31 17:14:26 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ typedef	enum e_rdir{
 	append,
 	heredoc
 } t_rdir;
+
+typedef	enum e_err{
+	KERNEL_ERR,
+	NOFILE_ERR,
+	NOCMD_ERR,
+	NOPERMISSION_ERR,
+} t_err;
 
 #define HEREDOC_FILENAME ".heredoc"
 
