@@ -6,53 +6,66 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:16:54 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/01 01:51:16 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 02:38:37 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-int	ft_isvar(int c)
+static	int	ft_strcmp(const char *s1, const char *s2)
 {
-	if (c == '_' || ft_isalpha(c) || ft_isdigit(c))
-		return (1);
-	return (0);
-}
-
-int	ft_varlen(char *s)
-{
-	int	i;
+	size_t	i;
 
 	i = 0;
-	if (!s)
-		return (0);
-	if (s[i] == '_' || ft_isalpha(s[i]))
+	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
-	else
-		return (0);
-	while (s[i] && ft_isvar(s[i]))
-		i++;
-	return (i);
-	
+	return ((unsigned char)(s1[i]) - (unsigned char)(s2[i]));
 }
 
-int	is_valid_var(char *s)
+
+static void	sort_export(char **tmp)
 {
-	int	varlen;
-	
-	if (!s)
-		return (0);
-	if (s[0] == '_' || ft_isalpha(s[0]))
+	int		i;
+	int		size;
+	char	*s;
+
+	i = 0;
+	size = strstrlen(tmp);
+	while (i < size && tmp[i + 1])
 	{
-		varlen = ft_varlen(s);
-		if (s[varlen] == '\0' || s[varlen] == '=')
-			return (1);
+		if (ft_strcmp(tmp[i], tmp[i + 1]) > 0)
+		{
+			s = NULL;
+			s = tmp[i];
+			tmp[i] = tmp[i + 1];
+			tmp[i + 1] = s;
+		}
+		i++;
 	}
-	return (0);
-		
 }
 
-int	export_to_env(char *s)
+
+static int	prt_env_alpha(void)
+{
+	char **tmp;
+	int	i;
+	
+	tmp = dup_env(global_data.env_ptr);
+	sort_export(tmp);
+	i = 0;
+	while (tmp[i])
+	{
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
+		ft_putstr_fd(tmp[i], STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		i++;
+	}
+	ft_double_free(tmp);
+	return (EXIT_SUCCESS);
+	
+}
+
+static int	export_to_env(char *s)
 {
 	char **split;
 	char *key;
@@ -85,10 +98,13 @@ int	ft_export(char **arg)
 	err = 0;
 	if (!arg)
 		return (0);
-	if (!*arg)
-		return (1);
-		// return (display_env_alpha());
-	i = 0;
+	if (!arg[1])
+	{
+		// return (1);
+		printf("bp1\n");
+		return (prt_env_alpha());
+	}
+	i = 1;
 	while (arg[i])
 	{
 		if (!is_valid_var(arg[i]))

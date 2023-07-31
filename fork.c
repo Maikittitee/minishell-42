@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 21:22:41 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 02:54:07 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	is_do_in_parent(t_scmd *cmd, t_buin *buin)
 {	
 	if (!is_built_in(cmd->cmd[0]))
 		return (0);
-	if (ft_strncmp(cmd->cmd[0], "export", 7) ==0 && cmd->cmd[1] != NULL)
+	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0 && cmd->cmd[1])
 		return (*buin = e_export, 1);
 	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 		return (*buin = e_cd, 1);
@@ -99,7 +99,7 @@ int	do_in_parent(t_scmd *cmd, t_buin *buin)
 	{
 		printf("hello export");
 		// return (EXIT_SUCCESS);
-		return (ft_export(&cmd->cmd[1]));
+		return (ft_export(cmd->cmd));
 	}
 	else if (*buin == e_cd)
 	{
@@ -142,9 +142,11 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 	curr = cmd;
 	if (pipe_data.npipe == 0 && is_do_in_parent(cmd, &dummy))
 	{
+		printf("bp2\n");
 		close_pipe(pipe_data);
 		return (do_in_parent(cmd, &dummy));
 	}
+	printf("bp3\n");
 	pipe_data.pcnt = 0;
 	path = get_paths(env);
 	pipe_data.pid = malloc(sizeof(int) * pipe_data.nprocess);

@@ -25,7 +25,8 @@ SRCS_fILE = exe.c\
 			buin_pwd_env_cd.c\
 			env.c\
 			buin_unset.c\
-			buin_export.c
+			buin_export.c\
+			var.c
 	 
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_fILE))
