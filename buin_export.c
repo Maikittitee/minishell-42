@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:16:54 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 21:29:54 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 01:51:16 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,19 @@ int	export_to_env(char *s)
 	char *key;
 	char *value;
 
+	key = NULL;
+	value = NULL;
 	split = ft_split(s, '=');
-	key = split[0];
-	value = split[1];
+	if (split[0])
+		key = split[0];
+	if (split[1])
+		value = split[1];
+	printf("bp1 %s %s\n", key, value);
 	if (get_value(global_data.env_dict, key))
+	{
+		printf("bp2\n");
 		change_env(key, value);
+	}
 	else
 		add_new_env(s);
 	ft_double_free(split);

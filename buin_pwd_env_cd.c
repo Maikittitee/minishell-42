@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 02:17:58 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 01:28:36 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	ft_env(char **arg)
 
 	i = 0;
 	(void)arg;
-	while (global_data.env_dict[i])
+	while (global_data.env_ptr[i])
 	{
-		printf("%s=%s\n", global_data.env_dict[i]->key, global_data.env_dict[i]->value);
+		printf("%s\n", global_data.env_ptr[i]);
 		i++;
 	}
 	exit (EXIT_SUCCESS);
@@ -71,16 +71,7 @@ int	ft_cd(char **arg)
 		printf("CHANGE FAIL\n");
 	if (get_value(global_data.env_dict, "OLDPWD"))
 		change_env("OLDPWD", oldpwd);
-		
 	free(newpwd);
 	free(oldpwd);
-
 	return (EXIT_SUCCESS);
-	
-	
-		
-		
-		
-		
-
 }

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:06:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 00:59:27 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 01:54:05 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,20 @@ t_dict **get_env_dict(char **env)
 	while (env[i])
 	{
 		tmp = ft_split(env[i], '=');
-		dict[i] = malloc(sizeof(t_dict));		
-		dict[i]->key = ft_strdup(tmp[0]);
-		dict[i]->value = ft_strdup(tmp[1]);
+		dict[i] = malloc(sizeof(t_dict));
+		if  (tmp[0])		
+			dict[i]->key = ft_strdup(tmp[0]);
+		else
+			dict[i]->key = NULL;
+		if (tmp[1])	
+			dict[i]->value = ft_strdup(tmp[1]);
+		else
+			dict[i]->value = NULL;
 		ft_double_free(tmp);
 		i++;
 	}
 	dict[i] = NULL;
 	return (dict);
-	
-	
 }
 
 char *get_value(t_dict **dict, char *target_str)
