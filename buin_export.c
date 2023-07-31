@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:16:54 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 17:41:42 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/31 21:29:54 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,23 @@ int	is_valid_var(char *s)
 		
 }
 
+int	export_to_env(char *s)
+{
+	char **split;
+	char *key;
+	char *value;
+
+	split = ft_split(s, '=');
+	key = split[0];
+	value = split[1];
+	if (get_value(global_data.env_dict, key))
+		change_env(key, value);
+	else
+		add_new_env(s);
+	ft_double_free(split);
+	return (1);
+}
+
 int	ft_export(char **arg)
 {
 	int	i;
@@ -61,15 +78,19 @@ int	ft_export(char **arg)
 	if (!arg)
 		return (0);
 	if (!*arg)
-		return (display_env_alpha());
+		return (1);
+		// return (display_env_alpha());
 	i = 0;
 	while (arg[i])
 	{
-		if (is_invalid_var(arg[i]))
+		if (!is_valid_var(arg[i]))
 		{
-			print_export_err(arg[i]);
+			// print_export_err(arg[i]);
 			err = 1;
 		}
+		else
+			export_to_env(arg[i]);
 		i++;
-	}	
+	}
+	return (err);
 }

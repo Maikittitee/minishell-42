@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 02:10:05 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/31 21:22:41 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int	do_in_parent(t_scmd *cmd, t_buin *buin)
 	if (*buin == e_export)
 	{
 		printf("hello export");
-		return (EXIT_SUCCESS);
-		// return (ft_export_arg(cmd->cmd));
+		// return (EXIT_SUCCESS);
+		return (ft_export(&cmd->cmd[1]));
 	}
 	else if (*buin == e_cd)
 	{
@@ -108,7 +108,8 @@ int	do_in_parent(t_scmd *cmd, t_buin *buin)
 	else if (*buin == e_unset)
 	{
 		printf("hello unset");
-		return (EXIT_SUCCESS);
+		return (2);
+		// return (ft_unset(cmd->cmd));
 	}
 	else
 		return (EXIT_FAILURE);

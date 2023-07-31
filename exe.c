@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 02:15:02 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/07/31 21:29:24 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,27 @@ int	main(int ac, char **av, char **env)
 	
 	(void)ac;
 	(void)av;
-	env = dup_env(env);
-	global_data.env_dict = get_env_dict(env);
-	global_data.env_ptr = env;	
-	cmd = init_cmd(new_node("ls"));
-	link_cmd(cmd, new_node("cd"));
+	global_data.env_ptr = dup_env(env);
+	global_data.env_dict = get_env_dict(global_data.env_ptr);
+	// global_data.env_ptr = env;	
+	cmd = init_cmd(new_node("export mynameis=maiza"));
+	// link_cmd(cmd, new_node("cd÷"));
 	// link_cmd(cmd, new_node(""));
 	print_cmd(cmd);
 	executor(*cmd, env);
+	int	i;
+
+	i = 0;
+	while (global_data.env_ptr[i])
+	{
+		printf("%s\n", global_data.env_ptr[i]);
+		i++;
+	}
+
+	
 
 	printf(GRN"\nexit code is %d\n"RESET, global_data.return_code);
-	ft_double_free(env);
+	ft_double_free(global_data.env_ptr);
 	ft_free_dict(global_data.env_dict);
 	clear_free_cmd(*cmd);
 	free(cmd);
