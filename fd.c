@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/27 22:44:22 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 19:37:49 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,6 @@ int	count_file(t_file *file)
 	return (i);
 }
 
-int	raise_error(char *msg, int mode)
-{
-	if (mode == NOFILE_ERR)
-		msg = ft_strjoin(msg, ": No such file or directory");
-	if (mode == NOPERMISSION_ERR)
-		msg = ft_strjoin(msg, ": Permission denied");
-	ft_putstr_fd(msg, STDERR_FILENO);
-	free(msg);
-	return (1);
-}
-
 int	get_infile_index(t_file *file)
 {
 	int	i;
@@ -98,10 +87,22 @@ int	check_fd_in(t_file *file)
 	{
 		if (file[i].type == infile)
 		{
+			if (access(file[i].filename, F_OK) != 0)
+			{
+				raise_error(file[i].filename, NOFILE_ERR);
+				free(fd_data.fd);
+				return (-1);
+			}
+			if (access(file[i].filename, R_OK) != 0)
+			{
+				raise_error(file[i].filename, NOPERMISSION_ERR);
+				free(fd_data.fd);
+				return (-1);
+			}
 			fd_data.fd[j] = open(file[i].filename, O_RDONLY);
 			if (fd_data.fd[j] == -1)
 			{
-				raise_error(file[i].filename, NOFILE_ERR);
+				raise_error(file[i].filename, KERNEL_ERR);
 				free(fd_data.fd);
 				return (-1);
 			}	
@@ -132,19 +133,26 @@ int	check_fd_out(t_file *file)
 	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
 	while (file[i].type != none)
 	{
+
+		if ((file[i].type == append || file[i].type == outfile) && access(file[i].filename, W_OK) != 0)
+		{
+				raise_error(file[i].filename, NOFILE_ERR);
+				free(fd_data.fd);
+				return (-1);
+		}
 		if (file[i].type == append) ///////////// 
 		{
-			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_APPEND, 0777);
+			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_APPEND, 0644);
 			j++;
 		}
 		else if (file[i].type == outfile)
 		{
-			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 			j++;
 		}
 		if (fd_data.fd[j] == -1) 
 		{
-			raise_error(file[i].filename, NOPERMISSION_ERR);
+			raise_error(file[i].filename, KERNEL_ERR);
 			free(fd_data.fd);
 			return (-1);
 		} ////////////////////////////////////////// -> Can Make it as function
@@ -163,7 +171,7 @@ int	apply_fd(t_file *file, t_pipe *pipe_data)
 	pipe_data->fd_out = check_fd_out(file);
 	// dprintf(1, "fd_out: %d\n", pipe_data->fd_out);
 	if (pipe_data->fd_out < 0 || pipe_data->fd_in < 0)
-		return (0);
-	return (1);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 		
 }

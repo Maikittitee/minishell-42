@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/01 17:02:45 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 19:52:27 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,19 @@ void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
 void	ft_child(t_scmd *cmd, t_pipe pipe_data, char **env)
 {
 	t_buin buin_flag;
-	
+	int	open_file_status;
+
+	open_file_status = apply_fd(cmd->file, &pipe_data);
+	if (open_file_status != EXIT_SUCCESS)
+			exit(open_file_status);
 	ft_dup(pipe_data.pcnt, pipe_data, pipe_data.fd_in, pipe_data.fd_out);
 	if (pipe_data.pcnt == 0 && pipe_data.fd_in != 0)
 		close(pipe_data.fd_in);
 	if (pipe_data.pcnt == pipe_data.npipe && pipe_data.fd_out != 1)
 		close(pipe_data.fd_out);
 	close_pipe(pipe_data);
+	if (!is_built_in(cmd->cmd[0]) && !join_path(cmd, pipe_data.path))
+		exit(raise_error(cmd->cmd[0], NOCMD_ERR));
 	if (assign_buin(cmd->cmd[0], &buin_flag))
 		do_built_in(cmd, &buin_flag);
 	else
@@ -113,10 +119,10 @@ int	do_in_parent(t_scmd *cmd, t_buin *buin)
 	// should return 0 (success) or 1 (error)
 	
 }
-int	cmd_execute(t_scmd *cmd, t_pipe pipe_data, char **path)
+int	cmd_execute(t_scmd *cmd, t_pipe pipe_data)
 {
-	if (!is_built_in(cmd->cmd[0]))
-		join_path(cmd, path);
+	// if (!is_built_in(cmd->cmd[0]))
+		// join_path(cmd, path);
 	pipe_data.pid[pipe_data.pcnt] = fork();
 	if (pipe_data.pid[pipe_data.pcnt] == -1)
 		return (raise_error("fork error", 0));
@@ -132,7 +138,6 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 {
 	t_scmd *curr;
 	t_buin dummy;
-	char **path;
 	int	status;
 	
 	curr = cmd;
@@ -142,13 +147,14 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 		return (do_in_parent(cmd, &dummy));
 	}
 	pipe_data.pcnt = 0;
-	path = get_paths(env);
+	pipe_data.path = get_paths(env);
 	pipe_data.pid = malloc(sizeof(int) * pipe_data.nprocess);
-	while (pipe_data.pcnt < pipe_data.nprocess)
+	printf("pcnt: %d, nprocess: %d\n", pipe_data.pcnt, pipe_data.nprocess);
+	while (curr && pipe_data.pcnt < pipe_data.nprocess)
 	{
-		if (!apply_fd(curr->file, &pipe_data))
-			return (0);
-		if (!cmd_execute(curr, pipe_data, path))
+		// if (!apply_fd(curr->file, &pipe_data))
+		// 	return (0);
+		if (!cmd_execute(curr, pipe_data))
 			return (0);
 		curr = curr->next;
 		pipe_data.pcnt += 1;
@@ -156,6 +162,6 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 	close_pipe(pipe_data);
 	wait_all(pipe_data.pid, pipe_data, &status);
 	free(pipe_data.pid);
-	ft_double_free(path);
+	ft_double_free(pipe_data.path);
 	return (WEXITSTATUS(status));
 }

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/01 17:12:04 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 19:37:18 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef	struct s_line{
 }	t_line;
 
 typedef	struct s_pipe{
+	char **path;
 	char **env;
 	int	**fd;
 	int	*pid;
@@ -148,7 +149,7 @@ int		add_new_env(char *new_env);
 int	delete_env(char *key);
 void	update_env_dict(void);
 
-int		raise_error(char *msg, int mode);
+int		raise_error(char *msg, t_err mode);
 
 int		ft_env(char **arg);
 int		ft_pwd(char **arg);
