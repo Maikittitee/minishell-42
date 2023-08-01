@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:09:21 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 21:15:04 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/02 00:18:26 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ int	do_built_in(t_scmd *cmd, t_buin *buin)
 	status = 0;	
 	if (*buin == e_pwd)
 		status = ft_pwd(cmd->cmd);
-	// else if (*buin == e_echo)
-	// 	status = ft_echo(cmd->cmd);
+	else if (*buin == e_echo)
+		status = ft_echo(cmd->cmd);
 	else if (*buin == e_cd)
 		status = ft_cd(cmd->cmd);
 	else if (*buin == e_export)
 		status = ft_export(cmd->cmd);
-	// else if (*buin == e_unset)
-	// 	status = ft_unset(cmd->cmd);
+	else if (*buin == e_unset)
+		status = ft_unset(cmd->cmd);
 	else if (*buin == e_env)
 		status = ft_env(cmd->cmd);
 	// else if (*buin == e_exit)
