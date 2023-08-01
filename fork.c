@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/01 02:54:07 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:02:45 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ int	do_in_parent(t_scmd *cmd, t_buin *buin)
 {	
 	if (*buin == e_export)
 	{
-		printf("hello export");
-		// return (EXIT_SUCCESS);
 		return (ft_export(cmd->cmd));
 	}
 	else if (*buin == e_cd)
@@ -107,9 +105,7 @@ int	do_in_parent(t_scmd *cmd, t_buin *buin)
 	}
 	else if (*buin == e_unset)
 	{
-		printf("hello unset");
-		return (2);
-		// return (ft_unset(cmd->cmd));
+		return (ft_unset(cmd->cmd));
 	}
 	else
 		return (EXIT_FAILURE);
@@ -142,11 +138,9 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 	curr = cmd;
 	if (pipe_data.npipe == 0 && is_do_in_parent(cmd, &dummy))
 	{
-		printf("bp2\n");
 		close_pipe(pipe_data);
 		return (do_in_parent(cmd, &dummy));
 	}
-	printf("bp3\n");
 	pipe_data.pcnt = 0;
 	path = get_paths(env);
 	pipe_data.pid = malloc(sizeof(int) * pipe_data.nprocess);

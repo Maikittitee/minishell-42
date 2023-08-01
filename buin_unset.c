@@ -6,49 +6,44 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 01:25:27 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/31 02:11:04 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:12:15 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-// int	unset_err(char *s)
-// {
-// 	int	i;
+void	print_unset_err(char *s)
+{
+	if (!s)
+		return ;
+	ft_putstr_fd("unset: `", 2);
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+}
 
-// 	i = 0;
-// 	while (s[i])
-// 	{
-// 		if (!ft_isalpha(s[i]))
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
+int	ft_unset(char **arg)
+{
+	int	i;
+	int	err;
 
-// int	ft_unset(char **arg)
-// {
-// 	int	i;
-// 	int	err;
-
-// 	i = 0;
-// 	err = 0;
-// 	if (!arg)
-// 		return (0);
-// 	if (!*arg)
-// 		return (0);
-// 	while(arg[i])
-// 	{
-// 		if (unset_err(arg[i]))
-// 		{
-// 			raise_error(arg[i], INVALID_IDENTIFIER);
-// 			err = 1;
-// 		}
-// 		else
-// 			delete_env(arg[i]);
-// 		i++;
-// 	}
-// 	return (err)
+	i = 0;
+	err = 0;
+	if (!arg)
+		return (0);
+	if (!*arg)
+		return (0);
+	while(arg[i])
+	{
+		if (!is_valid_var(arg[i]))
+		{
+			print_unset_err(arg[i]);
+			err = 1;
+		}
+		else
+			delete_env(arg[i]);
+		i++;
+	}
+	return (err);
 	
 	
-// }
+}

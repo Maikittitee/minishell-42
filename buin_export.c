@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:16:54 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/01 02:38:37 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:13:56 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,15 @@ static int	export_to_env(char *s)
 	return (1);
 }
 
+void	print_export_err(char *s)
+{
+	if (!s)
+		return ;
+	ft_putstr_fd("export: `", 2);
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+}
+
 int	ft_export(char **arg)
 {
 	int	i;
@@ -109,7 +118,7 @@ int	ft_export(char **arg)
 	{
 		if (!is_valid_var(arg[i]))
 		{
-			// print_export_err(arg[i]);
+			print_export_err(arg[i]);
 			err = 1;
 		}
 		else

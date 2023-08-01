@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:09:41 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/01 02:15:26 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:12:04 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int		ft_env(char **arg);
 int		ft_pwd(char **arg);
 int		ft_cd(char **arg);
 int		ft_export(char **arg);
-// int		ft_unset(char **arg);
+int		ft_unset(char **arg);
 
 
 int     ft_isvar(int c);
