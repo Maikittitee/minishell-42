@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 22:19:40 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 23:04:02 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,6 @@ typedef	enum e_err{
 	NOPERMISSION_ERR,
 } t_err;
 
-typedef struct s_global{
-	int		return_code;
-	char	**env_ptr;
-	t_dict	**env_dict;
-} t_global;
-
-t_global global_data;
 // extern char **environ;
 
 typedef struct s_cmd{
@@ -161,11 +154,23 @@ typedef struct s_scmd
 
 typedef struct s_shell
 {
+	struct termios	term;
 	t_token	*token;
 	t_scmd	*scmd;
 	// char	*line;
 }	t_shell;
 
+typedef struct s_global{
+	t_dict	**env_dict;
+	t_shell *shell_ptr;
+	int		return_code;
+	char	**env_ptr;
+} t_global;
+
+t_global global_data;
+
+void ft_clear_shell(t_shell *shell, int end);
+bool	restore_termios(struct termios *term);
 // lexer //
 int	valid_quote(char *s, int *qoute, int *dollar);
 int	valid_token(t_token *token);
@@ -187,7 +192,7 @@ t_token	*create_token(char	*content, int qoute, int dollar, int len);
 void	classify_add_token(t_token **lst, t_token *new);
 t_token	*last_token(t_token *lst);
 void	clear_token(t_token **lst);
-void	ft_init_shell(t_shell *shell, struct termios *term ,char **env);
+void	ft_init_shell(t_shell *shell, char **env);
 
 // debug.c //
 void	print_token(t_token	*token);

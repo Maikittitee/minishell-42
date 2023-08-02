@@ -6,11 +6,11 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:17:25 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 22:24:54 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 23:12:08 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void parser(t_shell *shell)
 {
@@ -185,20 +185,20 @@ int break_input(char *line, t_token **token)
 
 void ft_clear_shell(t_shell *shell, int end)
 {
-	if (!end)
+	if (shell->token)
 	{
-		if (shell->token)
-		{
-			clear_token(&shell->token);
-			shell->token = NULL;
-		}
-		if (shell->scmd)
-		{
-			clear_scmd(&shell->scmd);
-			shell->scmd = NULL;
-		}
+		clear_token(&shell->token);
+		shell->token = NULL;
 	}
+	if (shell->scmd)
+	{
+		clear_scmd(&shell->scmd);
+		shell->scmd = NULL;
+	}
+	if (end)
+		rl_clear_history();
 }
+
 
 int ft_manager(char *line, t_shell *shell, char **env)
 {
@@ -226,7 +226,7 @@ int ft_manager(char *line, t_shell *shell, char **env)
 
 	parser(shell);
 	print_flow(shell, f_rdir, "PARSER");
-	
+
 	executor(shell->scmd, env);
 	ft_clear_shell(shell, FALSE);
 	return (TRUE);
@@ -255,26 +255,27 @@ char *handling_arg(char *arg)
 	return (handle);
 }
 
-void ft_init_shell(t_shell *shell, struct termios *term ,char **env)
+void ft_init_shell(t_shell *shell, char **env)
 {
+	global_data.return_code = 0;
 	global_data.env_ptr = dup_env(env);
 	global_data.env_dict = get_env_dict(env);
+	global_data.shell_ptr = shell;
 	shell->scmd = NULL;
 	shell->token = NULL;
-	set_termios(term);
+	set_termios(&shell->term);
 	set_signal();
 }
 
 int main(int ac, char **av, char **env)
 {
-	struct termios	term;
 	char *arg;
 	t_shell shell;
 
 	if (ac != 1)
 		return (printf("This Program Receive Only One Argument !\n"), 1);
 	(void)av;
-	ft_init_shell(&shell, &term, env);
+	ft_init_shell(&shell, env);
 	while (1)
 	{
 		signal(SIGINT, &sigint_handler);
@@ -290,6 +291,8 @@ int main(int ac, char **av, char **env)
 		free(arg);
 	}
 	printf("exit\n");
+	rl_clear_history();
+	restore_termios(&shell.term);
 	ft_double_free(global_data.env_ptr);
 	ft_free_dict(global_data.env_dict);
 	return (0);

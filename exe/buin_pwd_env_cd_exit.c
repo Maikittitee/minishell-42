@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 22:32:57 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 22:43:01 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,16 @@ int	ft_exit(char **arg)
 			printf("exit\n");
 			printf("exit: %s ", arg[i]);
 			printf(": numeric argument required\n");
-			// free();
-			// free();
+			ft_clear_shell(global_data.shell_ptr, FALSE);
+			ft_double_free(global_data.env_ptr);
+			ft_free_dict(global_data.env_dict);
 			exit(255);
 		}
 		i++;
 	}
 	printf("exit\n");
-	// ft_free();
+	ft_clear_shell(global_data.shell_ptr, FALSE);
+	ft_double_free(global_data.env_ptr);
+	ft_free_dict(global_data.env_dict);
 	return (exit(code), 0);
 }
