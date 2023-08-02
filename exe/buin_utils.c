@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buin_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:09:21 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 12:35:17 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 23:38:53 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,24 @@ int	is_built_in(char *cmd)
 
 int	do_built_in(t_scmd *cmd, t_buin *buin)
 {
-	int	status;
+	// int	status;
 
-	status = 0;
+	// status = 0;
 	if (*buin == e_pwd)
-		status = ft_pwd(cmd->cmd);
+		exit(ft_pwd(cmd->cmd));
 	else if (*buin == e_echo)
-		status = ft_echo(cmd->cmd);
+		exit(ft_echo(cmd->cmd));
 	else if (*buin == e_cd)
-		status = ft_cd(cmd->cmd);
+		exit(ft_cd(cmd->cmd));
 	else if (*buin == e_export)
-		status = ft_export(cmd->cmd);
+		exit(ft_export(cmd->cmd));
 	else if (*buin == e_unset)
-		status = ft_unset(cmd->cmd);
+		exit(ft_unset(cmd->cmd));
 	else if (*buin == e_env)
-		status = ft_env(cmd->cmd);
+		exit(ft_env(cmd->cmd));
 	else if (*buin == e_exit)
-		status = ft_exit(cmd->cmd);
-	exit(status);
+		exit(ft_exit(cmd->cmd));
+	else
+		exit(0);
+	// exit(status);
 }
