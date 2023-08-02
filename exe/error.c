@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 19:38:06 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 15:40:48 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 04:01:21 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ int	raise_error(char *msg, t_err mode)
 		ret = 126;
 	}
 	ft_putstr_fd(msg, STDERR_FILENO);
-	free(msg);
-	return (ret);
+	return (free(msg), ret);
 }

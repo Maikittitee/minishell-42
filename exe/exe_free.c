@@ -36,8 +36,5 @@ void	clear_free_cmd(t_scmd *cmd)
 		free_cmd(cmd);
 		cmd = tmp;
 	}
-	// free_cmd(tmp);
-	// free(cmd);
-
 }
 

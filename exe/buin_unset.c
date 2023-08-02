@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 01:25:27 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 20:53:06 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 03:59:38 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ int	ft_unset(char **arg)
 			err = 1;
 		}
 		else
-		{
-			printf("here\n");
 			delete_env(arg[i]);
-		}
 		i++;
 	}
 	return (err);

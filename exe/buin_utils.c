@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:09:21 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 00:01:26 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 03:59:54 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	assign_buin(char *cmd, t_buin *buin)
 	else
 		return (0);
 }
+
 int	is_built_in(char *cmd)
 {
 	if (!cmd)
@@ -62,9 +63,6 @@ int	is_built_in(char *cmd)
 
 int	do_built_in(t_scmd *cmd, t_buin *buin)
 {
-	// int	status;
-
-	// status = 0;
 	if (*buin == e_pwd)
 		exit(ft_pwd(cmd->cmd));
 	else if (*buin == e_echo)
@@ -81,5 +79,4 @@ int	do_built_in(t_scmd *cmd, t_buin *buin)
 		exit(ft_exit(cmd->cmd));
 	else
 		exit(0);
-	// exit(status);
 }

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 00:02:04 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 03:59:22 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ int	ft_pwd(char **arg)
 	(void)arg;
 
 	cwd = NULL;
-	// if (arg[1])
-	// {
-	// 	raise_error(arg[0], TOO_MUCH_ARG);
-	// 	return (1);
-	// }
 	cwd = getcwd(cwd, 0);
 	if (cwd == NULL)
 	{
@@ -86,8 +81,7 @@ int	ft_exit(char **arg)
 		if (!ft_atol(arg[1]))
 		{
 			printf("exit\n");
-			printf("exit: %s ", arg[i]);
-			printf(": numeric argument required\n");
+			printf("exit: %s : numeric argument required\n", arg[i]);
 			ft_clear_shell(global_data.shell_ptr, FALSE);
 			ft_double_free(global_data.env_ptr);
 			ft_free_dict(global_data.env_dict);

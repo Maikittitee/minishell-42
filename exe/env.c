@@ -6,11 +6,12 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:06:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 20:57:57 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 04:00:45 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
+
 void	ft_free_dict(t_dict **dict)
 {
 	int	i;
