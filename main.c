@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:17:25 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 16:17:37 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 16:54:33 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,7 @@ int main(int ac, char **av, char **env)
 		free(arg);
 	}
 	printf("exit\n");
-	ft_double_free(env);
+	ft_double_free(global_data.env_ptr);
 	ft_free_dict(global_data.env_dict);
 	return (0);
 }

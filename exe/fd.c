@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 12:45:20 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 16:50:54 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,13 @@ int	check_fd_out(t_file *file)
 	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
 	while (file[i].type != none)
 	{
-
-		if ((file[i].type == append || file[i].type == outfile) && access(file[i].filename, W_OK) != 0)
+		if ((file[i].type == append || file[i].type == outfile) && access(file[i].filename, F_OK) != 0 && access(file[i].filename, W_OK) != 0)
 		{
-				raise_error(file[i].filename, NOFILE_ERR);
+				raise_error(file[i].filename, NOPERMISSION_ERR);
 				free(fd_data.fd);
 				return (-1);
 		}
-		if (file[i].type == append) /////////////
+		if (file[i].type == append)
 		{
 			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_APPEND, 0644);
 			j++;
@@ -155,7 +154,7 @@ int	check_fd_out(t_file *file)
 			raise_error(file[i].filename, KERNEL_ERR);
 			free(fd_data.fd);
 			return (-1);
-		} ////////////////////////////////////////// -> Can Make it as function
+		}
 		i++;
 	}
 	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile); /// optimize
