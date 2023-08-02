@@ -6,11 +6,17 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:44:56 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/07/18 15:12:09 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 15:14:51 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	print_valid_token(char *content)
+{
+	printf("syntax error near unexpected token `%s'\n", content);
+	return (FALSE);
+}
 
 int	valid_token(t_token *token)
 {
@@ -18,10 +24,7 @@ int	valid_token(t_token *token)
 	t_token	*next;
 
 	if (token->type == is_pipe)
-	{
-		printf("syntax error near unexpected token `%s'\n", token->content);
-		return (FALSE);
-	}
+		return (print_valid_token(token->content));
 	while (token)
 	{
 		type = token->type;
@@ -29,24 +32,15 @@ int	valid_token(t_token *token)
 		if (next)
 		{
 			if (next && type == is_pipe && next->type == is_pipe)
-			{
-				printf("syntax error near unexpected token `%s'\n", next->content);
-				return (FALSE);
-			}
+				return (print_valid_token(next->content));
 			else if (next && type == is_rdir && (next->type == is_pipe || next->type == is_rdir))
-			{
-				printf("syntax error near unexpected token `%s'\n", next->content);
-				return (FALSE);
-			}
+				return (print_valid_token(next->content));
 
 		}
 		else
 		{
 			if(type == is_pipe || type == is_rdir)
-			{
-				printf("syntax error near unexpected token `newline'\n");
-				return (FALSE);
-			}
+				return (print_valid_token("newline"));
 		}
 		token = next;
 	}

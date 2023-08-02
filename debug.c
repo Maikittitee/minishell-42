@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 12:25:28 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/07/18 21:12:54 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 14:29:07 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ void	print_type(t_type type)
 	else if (type == is_file)
 		printf("\033[2;34m" "file" "\033[0m");
 }
-
-// void	print_status()
-// {}
 
 void	print_token(t_token	*token)
 {
@@ -74,6 +71,12 @@ void	print_rdir(t_scmd *scmd)
 				printf("%s ", *(tmp)++);
 			printf("\n");
 		}
+		else
+		{
+			printf("cmd = ");
+			printf("\033[2;31m" "%s\n" "\033[0m", NULL);
+		}
+
 		if (scmd->file)
 		{
 			while (scmd->file[i].type)
@@ -90,6 +93,18 @@ void	print_rdir(t_scmd *scmd)
 		}
 		printf("\n\n");
 		scmd = scmd->next;
+	}
+}
+
+void	print_myenv(void)
+{
+	int	i = 0;
+	while (global_data.env_dict[i])
+	{
+		printf("%s", global_data.env_dict[i]->key);
+		printf("=");
+		printf("%s\n", global_data.env_dict[i]->value);
+		i++;
 	}
 }
 

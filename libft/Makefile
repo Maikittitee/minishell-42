@@ -6,7 +6,7 @@
 #    By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/02 14:31:53 by ksaelim           #+#    #+#              #
-#    Updated: 2023/06/22 21:04:36 by ksaelim          ###   ########.fr        #
+#    Updated: 2023/08/02 12:54:41 by ksaelim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,12 @@ SRCS	= ft_isalpha.c \
 	  ft_strtrim.c \
 	  ft_strmapi.c \
 	  ft_striteri.c \
-	  ft_split.c
+	  ft_split.c \
+	  get_next_line.c \
+	  get_next_line_utils.c \
+	  ft_strndup.c \
+	  ft_strcmp.c \
+	  ft_atol.c
 
 BONUS_SRCS	= ft_lstsize.c \
 		  ft_lstnew.c \
@@ -73,7 +78,7 @@ bonus: $(BONUS_OBJS)
 
 all: $(NAME)
 
-clean: 
+clean:
 	rm -rf $(OBJS) $(BONUS_OBJS)
 
 fclean:	clean
