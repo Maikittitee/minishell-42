@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 04:04:07 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 04:10:43 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,15 @@ int	get_infile_index(t_file *file)
 	return (target);
 }
 
+t_fd	get_fd_data(t_file *file)
+{
+	t_fd fd_data;
+
+	fd_data.nfile = count_file_by_type(file, infile);
+	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
+	return (fd_data);
+	
+}
 
 int	check_fd_in(t_file *file)
 {
@@ -79,8 +88,7 @@ int	check_fd_in(t_file *file)
 	if (real_index == -1)
 		return (0);
 	heredoc_fd = do_here(file);
-	fd_data.nfile = count_file_by_type(file, infile);
-	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
+	fd_data = get_fd_data(file);
 	j = 0;
 	i = 0;
 	while (file[i].type != none)
@@ -88,24 +96,12 @@ int	check_fd_in(t_file *file)
 		if (file[i].type == infile)
 		{
 			if (access(file[i].filename, F_OK) != 0)
-			{
-				raise_error(file[i].filename, NOFILE_ERR);
-				free(fd_data.fd);
-				return (-1);
-			}
+				return (raise_error(file[i].filename, NOFILE_ERR), free(fd_data.fd), -1);
 			if (access(file[i].filename, R_OK) != 0)
-			{
-				raise_error(file[i].filename, NOPERMISSION_ERR);
-				free(fd_data.fd);
-				return (-1);
-			}
+				return (raise_error(file[i].filename, NOPERMISSION_ERR), free(fd_data.fd), -1);
 			fd_data.fd[j] = open(file[i].filename, O_RDONLY);
 			if (fd_data.fd[j] == -1)
-			{
-				raise_error(file[i].filename, KERNEL_ERR);
-				free(fd_data.fd);
-				return (-1);
-			}
+				return (raise_error(file[i].filename, KERNEL_ERR), free(fd_data.fd), -1);
 			j++;
 		}
 		i++;
@@ -113,7 +109,6 @@ int	check_fd_in(t_file *file)
 	if (file[real_index].type == heredoc)
 		return (heredoc_fd);
 	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile);
-	printf("correct fd is %d\n", fd_data.correct_fd);
 	free(fd_data.fd);
 	return (fd_data.correct_fd);
 }
