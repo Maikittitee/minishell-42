@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 11:54:56 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/07/24 10:06:15 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 21:24:01 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	skip_qoute(char *s, char c, int *dollar)
 	i = 1;
 	while (s[i] && s[i] != c)
 	{
-		printf("%c\n", s[i]);
 		if (s[i] == '$' && dollar && c == DQUOTE)
 			(*dollar)++;
 		i++;

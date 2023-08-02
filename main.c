@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:17:25 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 17:34:32 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/02 22:24:54 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,10 @@ int ft_manager(char *line, t_shell *shell, char **env)
 		return (FALSE);
 	if (!valid_token(shell->token))
 		return (FALSE);
+	// printf("\n\n");
+	// print_token(shell->token);
+	// printf("\n\n");
+	print_flow(shell, f_token, "TOKEN");
 	// if (!expand_token())
 	// 	return (FALSE);
 	// if (!trim_quote())
@@ -215,15 +219,14 @@ int ft_manager(char *line, t_shell *shell, char **env)
 	// if (!executor())
 	// 	return (0);
 	expand_token(&shell->token);
-	print_token(shell->token);
-	printf("\n\n");
+	print_flow(shell, f_token, "EXPAND");
+
 	trim_quote(&shell->token);
-	printf("0123456789");
-	print_token(shell->token);
-	printf("\n\n");
+	print_flow(shell, f_token, "TRIM_QUOTE");
+
 	parser(shell);
-	print_rdir(shell->scmd);
-	printf("\n\n");
+	print_flow(shell, f_rdir, "PARSER");
+	
 	executor(shell->scmd, env);
 	ft_clear_shell(shell, FALSE);
 	return (TRUE);

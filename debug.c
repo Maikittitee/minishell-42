@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 12:25:28 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 14:29:07 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 22:35:49 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,18 @@ void	print_token(t_token	*token)
 	{
 		printf("[ %s =", token->content);
 		print_type(token->type);
-		printf("\033[1;30m" ":" "\033[0m");
-		printf("q=");
-		printf("\033[2;35m" "%d" "\033[0m", token->quote);
-		printf("\033[1;30m" ":" "\033[0m");
-		printf("d=");
-		printf("\033[2;35m" "%d" "\033[0m", token->dollar);
+		if (token->quote)
+		{
+			printf("\033[1;30m" ":" "\033[0m");
+			printf("q=");
+			printf("\033[2;35m" "%d" "\033[0m", token->quote);
+		}
+		if (token->dollar)
+		{
+			printf("\033[1;30m" ":" "\033[0m");
+			printf("d=");
+			printf("\033[2;35m" "%d" "\033[0m", token->dollar);
+		}
 		printf(" ]");
 		token = token->next;
 		if (token)
@@ -59,22 +65,20 @@ void	print_rdir_type(t_rdir type)
 void	print_rdir(t_scmd *scmd)
 {
 	int	i;
+	int	j;
 	char **tmp;
+
+	j = 1;
 	while (scmd)
 	{
 		i = 0;
 		if (scmd->cmd)
 		{
 			tmp = scmd->cmd;
-			printf("cmd = ");
+			printf("scmd%d = ", j++);
 			while (*tmp)
-				printf("%s ", *(tmp)++);
+				printf("\033[2;35m" "%s " "\033[0m", *(tmp)++);
 			printf("\n");
-		}
-		else
-		{
-			printf("cmd = ");
-			printf("\033[2;31m" "%s\n" "\033[0m", NULL);
 		}
 
 		if (scmd->file)
@@ -94,8 +98,19 @@ void	print_rdir(t_scmd *scmd)
 		printf("\n\n");
 		scmd = scmd->next;
 	}
+	printf("scmd%d = ", j++);
+	printf("END\n");
 }
 
+void	print_flow(t_shell *shell, t_flow flow, char *content)
+{
+	printf("\033[38;5;208m" "\n\n--------> %s PART <--------\n\n" "\033[0m", content);
+	if (flow == f_token)
+		print_token(shell->token);
+	else
+		print_rdir(shell->scmd);
+	printf("\n\n");
+}
 void	print_myenv(void)
 {
 	int	i = 0;

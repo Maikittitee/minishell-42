@@ -17,10 +17,6 @@ void	sigint_wait_handler(int signum)
 	global_data.return_code = ES_SIGINT_CHILD;
 	write(1, "\n", 1);
 }
-// Set_signal
-// There are 2 signal You have to handle
-// 1. Ctrl+C (Interrupt signal) : Display new prompt on new line.
-// 2. Ctrl+/ (Quit signal) : does nothing, So I sent sig ignore to it.
 bool	set_signal(void)
 {
 	struct sigaction	sigint;
@@ -35,10 +31,6 @@ bool	set_signal(void)
 	return (true);
 }
 
-// Set_termios
-// 1. get the old terminal control for restore
-// 2. get the new terminal control for using in this program
-// 3. set the new terminal control by disable echoctl for not display ^C
 bool	set_termios(struct termios *term)
 {
 	struct termios	myterm;

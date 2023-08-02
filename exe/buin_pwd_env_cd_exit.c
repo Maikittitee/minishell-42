@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 12:55:03 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 22:32:57 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ int	ft_exit(char **arg)
 	}
 	printf("exit\n");
 	// ft_free();
-	return (exit(code), 1);
+	return (exit(code), 0);
 }

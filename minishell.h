@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 16:34:28 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 22:19:40 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,16 @@
 # define ES_SIGKILL 137
 # define ES_SIGSTOP 145
 
+
 typedef	struct s_dict{
 	char	*key;
 	char	*value;
 }t_dict;
+
+typedef	enum e_flow{
+	f_token,
+	f_rdir,
+} t_flow;
 
 typedef	enum e_err{
 	KERNEL_ERR,
@@ -189,6 +195,7 @@ void	print_rdir(t_scmd *scmd);
 void	print_rdir_type(t_rdir type);
 void	print_type(t_type type);
 void	print_myenv(void);
+void	print_flow(t_shell *shell, t_flow flow, char *content);
 
 // scmd.c //
 t_scmd	*create_scmd(t_token **token);
