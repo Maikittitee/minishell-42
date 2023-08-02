@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:06:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/01 16:42:27 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 20:57:57 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int	delete_env(char *key)
 	new_envp = malloc(sizeof(char *) * (strstrlen(global_data.env_ptr)));
 	while (global_data.env_ptr[i])
 	{
-		if (ft_strncmp(new_envp[i], key, ft_strlen(key)) != 0)
+		if (ft_strncmp(global_data.env_ptr[i], key, ft_strlen(key)) != 0)
 		{
 			new_envp[j] = ft_strdup(global_data.env_ptr[i]);
 			j++;
@@ -155,6 +155,7 @@ int	delete_env(char *key)
 		i++;
 	}
 	new_envp[j] = NULL;
+	ft_double_free(global_data.env_ptr);
 	global_data.env_ptr = new_envp;
 	update_env_dict();
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buin_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 01:25:27 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 12:39:21 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 20:53:06 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	ft_unset(char **arg)
 	int	i;
 	int	err;
 
-	i = 0;
+	i = 1;
 	err = 0;
 	if (!arg)
 		return (0);
-	if (!*arg)
+	if (!arg[i])
 		return (0);
 	while(arg[i])
 	{
@@ -40,7 +40,10 @@ int	ft_unset(char **arg)
 			err = 1;
 		}
 		else
+		{
+			printf("here\n");
 			delete_env(arg[i]);
+		}
 		i++;
 	}
 	return (err);

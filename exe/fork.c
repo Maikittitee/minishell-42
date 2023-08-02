@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 19:38:43 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/02 19:55:54 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,9 @@ void	wait_all(int *pid, t_pipe pipe_data, int *status)
 	i = 0;
 	while (i < pipe_data.nprocess)
 	{
-		if (pid[i] != -2)
-		{
-			if (status != NULL)
-				waitpid(pid[i], status, 0);
-			else
-				waitpid(pid[i], NULL, 0);
-		}
+		waitpid(pid[i], status, 0);
 		i++;
 	}
-
-	// waitpid(pid[i], status, 0);
-
 }
 
 void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
@@ -125,7 +116,7 @@ int	cmd_execute(t_scmd *cmd, t_pipe pipe_data)
 {
 	pipe_data.pid[pipe_data.pcnt] = fork();
 	if (pipe_data.pid[pipe_data.pcnt] == -1)
-		return (raise_error("fork error", 0));
+		return (raise_error("fork error", KERNEL_ERR));
 	if (pipe_data.pid[pipe_data.pcnt] == 0)
 		ft_child(cmd, pipe_data, global_data.env_ptr);
 	return (1);
@@ -147,7 +138,6 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 	pipe_data.pcnt = 0;
 	pipe_data.path = get_paths(env);
 	pipe_data.pid = malloc(sizeof(int) * pipe_data.nprocess);
-	printf("pcnt: %d, nprocess: %d\n", pipe_data.pcnt, pipe_data.nprocess);
 	while (curr && pipe_data.pcnt < pipe_data.nprocess)
 	{
 		if (!cmd_execute(curr, pipe_data))

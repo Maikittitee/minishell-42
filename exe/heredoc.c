@@ -6,13 +6,13 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:43 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 18:59:49 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/02 19:56:42 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-int	ft_heredoc(char *start, char *eof) // return fd;
+int	ft_heredoc(char *start, char *eof)
 {
 	int	here_fd;
 	char *buffer;
@@ -50,7 +50,6 @@ int	ft_heredoc(char *start, char *eof) // return fd;
 	close(here_fd);
 	return (open(HEREDOC_FILENAME, O_RDONLY));
 }
-
 
 t_file *get_here_doc(t_file *file)
 {
