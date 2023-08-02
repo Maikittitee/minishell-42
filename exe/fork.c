@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 19:38:19 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/02 19:38:43 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,6 @@ int	cmd_execute(t_scmd *cmd, t_pipe pipe_data)
 	return (1);
 
 }
-
-
 
 int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 {
