@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:17:25 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 23:22:10 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/02 23:52:32 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,16 +236,16 @@ int ft_manager(char *line, t_shell *shell, char **env)
 char *handling_arg(char *arg)
 {
 	char *handle;
-	// int i;
+	int i;
 
-	// i = 0;
-	// while (ft_isspace(arg[i]))
-	// 	i++;
-	// if (!arg[i])
-	// {
-	// 	free(arg);
-	// 	return (NULL);
-	// }
+	i = 0;
+	while (ft_isspace(arg[i]))
+		i++;
+	if (!arg[i])
+	{
+		free(arg);
+		return (NULL);
+	}
 	handle = ft_strtrim(arg, " \t");
 	if (!ft_strlen(handle))
 	{

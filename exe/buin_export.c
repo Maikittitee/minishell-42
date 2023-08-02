@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buin_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:16:54 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 12:41:18 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 00:01:21 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,8 @@ static int	export_to_env(char *s)
 		key = split[0];
 	if (split[1])
 		value = split[1];
-	printf("bp1 %s %s\n", key, value);
 	if (get_value2(global_data.env_dict, key))
 	{
-		printf("bp2\n");
 		change_env(key, value);
 	}
 	else
@@ -108,11 +106,7 @@ int	ft_export(char **arg)
 	if (!arg)
 		return (0);
 	if (!arg[1])
-	{
-		// return (1);
-		printf("bp1\n");
 		return (prt_env_alpha());
-	}
 	i = 1;
 	while (arg[i])
 	{

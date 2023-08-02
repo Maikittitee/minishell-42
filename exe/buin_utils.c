@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:09:21 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 23:38:53 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 00:01:26 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	is_built_in(char *cmd)
 {
 	if (!cmd)
 		return (0);
-
+	if (!*cmd)
+	{
+		return (0);
+	}
 	if (ft_strncmp(cmd, "echo", 4) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, "cd", 2) == 0)

@@ -41,6 +41,8 @@ int	join_path(t_scmd *cmd, char **paths)
 	i = 0;
 	if (!cmd)
 		return (0);
+	if (!cmd->cmd[0][0])
+		return (0);
 	if (access(cmd->cmd[0], F_OK) == EXIT_SUCCESS)
 		return (1);
 	check = ft_strjoin(paths[i], cmd->cmd[0]);

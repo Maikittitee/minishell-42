@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buin_pwd_env_cd_exit.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 22:43:01 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 00:02:04 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,7 @@ int	ft_cd(char **arg)
 		return (raise_error(NULL, 0));
 	newpwd = NULL;
 	newpwd = getcwd(newpwd, 0);
-	printf("the new pwd is %s\n", newpwd);
-	if (change_env("PWD", newpwd))
-		printf("Success\n");
-	else
-		printf("CHANGE FAIL\n");
+	change_env("PWD", newpwd);
 	if (get_value2(global_data.env_dict, "OLDPWD"))
 		change_env("OLDPWD", oldpwd);
 	free(newpwd);
