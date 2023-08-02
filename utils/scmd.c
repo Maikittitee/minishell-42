@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scmd.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 12:08:43 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/07/19 19:30:32 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 23:25:42 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void clear_scmd(t_scmd **lst)
 	{
 		tmp = (*lst)->next;
 		if ((*lst)->cmd)
-			free((*lst)->cmd);
+			ft_double_free((*lst)->cmd);
 		if ((*lst)->file)
 			free((*lst)->file);
 		if (*lst)
