@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 12:46:46 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 19:38:19 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,27 +91,30 @@ int	is_do_in_parent(t_scmd *cmd, t_buin *buin)
 		return (*buin = e_cd, 1);
 	else if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)
 		return (*buin = e_unset, 1);
+	else if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
+		return (*buin = e_exit, 1);
 	else
 		return (0);
 
-	// should return 0 (success) or 1 (error)
+	// should return 0 (true) or 1 (false)
 
 }
 
 int	do_in_parent(t_scmd *cmd, t_buin *buin)
 {
+	t_pipe pipe_data;
+	int	open_file_status;
+	open_file_status = apply_fd(cmd->file, &pipe_data);
+	if (open_file_status != EXIT_SUCCESS)
+			return (open_file_status);				
 	if (*buin == e_export)
-	{
 		return (ft_export(cmd->cmd));
-	}
 	else if (*buin == e_cd)
-	{
 		return (ft_cd(cmd->cmd));
-	}
 	else if (*buin == e_unset)
-	{
 		return (ft_unset(cmd->cmd));
-	}
+	else if (*buin == e_exit)
+		return (ft_exit(cmd->cmd));
 	else
 		return (EXIT_FAILURE);
 
@@ -120,8 +123,6 @@ int	do_in_parent(t_scmd *cmd, t_buin *buin)
 }
 int	cmd_execute(t_scmd *cmd, t_pipe pipe_data)
 {
-	// if (!is_built_in(cmd->cmd[0]))
-		// join_path(cmd, path);
 	pipe_data.pid[pipe_data.pcnt] = fork();
 	if (pipe_data.pid[pipe_data.pcnt] == -1)
 		return (raise_error("fork error", 0));
@@ -151,10 +152,8 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 	printf("pcnt: %d, nprocess: %d\n", pipe_data.pcnt, pipe_data.nprocess);
 	while (curr && pipe_data.pcnt < pipe_data.nprocess)
 	{
-		// if (!apply_fd(curr->file, &pipe_data))
-		// 	return (0);
 		if (!cmd_execute(curr, pipe_data))
-			return (0);
+			return (1);
 		curr = curr->next;
 		pipe_data.pcnt += 1;
 	}
