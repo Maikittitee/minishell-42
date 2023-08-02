@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 16:05:11 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 14:56:09 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 04:12:59 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,6 @@ t_token *create_token(char *content, int qoute, int dollar, int len)
 void clear_token(t_token **lst)
 {
 	t_token *tmp;
-	int i;
-
-	i = 0;
 
 	if (!lst || !(*lst))
 		return;
@@ -89,6 +86,5 @@ void clear_token(t_token **lst)
 			free(*lst);
 		}
 		*lst = tmp;
-		i++;
 	}
 }
