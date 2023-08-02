@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 16:50:54 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:04:49 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,27 +133,30 @@ int	check_fd_out(t_file *file)
 	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
 	while (file[i].type != none)
 	{
-		if ((file[i].type == append || file[i].type == outfile) && access(file[i].filename, F_OK) != 0 && access(file[i].filename, W_OK) != 0)
+		if (file[i].type == append || file[i].type == outfile)
 		{
-				raise_error(file[i].filename, NOPERMISSION_ERR);
+			if (access(file[i].filename, F_OK) == 0 && access(file[i].filename, W_OK) != 0)
+			{
+					raise_error(file[i].filename, NOPERMISSION_ERR);
+					free(fd_data.fd);
+					return (-1);
+			}
+			if (file[i].type == append)
+			{
+				fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_APPEND, 0644);
+				j++;
+			}
+			else if (file[i].type == outfile)
+			{
+				fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
+				j++;
+			}
+			if (fd_data.fd[j] == -1)
+			{
+				raise_error(file[i].filename, KERNEL_ERR);
 				free(fd_data.fd);
 				return (-1);
-		}
-		if (file[i].type == append)
-		{
-			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_APPEND, 0644);
-			j++;
-		}
-		else if (file[i].type == outfile)
-		{
-			fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
-			j++;
-		}
-		if (fd_data.fd[j] == -1)
-		{
-			raise_error(file[i].filename, KERNEL_ERR);
-			free(fd_data.fd);
-			return (-1);
+			}
 		}
 		i++;
 	}
