@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 16:11:14 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/02 16:34:28 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "libft/libft.h"
 # include "readline/readline.h"
 # include "readline/history.h"
-# include "exec/exe.h"
+# include "exe/exe.h"
 # include <unistd.h>
 # include <signal.h>
 # include <sys/ioctl.h>

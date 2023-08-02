@@ -33,7 +33,7 @@ UTILS_FUNCT = skip_operator.c \
 			token.c \
 			scmd.c
 
-EXE_DIR = exec/
+EXE_DIR = exe/
 
 EXE_FUNCT = exe.c\
 			do_exe.c\
