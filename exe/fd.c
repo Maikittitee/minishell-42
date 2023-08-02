@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 17:04:49 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:46:44 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	check_fd_in(t_file *file)
 	if (file[real_index].type == heredoc)
 		return (heredoc_fd);
 	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile);
+	printf("correct fd is %d\n", fd_data.correct_fd);
 	free(fd_data.fd);
 	return (fd_data.correct_fd);
 }

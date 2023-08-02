@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:43 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/19 20:34:06 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:59:49 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ int	do_here(t_file *file)
 	if (heredoc == NULL)
 		return (-1);
 	nheredoc = count_file(heredoc);
-	if (nheredoc != 1)
-		return (-1);
 	if (nheredoc == 1)
 		start = NULL;
 	else
