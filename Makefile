@@ -56,7 +56,7 @@ EXE_FUNCT = exe.c\
 
 # mexe : mv $(EXE_FUNCT) exec
 ### flags ###
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 RDFLAGS = -L$(RD_DIR)lib -lreadline
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 

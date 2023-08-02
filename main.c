@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:17:25 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 16:54:33 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:34:32 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,8 +204,6 @@ int ft_manager(char *line, t_shell *shell, char **env)
 {
 	if (!break_input(line, &shell->token))
 		return (FALSE);
-	print_token(shell->token);
-	printf("\n\n");
 	if (!valid_token(shell->token))
 		return (FALSE);
 	// if (!expand_token())
@@ -217,7 +215,10 @@ int ft_manager(char *line, t_shell *shell, char **env)
 	// if (!executor())
 	// 	return (0);
 	expand_token(&shell->token);
+	print_token(shell->token);
+	printf("\n\n");
 	trim_quote(&shell->token);
+	printf("0123456789");
 	print_token(shell->token);
 	printf("\n\n");
 	parser(shell);
