@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 21:15:11 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/03 21:01:55 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 21:08:18 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_atol(const char *str, int *code)
 	while (ft_isdigit(str[i]))
 	{
 		n = (n * 10) + (str[i++] - '0');
-		if (n >= LLONG_MAX && sign > 0 || n > LLONG_MAX && sign < 0)
+		if ((n >= LLONG_MAX && sign > 0) || (n > LLONG_MAX && sign < 0))
 			return (0);
 	}
 	*code += n * sign;
