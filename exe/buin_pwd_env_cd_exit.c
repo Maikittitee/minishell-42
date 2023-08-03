@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buin_pwd_env_cd_exit.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 03:59:22 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 21:03:42 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_exit(char **arg)
 	{
 		if (i > 1)
 			return (printf("exit: too many arguments\n"), EXIT_FAILURE);
-		if (!ft_atol(arg[1]))
+		if (!ft_atol(arg[1], &code))
 		{
 			printf("exit\n");
 			printf("exit: %s : numeric argument required\n", arg[i]);

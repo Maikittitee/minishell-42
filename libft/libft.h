@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 14:23:13 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 12:54:31 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 20:58:07 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "get_next_line.h"
 
 # define ULLONG_MAX 9223372036854775807
+# define LLONG_MAX 9223372036854775807
 
 typedef struct s_list
 {
@@ -72,6 +73,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 char	*ft_strndup(char *s1, int len);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_strcmp(const char *s1, const char *s2);
-int		ft_atol(const char *str);
+int		ft_atol(const char *str, int *code);
 
 #endif
