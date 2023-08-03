@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 20:29:21 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:40:13 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void	ft_child(t_scmd *cmd, t_pipe pipe_data, char **env)
 
 	open_file_status = apply_fd(cmd->file, &pipe_data);
 	if (open_file_status != EXIT_SUCCESS)
-			exit(open_file_status);
+		exit(open_file_status);
+	if (!cmd->cmd)
+		exit(EXIT_FAILURE);
 	ft_dup(pipe_data.pcnt, pipe_data, pipe_data.fd_in, pipe_data.fd_out);
 	if (pipe_data.pcnt == 0 && pipe_data.fd_in != 0)
 		close(pipe_data.fd_in);
@@ -74,6 +76,10 @@ void	ft_child(t_scmd *cmd, t_pipe pipe_data, char **env)
 
 int	is_do_in_parent(t_scmd *cmd, t_buin *buin)
 {
+	if (!cmd)
+		return (0);
+	if (!cmd->cmd)
+		return (0);
 	if (!is_built_in(cmd->cmd[0]))
 		return (0);
 	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0 && cmd->cmd[1])
@@ -95,9 +101,12 @@ int	do_in_parent(t_scmd *cmd, t_buin *buin)
 {
 	t_pipe pipe_data;
 	int	open_file_status;
+	
 	open_file_status = apply_fd(cmd->file, &pipe_data);
 	if (open_file_status != EXIT_SUCCESS)
 			return (open_file_status);				
+	if (!cmd->cmd)
+		return (EXIT_SUCCESS);
 	if (*buin == e_export)
 		return (ft_export(cmd->cmd));
 	else if (*buin == e_cd)
