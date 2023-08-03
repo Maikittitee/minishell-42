@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 23:29:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 12:26:45 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 23:36:11 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_echo(char **arg)
 
 	i = 1;
 	no_nl = 0;
+	
 	n = strstrlen(arg);
 	if (arg[i] && ft_strnstr(arg[i], "-n", 2))
 	{

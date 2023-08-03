@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:17:25 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/03 20:27:22 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 23:48:20 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int ft_manager(char *line, t_shell *shell, char **env)
 		return (FALSE);
 	if (!valid_token(shell->token))
 		return (FALSE);
-	print_flow(shell, f_token, "TOKEN");
+	// print_flow(shell, f_token, "TOKEN");
 	// if (!expand_token())
 	// 	return (FALSE);
 	// if (!trim_quote())
@@ -217,17 +217,17 @@ int ft_manager(char *line, t_shell *shell, char **env)
 	// if (!executor())
 	// 	return (0);
 	expand_token(&shell->token);
-	print_flow(shell, f_token, "EXPAND");
+	// print_flow(shell, f_token, "EXPAND");
 
 	trim_quote(&shell->token);
-	print_flow(shell, f_token, "TRIM_QUOTE");
+	// print_flow(shell, f_token, "TRIM_QUOTE");
 
 	parser(shell);
-	print_flow(shell, f_rdir, "PARSER");
+	// print_flow(shell, f_rdir, "PARSER");
 
-	printf("\e[0;32m" "\n\n--------> RESULT <--------\n\n" "\e[0m");
+	// printf("\e[0;32m" "\n\n--------> RESULT <--------\n\n" "\e[0m");
 	executor(shell->scmd);
-	printf("\n\n");
+	// printf("\n\n");
 	ft_clear_shell(shell, FALSE);
 	return (TRUE);
 }
@@ -290,10 +290,8 @@ int main(int ac, char **av, char **env)
 			ft_clear_shell(&shell, FALSE);
 		free(arg);
 	}
-	printf("exit\n");
 	rl_clear_history();
 	restore_termios(&shell.term);
 	ft_double_free(global_data.env_ptr);
-	ft_free_dict(global_data.env_dict);
-	return (0);
+	return (ft_free_dict(global_data.env_dict), printf("exit\n"), 0);
 }
