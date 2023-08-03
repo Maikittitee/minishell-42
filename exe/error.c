@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 19:38:06 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 04:01:21 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 01:34:02 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,8 @@ int	raise_error(char *msg, t_err mode)
 	int	ret;
 
 	ret = 0;
-	if (mode == KERNEL_ERR)
-	{
-		perror(msg);
-		return (1);
-	}
+	if (mode == KERNEL_ERR || mode > 3)
+		return (perror(msg), mode + 1);
 	else if (mode == NOFILE_ERR)
 	{
 		msg = ft_strjoin(msg, ": No such file or directory\n");
@@ -35,7 +32,7 @@ int	raise_error(char *msg, t_err mode)
 	else if (mode == NOPERMISSION_ERR)
 	{
 		msg = ft_strjoin(msg, ": Permission denied\n");
-		ret = 126;
+		ret = 1;
 	}
 	ft_putstr_fd(msg, STDERR_FILENO);
 	return (free(msg), ret);

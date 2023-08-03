@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/04 00:40:25 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 01:29:28 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <dirent.h>
 # include <sys/stat.h>
 # include <stdbool.h>
+#include <sys/errno.h>
 
 #define HEREDOC_FILENAME "../.heredoc"
 

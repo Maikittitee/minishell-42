@@ -6,15 +6,15 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 00:30:39 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 01:34:13 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-void	close_pipe(t_pipe pipe_data)
+void close_pipe(t_pipe pipe_data)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < pipe_data.npipe)
@@ -25,9 +25,9 @@ void	close_pipe(t_pipe pipe_data)
 	}
 }
 
-void	wait_all(int *pid, t_pipe pipe_data, int *status)
+void wait_all(int *pid, t_pipe pipe_data, int *status)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < pipe_data.nprocess)
@@ -37,7 +37,7 @@ void	wait_all(int *pid, t_pipe pipe_data, int *status)
 	}
 }
 
-void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
+void ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
 {
 	if (fd_infile != 0)
 		dup2(fd_infile, STDIN_FILENO);
@@ -49,10 +49,10 @@ void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile)
 		dup2(piped.fd[ifd][1], STDOUT_FILENO);
 }
 
-void	ft_child(t_scmd *cmd, t_pipe pipe_data, char **env)
+void ft_child(t_scmd *cmd, t_pipe pipe_data, char **env)
 {
-	t_buin	buin_flag;
-	int		open_file_status;
+	t_buin buin_flag;
+	int open_file_status;
 
 	open_file_status = apply_fd(cmd->file, &pipe_data);
 	if (open_file_status != EXIT_SUCCESS)
@@ -69,11 +69,11 @@ void	ft_child(t_scmd *cmd, t_pipe pipe_data, char **env)
 		exit(raise_error(cmd->cmd[0], NOCMD_ERR));
 	if (assign_buin(cmd->cmd[0], &buin_flag))
 		do_built_in(cmd, &buin_flag);
-	else
-		execve(cmd->cmd[0], cmd->cmd, env);
+	else if (execve(cmd->cmd[0], cmd->cmd, env) == -1)
+		exit(raise_error(cmd->cmd[0], 125));
 }
 
-int	is_do_in_parent(t_scmd *cmd, t_buin *buin)
+int is_do_in_parent(t_scmd *cmd, t_buin *buin)
 {
 	if (!cmd)
 		return (0);
@@ -93,10 +93,10 @@ int	is_do_in_parent(t_scmd *cmd, t_buin *buin)
 		return (0);
 }
 
-int	do_in_parent(t_scmd *cmd, t_buin *buin)
+int do_in_parent(t_scmd *cmd, t_buin *buin)
 {
-	t_pipe	pipe_data;
-	int		open_file_status;
+	t_pipe pipe_data;
+	int open_file_status;
 
 	open_file_status = apply_fd(cmd->file, &pipe_data);
 	if (open_file_status != EXIT_SUCCESS)
@@ -115,7 +115,7 @@ int	do_in_parent(t_scmd *cmd, t_buin *buin)
 		return (EXIT_FAILURE);
 }
 
-int	cmd_execute(t_scmd *cmd, t_pipe pipe_data)
+int cmd_execute(t_scmd *cmd, t_pipe pipe_data)
 {
 	pipe_data.pid[pipe_data.pcnt] = fork();
 	if (pipe_data.pid[pipe_data.pcnt] == -1)
@@ -125,11 +125,11 @@ int	cmd_execute(t_scmd *cmd, t_pipe pipe_data)
 	return (1);
 }
 
-int	do_fork(t_scmd *cmd, t_pipe pipe_data)
+int do_fork(t_scmd *cmd, t_pipe pipe_data)
 {
-	t_scmd	*curr;
-	t_buin	dummy;
-	int		status;
+	t_scmd *curr;
+	t_buin dummy;
+	int status;
 
 	curr = cmd;
 	if (pipe_data.npipe == 0 && is_do_in_parent(cmd, &dummy))
