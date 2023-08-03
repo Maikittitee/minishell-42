@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:17:25 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 23:52:32 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 10:33:54 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,6 @@ int break_input(char *line, t_token **token)
 			return (FALSE);
 		ft_strlcpy(str, line, len + 1);
 		classify_add_token(token, create_token(str, qoute, dollar, len));
-		// clear_token(token);
 		line += len;
 	}
 	return (TRUE);
@@ -207,9 +206,6 @@ int ft_manager(char *line, t_shell *shell, char **env)
 		return (FALSE);
 	if (!valid_token(shell->token))
 		return (FALSE);
-	// printf("\n\n");
-	// print_token(shell->token);
-	// printf("\n\n");
 	print_flow(shell, f_token, "TOKEN");
 	// if (!expand_token())
 	// 	return (FALSE);
@@ -228,7 +224,9 @@ int ft_manager(char *line, t_shell *shell, char **env)
 	parser(shell);
 	print_flow(shell, f_rdir, "PARSER");
 
+	printf("\e[0;32m" "\n\n--------> RESULT <--------\n\n" "\e[0m");
 	executor(shell->scmd, env);
+	printf("\n\n");
 	ft_clear_shell(shell, FALSE);
 	return (TRUE);
 }

@@ -74,11 +74,12 @@ SRCS = $(addprefix $(UTILS_DIR), $(UTILS_FUNCT)) \
 
 CC = cc
 
-
 OBJS = $(SRCS:.c=.o)
 
 %o: %c $(INCLUDE)
 	$(CC) $(CFLAGS) $(LIBFT_HEAD) $(RD_HEAD) -c $< -o $@
+
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
@@ -95,4 +96,5 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+val:
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --trace-children=yes ./minishell
