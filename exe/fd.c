@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 21:38:30 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 21:54:57 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	get_infile_index(t_file *file)
 	while (file[i].type != none)
 	{
 		if (file[i].type == infile || file[i].type == heredoc)
-			target = file[i].index;
+			target = i;
 		i++;
 	}
 	return (target);
@@ -85,6 +85,7 @@ int	check_infile(char *filename, int *fd, int j)
 	fd[j] = open(filename, O_RDONLY);
 	if (fd[j] == -1)
 		return (raise_error(filename, KERNEL_ERR), free(fd), -1);
+	return (1);
 	
 }
 
@@ -101,8 +102,12 @@ int	check_fd_in(t_file *file, int i, int j)
 	fd_data = get_fd_data(file);
 	while (file[i].type != none)
 	{
-		if (file[i].type == infile && check_infile(file[i].filename, fd_data.fd, j))
+		if (file[i].type == infile)
+		{
+			if (check_infile(file[i].filename, fd_data.fd, j) == -1)
+				return (-1);
 			j++;
+		}
 		i++;
 	}
 	if (file[real_index].type == heredoc)
