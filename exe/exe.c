@@ -3,25 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 00:35:39 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 01:59:54 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-t_file	*create_file(void)
+t_fd	get_fd_data(t_file *file)
 {
-	t_file	*ret;
+	t_fd	fd_data;
 
-	ret = malloc(sizeof(t_file) * 2);
-	ret[0].filename = ft_strdup("eof");
-	ret[0].index = 0;
-	ret[0].type = heredoc;
-	ret[1].type = none;
-	return (ret);
+	fd_data.nfile = count_file_by_type(file, infile);
+	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
+	return (fd_data);
 }
 
 int	executor(t_scmd *cmd)

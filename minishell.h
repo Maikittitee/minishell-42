@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/04 01:29:28 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 02:14:31 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,13 +213,7 @@ bool	set_signal(void);
 
 // exe //
 
-t_scmd **init_cmd(t_scmd *cmd);
-t_scmd *new_node(char *str);
-void	link_cmd(t_scmd **head, t_scmd *cmd);
-
 char	**get_paths(char **env);
-void	print_cmd(t_scmd **head);
-void	clear_free_cmd(t_scmd *cmd);
 void	ft_double_free(char **s);
 int		cmdsize(t_scmd *cmd);
 int		do_fork(t_scmd *cmd, t_pipe pipe_data);
@@ -236,18 +230,16 @@ int		join_path(t_scmd *cmd, char **paths);
 char	**get_paths(char **env);
 int		do_built_in(t_scmd *cmd, t_buin *buin);
 int		is_built_in(char *cmd);
-int	assign_buin(char *cmd, t_buin *buin);
+int		assign_buin(char *cmd, t_buin *buin);
 char 	**dup_env(char **env);
 t_dict 	**get_env_dict(char **env);
 void	ft_free_dict(t_dict **dict);
 char 	*get_value2(t_dict **dict, char *target_str);
 int		change_env(char *key, char *value);
 int		add_new_env(char *new_env);
-int	delete_env(char *key);
+int		delete_env(char *key);
 void	update_env_dict(void);
-
 int		raise_error(char *msg, t_err mode);
-
 int		ft_env(char **arg);
 int		ft_pwd(char **arg);
 int		ft_cd(char **arg);
@@ -259,5 +251,16 @@ int		ft_echo(char **arg);
 int     ft_isvar(char c);
 int     ft_varlen2(char *s);
 int     is_valid_var(char *s);
+int	ft_strcmp2(const char *s1, const char *s2);
+int	count_file_by_type(t_file *file, t_rdir type);
+int	count_file(t_file *file);
+int	strstrlen(char **s);
+t_fd	get_fd_data(t_file *file);
+int     change_env(char *key, char *value);
+int     delete_env(char *key);
+void    update_env_dict(void);
+void    ft_child(t_scmd *cmd, t_pipe pipe_data, char **env);
+int     is_do_in_parent(t_scmd *cmd, t_buin *buin);
+int     do_in_parent(t_scmd *cmd, t_buin *buin);
 
 #endif

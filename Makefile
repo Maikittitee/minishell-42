@@ -44,7 +44,7 @@ EXE_FUNCT = exe.c\
 			cmd_utils.c\
 			heredoc.c\
 			fd.c\
-			file_utils.c\
+			fd_utils.c\
 			buin_utils.c\
 			buin_pwd_env_cd_exit.c\
 			env.c\
@@ -52,7 +52,10 @@ EXE_FUNCT = exe.c\
 			buin_export.c\
 			var.c \
 			buin_echo.c \
-			error.c
+			error.c \
+			env2.c \
+			exe_utils.c\
+			parentnchild.c
 
 # mexe : mv $(EXE_FUNCT) exec
 ### flags ###

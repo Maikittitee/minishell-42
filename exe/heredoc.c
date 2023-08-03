@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:43 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 00:26:49 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 02:22:26 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
+
+void	do_start(char *start, int fd)
+{
+	char	*buffer;
+
+	if (!start)
+		return ;
+	while (start)
+	{
+		write(STDOUT_FILENO, ">", 1);
+		buffer = get_next_line(STDIN_FILENO);
+		if (ft_strncmp(buffer, start, ft_strlen(start)) == 0)
+		{
+			free(buffer);
+			break ;
+		}
+		free(buffer);
+	}
+}
 
 int	ft_heredoc(char *start, char *eof)
 {
@@ -18,19 +37,7 @@ int	ft_heredoc(char *start, char *eof)
 	char	*buffer;
 
 	here_fd = open(HEREDOC_FILENAME, O_RDWR | O_CREAT | O_TRUNC, 0777);
-	if (here_fd == -1)
-		write(2, "here_fd ERROR\n", 14);
-	while (start)
-	{
-		write(STDOUT_FILENO, ">", 1);
-		buffer = get_next_line(STDIN_FILENO);
-		if (ft_strncmp(buffer, start, ft_strlen(eof)) == 0)
-		{
-			free(buffer);
-			break ;
-		}
-		free(buffer);
-	}
+	do_start(start, here_fd);
 	while (eof)
 	{
 		write(STDOUT_FILENO, ">", 1);
