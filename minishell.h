@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/04 02:14:31 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 02:30:00 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,14 +202,19 @@ void	print_type(t_type type);
 void	print_myenv(void);
 void	print_flow(t_shell *shell, t_flow flow, char *content);
 
-// scmd.c //
+// scmd.c and scmd2.c //
 t_scmd	*create_scmd(t_token **token);
 void	ft_add_scmd(t_scmd **lst, t_scmd *new);
 void	clear_scmd(t_scmd **lst);
-
 void	sigint_handler(int signum);
 bool	set_termios(struct termios *term);
 bool	set_signal(void);
+void    free_2d(char **s);
+char    **get_cmd(char **cmd, char *content);
+t_scmd  *last_scmd(t_scmd *lst);
+t_rdir  rdir_type(char *content);
+void    get_file(t_file *file, char *rdir, char *filename);
+int     count_rdir(t_token *token);
 
 // exe //
 
@@ -262,5 +267,9 @@ void    update_env_dict(void);
 void    ft_child(t_scmd *cmd, t_pipe pipe_data, char **env);
 int     is_do_in_parent(t_scmd *cmd, t_buin *buin);
 int     do_in_parent(t_scmd *cmd, t_buin *buin);
+void    close_pipe(t_pipe pipe_data);
+void    wait_all(int *pid, t_pipe pipe_data, int *status);
+void    ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile);
+int     cmd_execute(t_scmd *cmd, t_pipe pipe_data);
 
 #endif

@@ -31,7 +31,8 @@ UTILS_FUNCT = skip_operator.c \
 			ft_isarg.c \
 			ft_isspace.c \
 			token.c \
-			scmd.c
+			scmd.c \
+			scmd2.c
 
 EXE_DIR = exe/
 

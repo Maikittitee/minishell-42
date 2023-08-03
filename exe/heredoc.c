@@ -6,13 +6,13 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:43 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 02:22:26 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 02:28:28 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-void	do_start(char *start, int fd)
+void	do_start(char *start)
 {
 	char	*buffer;
 
@@ -37,7 +37,7 @@ int	ft_heredoc(char *start, char *eof)
 	char	*buffer;
 
 	here_fd = open(HEREDOC_FILENAME, O_RDWR | O_CREAT | O_TRUNC, 0777);
-	do_start(start, here_fd);
+	do_start(start);
 	while (eof)
 	{
 		write(STDOUT_FILENO, ">", 1);
