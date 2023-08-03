@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:17:25 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/03 10:33:54 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 20:27:22 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ void ft_clear_shell(t_shell *shell, int end)
 
 int ft_manager(char *line, t_shell *shell, char **env)
 {
+	(void)env;
 	if (!break_input(line, &shell->token))
 		return (FALSE);
 	if (!valid_token(shell->token))
@@ -225,7 +226,7 @@ int ft_manager(char *line, t_shell *shell, char **env)
 	print_flow(shell, f_rdir, "PARSER");
 
 	printf("\e[0;32m" "\n\n--------> RESULT <--------\n\n" "\e[0m");
-	executor(shell->scmd, env);
+	executor(shell->scmd);
 	printf("\n\n");
 	ft_clear_shell(shell, FALSE);
 	return (TRUE);

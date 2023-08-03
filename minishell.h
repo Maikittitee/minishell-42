@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 23:04:02 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 20:26:59 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,8 +222,8 @@ void	print_cmd(t_scmd **head);
 void	clear_free_cmd(t_scmd *cmd);
 void	ft_double_free(char **s);
 int		cmdsize(t_scmd *cmd);
-int		do_fork(t_scmd *cmd, t_pipe pipe_data, char **env);
-int		do_pipe(t_scmd *cmd, char **env);
+int		do_fork(t_scmd *cmd, t_pipe pipe_data);
+int		do_pipe(t_scmd *cmd);
 int		ft_heredoc(char *start, char *eof);
 int		do_here(t_file *in_here);
 int		count_file_by_type(t_file *file, t_rdir type);
@@ -254,7 +254,7 @@ int		ft_pwd(char **arg);
 int		ft_cd(char **arg);
 int		ft_unset(char **arg);
 int		ft_export(char **arg);
-int		executor(t_scmd *cmd, char **env);
+int		executor(t_scmd *cmd);
 int		ft_exit(char **arg);
 int		ft_echo(char **arg);
 int     ft_isvar(char c);

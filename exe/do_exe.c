@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:13:01 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 04:00:18 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:28:57 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	**get_paths(char **env)
 		}
 		i++;
 	}
+	if (env[i] == NULL)
+		return (NULL);
 	ret_path = ft_split(path, ':');
 	i = 0;
 	while (ret_path[i])
