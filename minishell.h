@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/03 21:28:08 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 21:35:02 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,6 @@ int		count_file_by_type(t_file *file, t_rdir type);
 int		count_file(t_file *file);
 void	ft_free_file(t_file *file);
 int		ft_max(int *fd, int size);
-int		check_fd_in(t_file *file);
 int		apply_fd(t_file *file, t_pipe *pipe_data);
 int		strstrlen(char **s);
 int		join_path(t_scmd *cmd, char **paths);

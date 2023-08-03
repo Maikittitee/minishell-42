@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 04:10:43 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 21:38:30 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	get_infile_index(t_file *file)
 
 	i = 0;
 	target = -1;
+	if (!file)
+		return (-1);
 	while (file[i].type != none)
 	{
 		if (file[i].type == infile || file[i].type == heredoc)
@@ -74,36 +76,33 @@ t_fd	get_fd_data(t_file *file)
 	
 }
 
-int	check_fd_in(t_file *file)
+int	check_infile(char *filename, int *fd, int j)
 {
-	int	i;
-	int	j;
+	if (access(filename, F_OK) != 0)
+		return (raise_error(filename, NOFILE_ERR), free(fd), -1);
+	if (access(filename, R_OK) != 0)
+		return (raise_error(filename, NOPERMISSION_ERR), free(fd), -1);
+	fd[j] = open(filename, O_RDONLY);
+	if (fd[j] == -1)
+		return (raise_error(filename, KERNEL_ERR), free(fd), -1);
+	
+}
+
+int	check_fd_in(t_file *file, int i, int j)
+{
 	t_fd fd_data;
 	int	real_index;
 	int	heredoc_fd;
 
-	if (file == NULL)
-		return (0);
 	real_index = get_infile_index(file);
 	if (real_index == -1)
 		return (0);
 	heredoc_fd = do_here(file);
 	fd_data = get_fd_data(file);
-	j = 0;
-	i = 0;
 	while (file[i].type != none)
 	{
-		if (file[i].type == infile)
-		{
-			if (access(file[i].filename, F_OK) != 0)
-				return (raise_error(file[i].filename, NOFILE_ERR), free(fd_data.fd), -1);
-			if (access(file[i].filename, R_OK) != 0)
-				return (raise_error(file[i].filename, NOPERMISSION_ERR), free(fd_data.fd), -1);
-			fd_data.fd[j] = open(file[i].filename, O_RDONLY);
-			if (fd_data.fd[j] == -1)
-				return (raise_error(file[i].filename, KERNEL_ERR), free(fd_data.fd), -1);
+		if (file[i].type == infile && check_infile(file[i].filename, fd_data.fd, j))
 			j++;
-		}
 		i++;
 	}
 	if (file[real_index].type == heredoc)
@@ -113,14 +112,10 @@ int	check_fd_in(t_file *file)
 	return (fd_data.correct_fd);
 }
 
-int	check_fd_out(t_file *file)
+int	check_fd_out(t_file *file, int i, int j)
 {
-	int	i;
-	int	j;
 	t_fd fd_data;
 
-	i = 0;
-	j = 0;
 	if (file == NULL)
 		return (1);
 	fd_data.nfile = count_file_by_type(file, append) + count_file_by_type(file, outfile);
@@ -165,8 +160,8 @@ int	check_fd_out(t_file *file)
 int	apply_fd(t_file *file, t_pipe *pipe_data)
 {
 
-	pipe_data->fd_in = check_fd_in(file);
-	pipe_data->fd_out = check_fd_out(file);
+	pipe_data->fd_in = check_fd_in(file, 0, 0);
+	pipe_data->fd_out = check_fd_out(file, 0, 0);
 	if (pipe_data->fd_out < 0 || pipe_data->fd_in < 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
