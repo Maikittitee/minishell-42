@@ -6,13 +6,13 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 10:41:15 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/07/14 21:11:21 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 00:09:36 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_isrdir(char c)
+int	ft_isrdir(char c)
 {
-    return (c == INDIR || c == OUTDIR || c == PIPE);
+	return (c == INDIR || c == OUTDIR || c == PIPE);
 }

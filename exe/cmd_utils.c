@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 21:13:26 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/07/18 21:38:11 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:39:13 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	cmdsize(t_scmd *cmd)
 	int	i;
 
 	i = 0;
-	while(cmd)
+	while (cmd)
 	{
 		i++;
 		cmd = cmd->next;

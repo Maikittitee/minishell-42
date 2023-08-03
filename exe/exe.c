@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 20:25:49 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:35:39 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-t_file *create_file(void)
+t_file	*create_file(void)
 {
-	t_file *ret;
+	t_file	*ret;
 
 	ret = malloc(sizeof(t_file) * 2);
 	ret[0].filename = ft_strdup("eof");

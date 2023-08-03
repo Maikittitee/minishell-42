@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 16:05:11 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/03 04:12:59 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:07:01 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_token *last_token(t_token *lst)
+t_token	*last_token(t_token *lst)
 {
 	if (!lst)
 		return (lst);
@@ -21,7 +21,7 @@ t_token *last_token(t_token *lst)
 	return (lst);
 }
 
-t_type token_type(char *content, t_type pre_type)
+t_type	token_type(char *content, t_type pre_type)
 {
 	if (content[0] == PIPE)
 		return (is_pipe);
@@ -33,9 +33,9 @@ t_type token_type(char *content, t_type pre_type)
 		return (is_arg);
 }
 
-void classify_add_token(t_token **lst, t_token *new)
+void	classify_add_token(t_token **lst, t_token *new)
 {
-	t_token *back;
+	t_token	*back;
 
 	if (lst)
 	{
@@ -53,9 +53,9 @@ void classify_add_token(t_token **lst, t_token *new)
 	}
 }
 
-t_token *create_token(char *content, int qoute, int dollar, int len)
+t_token	*create_token(char *content, int qoute, int dollar, int len)
 {
-	t_token *new;
+	t_token	*new;
 
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
@@ -68,12 +68,12 @@ t_token *create_token(char *content, int qoute, int dollar, int len)
 	return (new);
 }
 
-void clear_token(t_token **lst)
+void	clear_token(t_token **lst)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!lst || !(*lst))
-		return;
+		return ;
 	while (*lst)
 	{
 		tmp = (*lst)->next;

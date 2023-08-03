@@ -6,10 +6,9 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 02:13:30 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/01 16:47:26 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 00:13:20 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "exe.h"
 
@@ -27,7 +26,6 @@ int	ft_varlen2(char *s)
 	while (s[i] && ft_isvar(s[i]))
 		i++;
 	return (i);
-
 }
 
 int	is_valid_var(char *s)
@@ -43,5 +41,4 @@ int	is_valid_var(char *s)
 			return (1);
 	}
 	return (0);
-
 }

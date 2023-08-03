@@ -6,34 +6,34 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:17:25 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/03 23:48:20 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 00:21:04 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void parser(t_shell *shell)
+void	parser(t_shell *shell)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = shell->token;
 	while (tmp)
 		ft_add_scmd(&shell->scmd, create_scmd(&tmp));
 }
 
-int check_1stchar_var(char c)
+int	check_1stchar_var(char c)
 {
 	if (c == '_' || ft_isalpha(c))
 		return (1);
 	return (0);
 }
 
-char *ft_restr(char *re, char *token, char var_len, int *start)
+char	*ft_restr(char *re, char *token, char var_len, int *start)
 {
-	char *new;
-	int re_len;
-	int i;
-	int j;
+	char	*new;
+	int		re_len;
+	int		i;
+	int		j;
 
 	if (!re)
 		re = "";
@@ -56,9 +56,9 @@ char *ft_restr(char *re, char *token, char var_len, int *start)
 	return (new);
 }
 
-char *get_return_code(char *token, int *start)
+char	*get_return_code(char *token, int *start)
 {
-	char *code;
+	char	*code;
 
 	code = ft_itoa(global_data.return_code);
 	if (!code)
@@ -70,14 +70,14 @@ char *get_return_code(char *token, int *start)
 	return (token);
 }
 
-int ft_isvar(char c)
+int	ft_isvar(char c)
 {
 	return (ft_isalpha(c) || ft_isdigit(c) || c == '_');
 }
 
-char *ft_get_var(char *token)
+char	*ft_get_var(char *token)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (global_data.env_dict[i])
@@ -89,10 +89,10 @@ char *ft_get_var(char *token)
 	return (NULL);
 }
 
-char *get_value(char *token, int *start, int var_len)
+char	*get_value(char *token, int *start, int var_len)
 {
-	char *var;
-	char *correct_var;
+	char	*var;
+	char	*correct_var;
 
 	var = ft_strndup(&token[*start + 1], var_len - 1);
 	correct_var = ft_get_var(var);
@@ -104,9 +104,9 @@ char *get_value(char *token, int *start, int var_len)
 	return (token);
 }
 
-int ft_varlen(char *token)
+int	ft_varlen(char *token)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (check_1stchar_var(token[i]))
@@ -116,9 +116,9 @@ int ft_varlen(char *token)
 	return (i);
 }
 
-char *ft_expander(char **token, int *start)
+char	*ft_expander(char **token, int *start)
 {
-	char c;
+	char	c;
 
 	c = token[0][*start + 1];
 	if (c == '?')
@@ -130,11 +130,11 @@ char *ft_expander(char **token, int *start)
 	return (*token);
 }
 
-void expand_token(t_token **token)
+void	expand_token(t_token **token)
 {
-	t_token *tmp;
-	int is_dq;
-	int i;
+	t_token	*tmp;
+	int		is_dq;
+	int		i;
 
 	is_dq = 0;
 	tmp = *token;
@@ -157,12 +157,12 @@ void expand_token(t_token **token)
 	}
 }
 
-int break_input(char *line, t_token **token)
+int	break_input(char *line, t_token **token)
 {
-	int len;
-	int	qoute;
-	int	dollar;
-	char *str;
+	int		len;
+	int		qoute;
+	int		dollar;
+	char	*str;
 
 	while (*line)
 	{
@@ -183,7 +183,7 @@ int break_input(char *line, t_token **token)
 	return (TRUE);
 }
 
-void ft_clear_shell(t_shell *shell, int end)
+void	ft_clear_shell(t_shell *shell, int end)
 {
 	if (shell->token)
 	{
@@ -199,43 +199,25 @@ void ft_clear_shell(t_shell *shell, int end)
 		rl_clear_history();
 }
 
-
-int ft_manager(char *line, t_shell *shell, char **env)
+int	ft_manager(char *line, t_shell *shell, char **env)
 {
 	(void)env;
 	if (!break_input(line, &shell->token))
 		return (FALSE);
 	if (!valid_token(shell->token))
 		return (FALSE);
-	// print_flow(shell, f_token, "TOKEN");
-	// if (!expand_token())
-	// 	return (FALSE);
-	// if (!trim_quote())
-	// return (FALSE);
-	// if (!parser())
-	// 	return (0);
-	// if (!executor())
-	// 	return (0);
 	expand_token(&shell->token);
-	// print_flow(shell, f_token, "EXPAND");
-
 	trim_quote(&shell->token);
-	// print_flow(shell, f_token, "TRIM_QUOTE");
-
 	parser(shell);
-	// print_flow(shell, f_rdir, "PARSER");
-
-	// printf("\e[0;32m" "\n\n--------> RESULT <--------\n\n" "\e[0m");
 	executor(shell->scmd);
-	// printf("\n\n");
 	ft_clear_shell(shell, FALSE);
 	return (TRUE);
 }
 
-char *handling_arg(char *arg)
+char	*handling_arg(char *arg)
 {
-	char *handle;
-	int i;
+	char	*handle;
+	int		i;
 
 	i = 0;
 	while (ft_isspace(arg[i]))
@@ -255,7 +237,7 @@ char *handling_arg(char *arg)
 	return (handle);
 }
 
-void ft_init_shell(t_shell *shell, char **env)
+void	ft_init_shell(t_shell *shell, char **env)
 {
 	global_data.return_code = 0;
 	global_data.env_ptr = dup_env(env);
@@ -267,10 +249,10 @@ void ft_init_shell(t_shell *shell, char **env)
 	set_signal();
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-	char *arg;
-	t_shell shell;
+	char	*arg;
+	t_shell	shell;
 
 	if (ac != 1)
 		return (printf("This Program Receive Only One Argument !\n"), 1);
@@ -281,11 +263,11 @@ int main(int ac, char **av, char **env)
 		signal(SIGINT, &sigint_handler);
 		arg = readline("minishell $");
 		if (!arg)
-			break;
+			break ;
 		add_history(arg);
 		arg = handling_arg(arg);
 		if (!arg)
-			continue;
+			continue ;
 		if (!ft_manager(arg, &shell, env))
 			ft_clear_shell(&shell, FALSE);
 		free(arg);

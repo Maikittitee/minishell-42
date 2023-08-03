@@ -6,17 +6,16 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:09:21 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 23:43:48 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 00:24:53 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-int assign_buin(char *cmd, t_buin *buin)
+int	assign_buin(char *cmd, t_buin *buin)
 {
 	if (!cmd)
 		return (0);
-
 	if (ft_strncmp(cmd, "echo", 5) == 0)
 	{
 		return (*buin = e_echo, 1);
@@ -39,7 +38,7 @@ int assign_buin(char *cmd, t_buin *buin)
 	}
 }
 
-int is_built_in(char *cmd)
+int	is_built_in(char *cmd)
 {
 	if (!cmd)
 		return (0);
@@ -65,7 +64,7 @@ int is_built_in(char *cmd)
 		return (0);
 }
 
-int do_built_in(t_scmd *cmd, t_buin *buin)
+int	do_built_in(t_scmd *cmd, t_buin *buin)
 {
 	if (*buin == e_pwd)
 		exit(ft_pwd(cmd->cmd));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buin_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:16:54 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 03:58:28 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:22:46 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static	int	ft_strcmp2(const char *s1, const char *s2)
 		i++;
 	return ((unsigned char)(s1[i]) - (unsigned char)(s2[i]));
 }
-
 
 static void	sort_export(char **tmp)
 {
@@ -44,11 +43,10 @@ static void	sort_export(char **tmp)
 	}
 }
 
-
 static int	prt_env_alpha(void)
 {
-	char **tmp;
-	int	i;
+	char	**tmp;
+	int		i;
 
 	tmp = dup_env(global_data.env_ptr);
 	sort_export(tmp);
@@ -62,14 +60,13 @@ static int	prt_env_alpha(void)
 	}
 	ft_double_free(tmp);
 	return (EXIT_SUCCESS);
-
 }
 
 static int	export_to_env(char *s)
 {
-	char **split;
-	char *key;
-	char *value;
+	char	**split;
+	char	*key;
+	char	*value;
 
 	key = NULL;
 	value = NULL;

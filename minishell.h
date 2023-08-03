@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/03 21:35:02 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:40:25 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <termios.h>
 # include <dirent.h>
 # include <sys/stat.h>
-# include "colors.h"
 # include <stdbool.h>
 
 #define HEREDOC_FILENAME "../.heredoc"

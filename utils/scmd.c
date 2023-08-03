@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   scmd.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 12:08:43 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 23:25:42 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:12:14 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void free_2d(char **s)
+void	free_2d(char **s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -22,11 +22,11 @@ void free_2d(char **s)
 	free(s);
 }
 
-char **get_cmd(char **cmd, char *content)
+char	**get_cmd(char **cmd, char *content)
 {
-	char **new;
-	int i;
-	int j;
+	char	**new;
+	int		i;
+	int		j;
 
 	i = 0;
 	if (cmd)
@@ -45,7 +45,8 @@ char **get_cmd(char **cmd, char *content)
 		free(cmd);
 	return (new);
 }
-t_scmd *last_scmd(t_scmd *lst)
+
+t_scmd	*last_scmd(t_scmd *lst)
 {
 	if (!lst)
 		return (lst);
@@ -54,7 +55,7 @@ t_scmd *last_scmd(t_scmd *lst)
 	return (lst);
 }
 
-t_rdir rdir_type(char *content)
+t_rdir	rdir_type(char *content)
 {
 	if (content[0] == INDIR)
 	{
@@ -74,15 +75,15 @@ t_rdir rdir_type(char *content)
 	}
 }
 
-void get_file(t_file *file, char *rdir, char *filename)
+void	get_file(t_file *file, char *rdir, char *filename)
 {
 	file->type = rdir_type(rdir);
 	file->filename = filename;
 }
 
-int count_rdir(t_token *token)
+int	count_rdir(t_token *token)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (token && token->type != is_pipe)
@@ -94,11 +95,11 @@ int count_rdir(t_token *token)
 	return (i);
 }
 
-t_scmd *create_scmd(t_token **token)
+t_scmd	*create_scmd(t_token **token)
 {
-	t_scmd *new;
-	int n_rdir;
-	int i;
+	t_scmd	*new;
+	int		n_rdir;
+	int		i;
 
 	new = (t_scmd *)malloc(sizeof(t_scmd));
 	if (!new)
@@ -129,9 +130,9 @@ t_scmd *create_scmd(t_token **token)
 	return (new);
 }
 
-void ft_add_scmd(t_scmd **lst, t_scmd *new)
+void	ft_add_scmd(t_scmd **lst, t_scmd *new)
 {
-	t_scmd *back;
+	t_scmd	*back;
 
 	if (lst)
 	{
@@ -145,12 +146,12 @@ void ft_add_scmd(t_scmd **lst, t_scmd *new)
 	}
 }
 
-void clear_scmd(t_scmd **lst)
+void	clear_scmd(t_scmd **lst)
 {
-	t_scmd *tmp;
+	t_scmd	*tmp;
 
 	if (!lst || !(*lst))
-		return;
+		return ;
 	while (*lst)
 	{
 		tmp = (*lst)->next;

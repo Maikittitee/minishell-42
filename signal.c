@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/03 23:58:43 by ksaelim           #+#    #+#             */
+/*   Updated: 2023/08/03 23:59:26 by ksaelim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <stdbool.h>
 
@@ -17,6 +29,7 @@ void	sigint_wait_handler(int signum)
 	global_data.return_code = ES_SIGINT_CHILD;
 	write(1, "\n", 1);
 }
+
 bool	set_signal(void)
 {
 	struct sigaction	sigint;

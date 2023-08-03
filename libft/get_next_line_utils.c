@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 14:49:14 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/06/11 21:28:14 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:03:21 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char	*ft_strjoin_free(char *s1, char *s2)
 
 	if (!s2)
 		return (NULL);
-	buffer = malloc((ft_strlen_mode(s1, 0) + ft_strlen_mode(s2, 0) + 1) * sizeof(char));
+	buffer = malloc((ft_strlen_mode(s1, 0) + ft_strlen_mode(s2, 0) + 1) \
+		* sizeof(char));
 	if (!buffer)
 		return (NULL);
 	i = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buin_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 01:25:27 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 03:59:38 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:24:22 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_unset(char **arg)
 		return (0);
 	if (!arg[i])
 		return (0);
-	while(arg[i])
+	while (arg[i])
 	{
 		if (!is_valid_var(arg[i]))
 		{

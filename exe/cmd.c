@@ -1,29 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/04 00:24:58 by ksaelim           #+#    #+#             */
+/*   Updated: 2023/08/04 00:38:35 by ksaelim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exe.h"
 
-t_scmd **init_cmd(t_scmd *cmd)
+t_scmd	**init_cmd(t_scmd *cmd)
 {
-	t_scmd **head;
+	t_scmd	**head;
+
 	head = malloc(sizeof(t_scmd *));
 	*head = cmd;
 	return (head);
 }
 
-t_scmd *new_node(char *str)
+t_scmd	*new_node(char *str)
 {
-	t_scmd *cmd;
+	t_scmd	*cmd;
 
 	cmd = malloc(sizeof(t_scmd));
 	cmd->cmd = ft_split(str, ' ');
 	cmd->file = NULL;
 	cmd->next = NULL;
 	return (cmd);
-	
 }
-
 
 void	link_cmd(t_scmd **head, t_scmd *cmd)
 {
-	t_scmd *curr;
+	t_scmd	*curr;
 
 	(void)cmd;
 	curr = *head;
@@ -34,12 +45,12 @@ void	link_cmd(t_scmd **head, t_scmd *cmd)
 
 int	join_path(t_scmd *cmd, char **paths)
 {
-	int	i;
 	char	*check;
 	char	*temp;
+	int		i;
 
 	i = 0;
-	if (!cmd || !paths) 
+	if (!cmd || !paths)
 		return (0);
 	if (!cmd->cmd[0][0])
 		return (0);
@@ -63,8 +74,6 @@ int	join_path(t_scmd *cmd, char **paths)
 	free(temp);
 	return (1);
 }
-
-
 
 void	print_cmd(t_scmd **head)
 {

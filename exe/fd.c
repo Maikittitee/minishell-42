@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 22:01:06 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:35:18 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,11 @@ int	get_infile_index(t_file *file)
 
 t_fd	get_fd_data(t_file *file)
 {
-	t_fd fd_data;
+	t_fd	fd_data;
 
 	fd_data.nfile = count_file_by_type(file, infile);
 	fd_data.fd = ft_calloc(sizeof(int), fd_data.nfile);
 	return (fd_data);
-	
 }
 
 int	check_infile(char *filename, int *fd, int j)
@@ -88,14 +87,13 @@ int	check_infile(char *filename, int *fd, int j)
 	if (fd[j] == -1)
 		return (raise_error(filename, KERNEL_ERR), free(fd), -1);
 	return (1);
-	
 }
 
 int	check_fd_in(t_file *file, int i, int j)
 {
-	t_fd fd_data;
-	int	real_index;
-	int	heredoc_fd;
+	t_fd	fd_data;
+	int		real_index;
+	int		heredoc_fd;
 
 	real_index = get_infile_index(file);
 	if (real_index == -1)
@@ -121,7 +119,7 @@ int	check_fd_in(t_file *file, int i, int j)
 
 int	check_fd_out(t_file *file, int i, int j)
 {
-	t_fd fd_data;
+	t_fd	fd_data;
 
 	fd_data.nfile = count_file_by_type(file, append) + count_file_by_type(file, outfile);
 	if (fd_data.nfile == 0)
@@ -132,7 +130,7 @@ int	check_fd_out(t_file *file, int i, int j)
 		if (file[i].type == append || file[i].type == outfile)
 		{
 			if (access(file[i].filename, F_OK) == 0 && access(file[i].filename, W_OK) != 0)
-					return (raise_error(file[i].filename, NOPERMISSION_ERR), free(fd_data.fd), -1);
+				return (raise_error(file[i].filename, NOPERMISSION_ERR), free(fd_data.fd), -1);
 			if (file[i].type == append)
 				fd_data.fd[j++] = open(file[i].filename, O_RDWR | O_CREAT | O_APPEND, 0644);
 			else if (file[i].type == outfile)
@@ -145,12 +143,10 @@ int	check_fd_out(t_file *file, int i, int j)
 	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile);
 	free(fd_data.fd);
 	return (fd_data.correct_fd);
-
 }
 
 int	apply_fd(t_file *file, t_pipe *pipe_data)
 {
-
 	pipe_data->fd_in = check_fd_in(file, 0, 0);
 	pipe_data->fd_out = check_fd_out(file, 0, 0);
 	if (pipe_data->fd_out < 0 || pipe_data->fd_in < 0)

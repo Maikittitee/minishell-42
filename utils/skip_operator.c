@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 11:54:56 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 21:24:01 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 00:06:06 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	skip_qoute(char *s, char c, int *dollar)
 int	skip_arg(char *s, int *qoute, int *dollar)
 {
 	int	i;
-	int q;
+	int	q;
 
 	i = 0;
 	while (s[i] && ft_isarg(s[i]))
@@ -59,10 +59,10 @@ int	skip_arg(char *s, int *qoute, int *dollar)
 
 int	skip_rdir(char *s)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (s[i] == INDIR || s[i] == OUTDIR)
-        i++;
+		i++;
 	return (i);
 }

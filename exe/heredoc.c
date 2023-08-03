@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:43 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 19:56:42 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:26:49 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_heredoc(char *start, char *eof)
 {
-	int	here_fd;
-	char *buffer;
+	int		here_fd;
+	char	*buffer;
 
 	here_fd = open(HEREDOC_FILENAME, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (here_fd == -1)
@@ -27,7 +27,7 @@ int	ft_heredoc(char *start, char *eof)
 		if (ft_strncmp(buffer, start, ft_strlen(eof)) == 0)
 		{
 			free(buffer);
-			break;
+			break ;
 		}
 		free(buffer);
 	}
@@ -38,7 +38,7 @@ int	ft_heredoc(char *start, char *eof)
 		if (ft_strncmp(buffer, eof, ft_strlen(eof)) == 0)
 		{
 			free(buffer);
-			break;
+			break ;
 		}
 		write(here_fd, buffer, ft_strlen(buffer));
 		free(buffer);
@@ -51,12 +51,12 @@ int	ft_heredoc(char *start, char *eof)
 	return (open(HEREDOC_FILENAME, O_RDONLY));
 }
 
-t_file *get_here_doc(t_file *file)
+t_file	*get_here_doc(t_file *file)
 {
-	int	nhere;
-	t_file *here;
-	int	i;
-	int	j;
+	t_file	*here;
+	int		nhere;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -85,6 +85,7 @@ int	do_here(t_file *file)
 	char	*end;
 	t_file	*heredoc;
 	int		nheredoc;
+
 	heredoc = get_here_doc(file);
 	if (heredoc == NULL)
 		return (-1);

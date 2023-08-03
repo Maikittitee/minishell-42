@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 21:03:42 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 00:24:05 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_pwd(char **arg)
 {
-	char *cwd;
-	(void)arg;
+	char	*cwd;
 
+	(void)arg;
 	cwd = NULL;
 	cwd = getcwd(cwd, 0);
 	if (cwd == NULL)
@@ -45,11 +45,11 @@ int	ft_env(char **arg)
 
 int	ft_cd(char **arg)
 {
-	char *oldpwd;
-	char *newpwd;
-	char *gogo;
-	oldpwd = NULL;
+	char	*oldpwd;
+	char	*newpwd;
+	char	*gogo;
 
+	oldpwd = NULL;
 	oldpwd = getcwd(oldpwd, 0);
 	if (arg[1])
 		gogo = arg[1];

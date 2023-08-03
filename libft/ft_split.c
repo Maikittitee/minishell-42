@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:15:07 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/06/27 11:05:07 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 00:12:39 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,7 @@ static int	alpha_count(char *s, char c)
 		if (*s && *s != c)
 			count++;
 		while (*s && *s != c)
-		{
-			// if (*s == DQUOTE)
-			// 	s += len_qoute(s, DQUOTE);
-			// else if (*s == SQUOTE)
-			// 	s += len_qoute(s, SQUOTE);
-			// else
-				s++;
-		}
+			s++;
 	}
 	return (count);
 }
@@ -44,11 +37,7 @@ static char	*word_count(char *s, char c)
 
 	i = 0;
 	while (s[i] && s[i] != c)
-	{
-		// if (s[i] == DQUOTE)
-		// else
-			i++;
-	}
+		i++;
 	word = (char *)malloc(i + 1);
 	if (!word)
 		return (NULL);

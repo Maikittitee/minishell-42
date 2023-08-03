@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:44:56 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/02 15:14:51 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 00:12:48 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ int	valid_token(t_token *token)
 		{
 			if (next && type == is_pipe && next->type == is_pipe)
 				return (print_valid_token(next->content));
-			else if (next && type == is_rdir && (next->type == is_pipe || next->type == is_rdir))
+			else if (next && type == is_rdir && (next->type == is_pipe || \
+				next->type == is_rdir))
 				return (print_valid_token(next->content));
-
 		}
 		else
 		{
-			if(type == is_pipe || type == is_rdir)
+			if (type == is_pipe || type == is_rdir)
 				return (print_valid_token("newline"));
 		}
 		token = next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_exe.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:13:01 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 20:28:57 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:42:25 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ char	**get_paths(char **env)
 		ret_path[i] = ft_strjoin_free(ret_path[i], "/");
 		i++;
 	}
-	free(path);
-	return (ret_path);
+	return (free(path), ret_path);
 }
