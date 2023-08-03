@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "KUY GU YAI"
+echo "HELLO WORLD"
