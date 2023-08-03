@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 20:33:10 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 21:54:57 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 22:01:06 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	count_file_by_type(t_file *file, t_rdir type)
 
 	i = 0;
 	cnt = 0;
+	if (!file)
+		return (0);
 	while (file[i].type != none)
 	{
 		if (file[i].type == type)
@@ -121,8 +123,6 @@ int	check_fd_out(t_file *file, int i, int j)
 {
 	t_fd fd_data;
 
-	if (file == NULL)
-		return (1);
 	fd_data.nfile = count_file_by_type(file, append) + count_file_by_type(file, outfile);
 	if (fd_data.nfile == 0)
 		return (1);
@@ -132,31 +132,17 @@ int	check_fd_out(t_file *file, int i, int j)
 		if (file[i].type == append || file[i].type == outfile)
 		{
 			if (access(file[i].filename, F_OK) == 0 && access(file[i].filename, W_OK) != 0)
-			{
-					raise_error(file[i].filename, NOPERMISSION_ERR);
-					free(fd_data.fd);
-					return (-1);
-			}
+					return (raise_error(file[i].filename, NOPERMISSION_ERR), free(fd_data.fd), -1);
 			if (file[i].type == append)
-			{
-				fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_APPEND, 0644);
-				j++;
-			}
+				fd_data.fd[j++] = open(file[i].filename, O_RDWR | O_CREAT | O_APPEND, 0644);
 			else if (file[i].type == outfile)
-			{
-				fd_data.fd[j] = open(file[i].filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
-				j++;
-			}
+				fd_data.fd[j++] = open(file[i].filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
 			if (fd_data.fd[j] == -1)
-			{
-				raise_error(file[i].filename, KERNEL_ERR);
-				free(fd_data.fd);
-				return (-1);
-			}
+				return (raise_error(file[i].filename, KERNEL_ERR), free(fd_data.fd), -1);
 		}
 		i++;
 	}
-	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile); /// optimize
+	fd_data.correct_fd = ft_max(fd_data.fd, fd_data.nfile);
 	free(fd_data.fd);
 	return (fd_data.correct_fd);
 
