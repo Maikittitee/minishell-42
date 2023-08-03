@@ -39,7 +39,7 @@ int	join_path(t_scmd *cmd, char **paths)
 	char	*temp;
 
 	i = 0;
-	if (!cmd)
+	if (!cmd || !paths) 
 		return (0);
 	if (!cmd->cmd[0][0])
 		return (0);

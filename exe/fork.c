@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 23:58:37 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:29:21 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	cmd_execute(t_scmd *cmd, t_pipe pipe_data)
 
 }
 
-int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
+int	do_fork(t_scmd *cmd, t_pipe pipe_data)
 {
 	t_scmd *curr;
 	t_buin dummy;
@@ -136,7 +136,7 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data, char **env)
 		return (do_in_parent(cmd, &dummy));
 	}
 	pipe_data.pcnt = 0;
-	pipe_data.path = get_paths(env);
+	pipe_data.path = get_paths(global_data.env_ptr);
 	pipe_data.pid = malloc(sizeof(int) * pipe_data.nprocess);
 	while (curr && pipe_data.pcnt < pipe_data.nprocess)
 	{

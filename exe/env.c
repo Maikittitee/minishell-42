@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:06:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/03 04:00:45 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:23:34 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,12 @@ int	change_env(char *key, char *value)
 			tmp = ft_strjoin(key, "=");
 			free(global_data.env_ptr[i]);
 			global_data.env_ptr[i] = ft_strjoin(tmp, value);
+			update_env_dict();
 			free(tmp);
 			return (1);
 		}
 		i++;
 	}
-	update_env_dict();
 	return (0);
 }
 

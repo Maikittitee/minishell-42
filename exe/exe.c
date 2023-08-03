@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/01 16:44:01 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 20:25:49 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_file *create_file(void)
 	return (ret);
 }
 
-int	executor(t_scmd *cmd, char **env)
+int	executor(t_scmd *cmd)
 {
-	do_pipe(cmd, env);
+	do_pipe(cmd);
 	return (1);
 }
 

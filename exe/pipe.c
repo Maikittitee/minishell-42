@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/02 12:50:02 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/03 20:26:09 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	free_pipe(int **fd, int n)
 	free(fd);
 }
 
-int	do_pipe(t_scmd *cmd, char **env)
+int	do_pipe(t_scmd *cmd)
 {
 	t_pipe pipe_data;
 
@@ -68,7 +68,7 @@ int	do_pipe(t_scmd *cmd, char **env)
 		free_pipe(pipe_data.fd, pipe_data.npipe);
 		return (raise_error("pipe error", 0));
 	}
-	global_data.return_code = do_fork(cmd, pipe_data, env);
+	global_data.return_code = do_fork(cmd, pipe_data);
 	free_pipe(pipe_data.fd, pipe_data.npipe);
 
 	// return that have no errr
