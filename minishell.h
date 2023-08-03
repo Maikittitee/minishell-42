@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/03 20:26:59 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/03 21:28:08 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include "colors.h"
 # include <stdbool.h>
 
-#define HEREDOC_FILENAME ".heredoc"
+#define HEREDOC_FILENAME "../.heredoc"
 
 # define TRUE 1
 # define FALSE 0
