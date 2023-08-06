@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:06:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 01:48:51 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 21:37:00 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_dict	**get_env_dict(char **env)
 		if (tmp[1])
 			dict[i]->value = ft_strdup(tmp[1]);
 		else
-			dict[i]->value = NULL;
+			dict[i]->value = ft_strdup("");
 		ft_double_free(tmp);
 		i++;
 	}
@@ -77,6 +77,8 @@ char	*get_value2(t_dict **dict, char *target_str)
 	int	i;
 
 	if (!dict)
+		return (NULL);
+	if (!target_str)
 		return (NULL);
 	i = 0;
 	while (dict[i])
@@ -94,16 +96,19 @@ int	add_new_env(char *new_env)
 	int		i;
 
 	i = 0;
-	new_envp = malloc(sizeof(char *) * (strstrlen(global_data.env_ptr) + 2));
-	while (global_data.env_ptr[i])
+	new_envp = malloc(sizeof(char *) * (strstrlen(g_global_data.env_ptr) + 2));
+	while (g_global_data.env_ptr[i])
 	{
-		new_envp[i] = ft_strdup(global_data.env_ptr[i]);
+		new_envp[i] = ft_strdup(g_global_data.env_ptr[i]);
 		i++;
 	}
-	new_envp[i] = ft_strdup(new_env);
+	if (ft_strchr(new_env, '='))
+		new_envp[i] = ft_strdup(new_env);
+	else
+		new_envp[i] = ft_strjoin(new_env, "=");
 	new_envp[i + 1] = NULL;
-	ft_double_free(global_data.env_ptr);
-	global_data.env_ptr = new_envp;
+	ft_double_free(g_global_data.env_ptr);
+	g_global_data.env_ptr = new_envp;
 	update_env_dict();
 	return (1);
 }

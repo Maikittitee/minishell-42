@@ -15,12 +15,14 @@ LEXER_DIR = lexer/
 
 LEXER_FUNCT	= valid_quote.c \
 			valid_token.c \
-			trim_qoute.c
+			trim_qoute.c \
+			expand.c \
+			break_input.c
 
 ### parser ###
-# PARSER_DIR = parser/
+PARSER_DIR = parser/
 
-# PARSER_FUNCT = parser.c
+PARSER_FUNCT = parser.c
 
 ### utils ###
 UTILS_DIR = utils/
@@ -32,7 +34,9 @@ UTILS_FUNCT = skip_operator.c \
 			ft_isspace.c \
 			token.c \
 			scmd.c \
-			scmd2.c
+			scmd2.c \
+			check_var.c \
+			restr.c
 
 EXE_DIR = exe/
 
@@ -64,16 +68,11 @@ CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 RDFLAGS = -L$(RD_DIR)lib -lreadline
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 
-# SRCS = $(addprefix $(LEXER_DIR), $(LEXER_FUNCT)) \
-# 			$(addprefix $(PARSER_DIR), $(PARSER_FUNCT)) \
-# 			$(addprefix $(UTILS_DIR), $(UTILS_FUNCT)) \
-# 			main.c
-
 SRCS = $(addprefix $(UTILS_DIR), $(UTILS_FUNCT)) \
 		$(addprefix $(LEXER_DIR), $(LEXER_FUNCT)) \
+		$(addprefix $(PARSER_DIR), $(PARSER_FUNCT)) \
 		$(addprefix $(EXE_DIR), $(EXE_FUNCT)) \
 		main.c \
-		debug.c \
 		signal.c
 
 CC = cc
@@ -83,7 +82,7 @@ OBJS = $(SRCS:.c=.o)
 %o: %c $(INCLUDE)
 	$(CC) $(CFLAGS) $(LIBFT_HEAD) $(RD_HEAD) -c $< -o $@
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re val
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:15:38 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/04 02:30:00 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 21:05:46 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # include <dirent.h>
 # include <sys/stat.h>
 # include <stdbool.h>
-#include <sys/errno.h>
+# include <sys/errno.h>
 
-#define HEREDOC_FILENAME "../.heredoc"
+# define HEREDOC_FILENAME "../.heredoc"
 
 # define TRUE 1
 # define FALSE 0
@@ -42,56 +42,54 @@
 # define ES_SIGKILL 137
 # define ES_SIGSTOP 145
 
-
-typedef	struct s_dict{
+typedef struct s_dict
+{
 	char	*key;
 	char	*value;
-}t_dict;
+}	t_dict;
 
-typedef	enum e_flow{
-	f_token,
-	f_rdir,
-} t_flow;
-
-typedef	enum e_err{
+typedef enum e_err
+{
 	KERNEL_ERR,
 	NOFILE_ERR,
 	NOCMD_ERR,
 	NOPERMISSION_ERR,
-} t_err;
+}	t_err;
 
-// extern char **environ;
-
-typedef struct s_cmd{
+typedef struct s_cmd
+{
 	char			**arg;
 	struct s_cmd	*next;
 }	t_cmd;
 
-
-typedef	struct s_line{
-	int			fd_in;
-	int			fd_out;
-}	t_line;
-
-typedef	struct s_pipe{
-	char **path;
-	char **env;
-	int	**fd;
-	int	*pid;
-	int	pcnt;
-	int	npipe;
-	int	nprocess;
+typedef struct s_line
+{
 	int	fd_in;
 	int	fd_out;
-}t_pipe;
+}	t_line;
 
-typedef struct s_fd{
+typedef struct s_pipe
+{
+	char	**path;
+	char	**env;
+	int		**fd;
+	int		*pid;
+	int		pcnt;
+	int		npipe;
+	int		nprocess;
+	int		fd_in;
+	int		fd_out;
+}	t_pipe;
+
+typedef struct s_fd
+{
 	int	*fd;
 	int	nfile;
-	int correct_fd;
-}t_fd;
+	int	correct_fd;
+}	t_fd;
 
-typedef enum e_buin{
+typedef enum e_buin
+{
 	e_echo,
 	e_cd,
 	e_pwd,
@@ -101,9 +99,8 @@ typedef enum e_buin{
 	e_exit,
 }	t_buin;
 
-
-
-typedef enum e_rdir{
+typedef enum e_rdir
+{
 	none,
 	infile,
 	outfile,
@@ -111,7 +108,8 @@ typedef enum e_rdir{
 	heredoc,
 }	t_rdir;
 
-typedef	enum e_type{
+typedef enum e_type
+{
 	is_none,
 	is_pipe,
 	is_arg,
@@ -119,7 +117,8 @@ typedef	enum e_type{
 	is_file,
 }	t_type;
 
-enum e_define{
+enum e_define
+{
 	PIPE = '|',
 	INDIR = '<',
 	OUTDIR = '>',
@@ -154,67 +153,57 @@ typedef struct s_scmd
 
 typedef struct s_shell
 {
-	struct termios	term;
-	t_token	*token;
-	t_scmd	*scmd;
-	// char	*line;
+	t_token			*token;
+	t_scmd			*scmd;
 }	t_shell;
 
-typedef struct s_global{
+typedef struct s_global
+{
 	t_dict	**env_dict;
-	t_shell *shell_ptr;
-	int		return_code;
+	t_shell	*shell_ptr;
 	char	**env_ptr;
-} t_global;
+	int		return_code;
+}	t_global;
 
-t_global global_data;
+t_global	g_global_data;
 
-void ft_clear_shell(t_shell *shell, int end);
-bool	restore_termios(struct termios *term);
+void	ft_clear_shell(t_shell *shell, int end);
 // lexer //
-int	valid_quote(char *s, int *qoute, int *dollar);
-int	valid_token(t_token *token);
+int		valid_quote(char *s, int *qoute, int *dollar);
+int		valid_token(t_token *token);
 void	trim_quote(t_token **token);
 // parser //
 // utils //
-int	ft_isspace(char c);
-int ft_isrdir(char c);
-int	ft_isquote(char c);
-int	ft_isarg(char c);
+int		ft_isspace(char c);
+int		ft_isrdir(char c);
+int		ft_isquote(char c);
+int		ft_isarg(char c);
 
 // skip_operator.c //
-int	skip_rdir(char *s);
-int	skip_qoute(char *s, char c, int *dollar);
-int	skip_arg(char *s, int *qoute, int *dollar);
+int		skip_rdir(char *s);
+int		skip_qoute(char *s, char c, int *dollar);
+int		skip_arg(char *s, int *qoute, int *dollar);
 
 // token.c
-t_token	*create_token(char	*content, int qoute, int dollar, int len);
+t_token	*create_token(char *content, int qoute, int dollar, int len);
 void	classify_add_token(t_token **lst, t_token *new);
 t_token	*last_token(t_token *lst);
 void	clear_token(t_token **lst);
 void	ft_init_shell(t_shell *shell, char **env);
 
-// debug.c //
-void	print_token(t_token	*token);
-void	print_rdir(t_scmd *scmd);
-void	print_rdir_type(t_rdir type);
-void	print_type(t_type type);
-void	print_myenv(void);
-void	print_flow(t_shell *shell, t_flow flow, char *content);
-
 // scmd.c and scmd2.c //
 t_scmd	*create_scmd(t_token **token);
 void	ft_add_scmd(t_scmd **lst, t_scmd *new);
 void	clear_scmd(t_scmd **lst);
-void	sigint_handler(int signum);
-bool	set_termios(struct termios *term);
+void	main_handler(int signum);
+void	exec_handler(int signum);
 bool	set_signal(void);
-void    free_2d(char **s);
-char    **get_cmd(char **cmd, char *content);
-t_scmd  *last_scmd(t_scmd *lst);
-t_rdir  rdir_type(char *content);
-void    get_file(t_file *file, char *rdir, char *filename);
-int     count_rdir(t_token *token);
+void	free_2d(char **s);
+char	**get_cmd(char **cmd, char *content);
+t_scmd	*last_scmd(t_scmd *lst);
+t_rdir	rdir_type(char *content);
+void	get_file(t_file *file, char *rdir, char *filename);
+int		count_rdir(t_token *token);
 
 // exe //
 
@@ -236,10 +225,10 @@ char	**get_paths(char **env);
 int		do_built_in(t_scmd *cmd, t_buin *buin);
 int		is_built_in(char *cmd);
 int		assign_buin(char *cmd, t_buin *buin);
-char 	**dup_env(char **env);
-t_dict 	**get_env_dict(char **env);
+char	**dup_env(char **env);
+t_dict	**get_env_dict(char **env);
 void	ft_free_dict(t_dict **dict);
-char 	*get_value2(t_dict **dict, char *target_str);
+char	*get_value2(t_dict **dict, char *target_str);
 int		change_env(char *key, char *value);
 int		add_new_env(char *new_env);
 int		delete_env(char *key);
@@ -253,23 +242,32 @@ int		ft_export(char **arg);
 int		executor(t_scmd *cmd);
 int		ft_exit(char **arg);
 int		ft_echo(char **arg);
-int     ft_isvar(char c);
-int     ft_varlen2(char *s);
-int     is_valid_var(char *s);
-int	ft_strcmp2(const char *s1, const char *s2);
-int	count_file_by_type(t_file *file, t_rdir type);
-int	count_file(t_file *file);
-int	strstrlen(char **s);
+int		ft_isvar(char c);
+int		ft_varlen2(char *s);
+int		is_valid_var(char *s);
+int		ft_strcmp2(const char *s1, const char *s2);
+int		count_file_by_type(t_file *file, t_rdir type);
+int		count_file(t_file *file);
+int		strstrlen(char **s);
 t_fd	get_fd_data(t_file *file);
-int     change_env(char *key, char *value);
-int     delete_env(char *key);
-void    update_env_dict(void);
-void    ft_child(t_scmd *cmd, t_pipe pipe_data, char **env);
-int     is_do_in_parent(t_scmd *cmd, t_buin *buin);
-int     do_in_parent(t_scmd *cmd, t_buin *buin);
-void    close_pipe(t_pipe pipe_data);
-void    wait_all(int *pid, t_pipe pipe_data, int *status);
-void    ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile);
-int     cmd_execute(t_scmd *cmd, t_pipe pipe_data);
+int		change_env(char *key, char *value);
+int		delete_env(char *key);
+void	update_env_dict(void);
+void	ft_child(t_scmd *cmd, t_pipe pipe_data, char **env);
+int		is_do_in_parent(t_scmd *cmd, t_buin *buin);
+int		do_in_parent(t_scmd *cmd, t_buin *buin);
+void	close_pipe(t_pipe pipe_data);
+void	wait_all(int *pid, t_pipe pipe_data, int *status);
+void	ft_dup(int ifd, t_pipe piped, int fd_infile, int fd_outfile);
+int		cmd_execute(t_scmd *cmd, t_pipe pipe_data);
+void	expand_token(t_token **token);
+int		ft_isvar(char c);
+int		check_1stchar_var(char c);
+int		ft_varlen(char *token);
+int		break_input(char *line, t_token **token);
+char	*ft_restr(char *re, char *token, char var_len, int *start);
+void	parser(t_shell *shell);
+int		is_exist(t_dict **dict, char *target_str);
+int		replace_env(char *key, char *value);
 
 #endif

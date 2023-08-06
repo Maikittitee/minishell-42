@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 11:54:56 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/04 00:06:06 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 04:02:01 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	skip_qoute(char *s, char c, int *dollar)
 	if (s[i] != c)
 	{
 		printf("syntax error unclosed double quote `%c'\n", c);
+		g_global_data.return_code = 258;
 		return (0);
 	}
 	return (i + 1);

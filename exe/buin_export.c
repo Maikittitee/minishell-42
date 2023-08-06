@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:16:54 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 01:42:25 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 21:51:57 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	prt_env_alpha(void)
 	char	**tmp;
 	int		i;
 
-	tmp = dup_env(global_data.env_ptr);
+	tmp = dup_env(g_global_data.env_ptr);
 	sort_export(tmp);
 	i = 0;
 	while (tmp[i])
@@ -65,9 +65,12 @@ static int	export_to_env(char *s)
 		key = split[0];
 	if (split[1])
 		value = split[1];
-	if (get_value2(global_data.env_dict, key))
+	if (is_exist(g_global_data.env_dict, key))
 	{
-		change_env(key, value);
+		if (get_value2(g_global_data.env_dict, key))
+			change_env(key, value);
+		else
+			replace_env(key, value);
 	}
 	else
 		add_new_env(s);

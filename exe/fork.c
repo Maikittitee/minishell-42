@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 23:30:00 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 02:15:24 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 21:17:21 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	cmd_execute(t_scmd *cmd, t_pipe pipe_data)
 	if (pipe_data.pid[pipe_data.pcnt] == -1)
 		return (raise_error("fork error", KERNEL_ERR));
 	if (pipe_data.pid[pipe_data.pcnt] == 0)
-		ft_child(cmd, pipe_data, global_data.env_ptr);
+		ft_child(cmd, pipe_data, g_global_data.env_ptr);
 	return (1);
 }
 
@@ -72,7 +72,7 @@ int	do_fork(t_scmd *cmd, t_pipe pipe_data)
 		return (do_in_parent(cmd, &dummy));
 	}
 	pipe_data.pcnt = 0;
-	pipe_data.path = get_paths(global_data.env_ptr);
+	pipe_data.path = get_paths(g_global_data.env_ptr);
 	pipe_data.pid = malloc(sizeof(int) * pipe_data.nprocess);
 	while (curr && pipe_data.pcnt < pipe_data.nprocess)
 	{

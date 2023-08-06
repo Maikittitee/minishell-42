@@ -3,44 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   scmd2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 02:24:40 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 02:27:45 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 03:47:02 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static void	put_in_scmd(t_token **token, t_scmd **new)
+{
+	t_scmd	*tmp;
+	int		i;
+
+	tmp = *new;
+	i = 0;
+	while (*token && (*token)->type != is_pipe)
+	{
+		if ((*token)->type == is_arg)
+			tmp->cmd = get_cmd(tmp->cmd, (*token)->content);
+		else if ((*token)->type == is_rdir)
+		{
+			get_file(&tmp->file[i++], (*token)->content, \
+				(*token)->next->content);
+			*token = (*token)->next;
+		}
+		*token = (*token)->next;
+	}
+	if (tmp->file)
+		tmp->file[i].type = none;
+}
+
 t_scmd	*create_scmd(t_token **token)
 {
 	t_scmd	*new;
 	int		n_rdir;
-	int		i;
 
 	new = (t_scmd *)malloc(sizeof(t_scmd));
 	if (!new)
 		return (NULL);
-	i = 0;
 	new->cmd = NULL;
 	n_rdir = count_rdir(*token);
 	if (n_rdir)
 		new->file = malloc(sizeof(t_file) * (n_rdir + 1));
 	else
 		new->file = NULL;
-	while (*token && (*token)->type != is_pipe)
-	{
-		if ((*token)->type == is_arg)
-			new->cmd = get_cmd(new->cmd, (*token)->content);
-		else if ((*token)->type == is_rdir)
-		{
-			get_file(&new->file[i++], (*token)->content, (*token)->next->content);
-			*token = (*token)->next;
-		}
-		*token = (*token)->next;
-	}
-	if (new->file)
-		new->file[i].type = none;
+	put_in_scmd(token, &new);
 	if (*token && (*token)->type == is_pipe)
 		*token = (*token)->next;
 	new->next = NULL;

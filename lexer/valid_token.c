@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:44:56 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/04 00:12:48 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 04:02:01 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	print_valid_token(char *content)
 {
 	printf("syntax error near unexpected token `%s'\n", content);
+	g_global_data.return_code = 258;
 	return (FALSE);
 }
 

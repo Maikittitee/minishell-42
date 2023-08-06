@@ -6,7 +6,7 @@
 /*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 21:22:15 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 01:59:54 by ktunchar         ###   ########.fr       */
+/*   Updated: 2023/08/04 21:14:19 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	executor(t_scmd *cmd)
 
 // 	(void)ac;
 // 	(void)av;
-// 	global_data.env_ptr = dup_env(env);
-// 	global_data.env_dict = get_env_dict(global_data.env_ptr);
-// 	// global_data.env_ptr = env;
+// 	g_global_data.env_ptr = dup_env(env);
+// 	g_global_data.env_dict = get_env_dict(g_global_data.env_ptr);
+// 	// g_global_data.env_ptr = env;
 // 	cmd = init_cmd(new_node("export"));
 // 	// link_cmd(cmd, new_node("export"));
 // 	// link_cmd(cmd, new_node(""));
@@ -44,16 +44,16 @@ int	executor(t_scmd *cmd)
 // 	// int	i;
 
 // 	// i = 0;
-// 	// while (global_data.env_ptr[i])
+// 	// while (g_global_data.env_ptr[i])
 // 	// {
-// 	// 	printf("%s\n", global_data.env_ptr[i]);
+// 	// 	printf("%s\n", g_global_data.env_ptr[i]);
 // 	// 	i++;
 // 	// }
 
-// 	printf(GRN"\nexit code is %d\n"RESET, global_data.return_code);
-// 	ft_double_free(global_data.env_ptr);
-// 	ft_free_dict(global_data.env_dict);
+// 	printf(GRN"\nexit code is %d\n"RESET, g_global_data.return_code);
+// 	ft_double_free(g_global_data.env_ptr);
+// 	ft_free_dict(g_global_data.env_dict);
 // 	clear_free_cmd(*cmd);
 // 	free(cmd);
-// 	return (global_data.return_code);
+// 	return (g_global_data.return_code);
 // }

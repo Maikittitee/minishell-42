@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ktunchar <ktunchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 23:58:43 by ksaelim           #+#    #+#             */
-/*   Updated: 2023/08/03 23:59:26 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 21:06:17 by ktunchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdbool.h>
 
-void	sigint_handler(int signum)
+void	main_handler(int signum)
 {
 	(void)signum;
-	global_data.return_code = ES_SIGINT_PARENT;
+	g_global_data.return_code = 1;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
-void	sigint_wait_handler(int signum)
+void	exec_handler(int signum)
 {
 	(void)signum;
-	global_data.return_code = ES_SIGINT_CHILD;
 	write(1, "\n", 1);
+	exit(130);
 }
 
 bool	set_signal(void)
@@ -37,30 +37,9 @@ bool	set_signal(void)
 
 	sigemptyset(&sigint.sa_mask);
 	sigemptyset(&sigquit.sa_mask);
-	sigint.sa_handler = &sigint_handler;
+	sigint.sa_handler = &main_handler;
 	sigquit.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &sigint, NULL);
 	sigaction(SIGQUIT, &sigquit, NULL);
-	return (true);
-}
-
-bool	set_termios(struct termios *term)
-{
-	struct termios	myterm;
-
-	if (tcgetattr(STDIN_FILENO, term) == -1)
-		return (perror("Error tcgetattr\n"), false);
-	if (tcgetattr(STDIN_FILENO, &myterm) == -1)
-		return (perror("Error tcgetattr\n"), false);
-	myterm.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &myterm) == -1)
-		return (perror("Error tcsetattr\n"), false);
-	return (true);
-}
-
-bool	restore_termios(struct termios *term)
-{
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, term) == -1)
-		return (perror("Error tcsetattr\n"), false);
 	return (true);
 }

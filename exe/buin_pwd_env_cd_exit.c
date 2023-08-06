@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:40:45 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 00:24:05 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 04:02:01 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	ft_env(char **arg)
 
 	i = 0;
 	(void)arg;
-	while (global_data.env_ptr[i])
+	while (g_global_data.env_ptr[i])
 	{
-		printf("%s\n", global_data.env_ptr[i]);
+		printf("%s\n", g_global_data.env_ptr[i]);
 		i++;
 	}
 	exit (EXIT_SUCCESS);
@@ -54,13 +54,13 @@ int	ft_cd(char **arg)
 	if (arg[1])
 		gogo = arg[1];
 	else
-		gogo = get_value2(global_data.env_dict, "HOME");
+		gogo = get_value2(g_global_data.env_dict, "HOME");
 	if (chdir(gogo) == -1)
 		return (raise_error(NULL, 0));
 	newpwd = NULL;
 	newpwd = getcwd(newpwd, 0);
 	change_env("PWD", newpwd);
-	if (get_value2(global_data.env_dict, "OLDPWD"))
+	if (get_value2(g_global_data.env_dict, "OLDPWD"))
 		change_env("OLDPWD", oldpwd);
 	free(newpwd);
 	free(oldpwd);
@@ -82,16 +82,16 @@ int	ft_exit(char **arg)
 		{
 			printf("exit\n");
 			printf("exit: %s : numeric argument required\n", arg[i]);
-			ft_clear_shell(global_data.shell_ptr, FALSE);
-			ft_double_free(global_data.env_ptr);
-			ft_free_dict(global_data.env_dict);
+			ft_clear_shell(g_global_data.shell_ptr, FALSE);
+			ft_double_free(g_global_data.env_ptr);
+			ft_free_dict(g_global_data.env_dict);
 			exit(255);
 		}
 		i++;
 	}
 	printf("exit\n");
-	ft_clear_shell(global_data.shell_ptr, FALSE);
-	ft_double_free(global_data.env_ptr);
-	ft_free_dict(global_data.env_dict);
+	ft_clear_shell(g_global_data.shell_ptr, FALSE);
+	ft_double_free(g_global_data.env_ptr);
+	ft_free_dict(g_global_data.env_dict);
 	return (exit(code), 0);
 }

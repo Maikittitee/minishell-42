@@ -6,7 +6,7 @@
 /*   By: ksaelim <ksaelim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:07:12 by ktunchar          #+#    #+#             */
-/*   Updated: 2023/08/04 00:14:40 by ksaelim          ###   ########.fr       */
+/*   Updated: 2023/08/04 04:02:01 by ksaelim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	do_pipe(t_scmd *cmd)
 		free_pipe(pipe_data.fd, pipe_data.npipe);
 		return (raise_error("pipe error", 0));
 	}
-	global_data.return_code = do_fork(cmd, pipe_data);
+	g_global_data.return_code = do_fork(cmd, pipe_data);
 	free_pipe(pipe_data.fd, pipe_data.npipe);
 	return (1);
 }
